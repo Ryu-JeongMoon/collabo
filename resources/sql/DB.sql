@@ -1,0 +1,52 @@
+DELETE DATA_BOARD
+ WHERE POST_NO BETWEEN 500 AND 1242;
+
+SELECT *
+  FROM DATA_BOARD;
+
+COMMIT;
+
+CREATE TABLE REPLY (
+    COMMENT_NO     NUMBER PRIMARY KEY,
+    WRITER_NAME    VARCHAR2(50),
+    REPLY_CONTENT  VARCHAR2(500),
+    REG_DATE       DATE DEFAULT CURRENT_DATE,
+    POST_NO        NUMBER,
+    CONSTRAINT COMMENT_FK_CODE FOREIGN KEY ( POST_NO )
+        REFERENCES DATA_BOARD ( POST_NO )
+            ON DELETE CASCADE
+);
+
+SELECT *
+  FROM REPLY;
+
+CREATE VIEW DATA_BOARD_VIEW AS
+    SELECT D.POST_NO,
+           D.POST_TITLE,
+           D.POST_CONTENT,
+           D.WRITER_NAME,
+           D.REG_DATE,
+           D.HIT,
+           D.ATTACHED_FILE,
+           COUNT(R.POST_NO) REPLY_CNT
+      FROM DATA_BOARD D
+      LEFT JOIN REPLY R ON D.POST_NO = R.POST_NO
+     GROUP BY D.POST_NO,
+              D.POST_TITLE,
+              D.POST_CONTENT,
+              D.WRITER_NAME,
+              D.REG_DATE,
+              D.HIT,
+              D.ATTACHED_FILE;
+
+SELECT *
+  FROM ( SELECT ROWNUM NUM,
+                D.*
+         FROM ( SELECT *
+                FROM DATA_BOARD_VIEW
+               WHERE POST_TITLE LIKE '%%'
+               ORDER BY POST_NO DESC ) D
+       )
+ WHERE NUM BETWEEN 1 AND 10;
+
+ commit;
