@@ -1,6 +1,6 @@
-package hello.servlet.bit.controller.pojo;
+package com.servlet.bit.controller.pojo;
 
-import hello.servlet.bit.controller.BoardController;
+import com.servlet.bit.controller.BoardController;
 import java.util.Map;
 
 

@@ -1,9 +1,8 @@
-package hello.servlet.bit.controller;
+package com.servlet.bit.controller;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import hello.servlet.bit.controller.pojo.*;
-import hello.servlet.web.frontcontroller.MyView;
+import com.servlet.bit.controller.pojo.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 

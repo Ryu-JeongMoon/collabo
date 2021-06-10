@@ -141,6 +141,7 @@
         </table>
 
         <div class="col">
+            <c:if test="${login == list.writer_name}">
             <c:if test="${!empty param.p}">
             <button class="btn btn-primary btn-lg"
                     onclick="location.href='update?post_no=${list.post_no}&p=${param.p}&f=${param.f}&k=${param.k}'"
@@ -159,6 +160,11 @@
                     formmethod="post"
                     type="button">삭제
             </button>
+            </c:if>
+            <c:if test="${login == null || login != list.writer_name}">
+                <button class="btn btn-danger btn-lg" onclick="alert('본인이 작성한 글만 수정할 수 있습니다.');" type="reset">수정</button>
+                <button class="btn btn-danger btn-lg" onclick="alert('본인이 작성한 글만 삭제할 수 있습니다.');" type="reset">삭제</button>
+            </c:if>
             <c:if test="${!empty param.p}">
             <button class="btn btn-secondary btn-lg"
                     onclick="location.href='list?p=${param.p}&f=${param.f}&k=${param.k}'"

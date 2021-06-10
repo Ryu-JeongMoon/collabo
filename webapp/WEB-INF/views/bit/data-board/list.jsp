@@ -99,6 +99,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="">일정 관리</a>
                 </li>
+                <c:choose>
+                    <c:when test="${login != null }">
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://localhost:8080/u/controller?type=out"
+                               onclick="return confirm('로그아웃?');">${login}님 로그아웃</a>
+                        </li>
+                    </c:when>
+                    <c:when test="${login == null }">
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://localhost:8080/u/login.jsp">로그인</a>
+                        </li>
+                    </c:when>
+                </c:choose>
             </ul>
         </div>
     </div>
@@ -121,6 +134,7 @@
         <div class="form-group">
             <button class="btn btn-outline-dark" type="submit">검색</button>
         </div>
+
     </form>
 </div>
 
@@ -143,12 +157,17 @@
         <c:forEach var="item" items="${list}">
             <tr class="table-primary">
                 <c:if test="${!empty param.p}">
-                    <td><a href="/data-board/detail?post_no=${item.post_no}&p=${param.p}&f=${param.f}&k=${param.k}">${item.post_no}</a></td>
-                    <td><a href="/data-board/detail?post_no=${item.post_no}&p=${param.p}&f=${param.f}&k=${param.k}">${item.post_title} [${item.reply_cnt}]</a></td>
+                    <td>
+                        <a href="/data-board/detail?post_no=${item.post_no}&p=${param.p}&f=${param.f}&k=${param.k}">${item.post_no}</a>
+                    </td>
+                    <td>
+                        <a href="/data-board/detail?post_no=${item.post_no}&p=${param.p}&f=${param.f}&k=${param.k}">${item.post_title}
+                            [${item.reply_cnt}]</a></td>
                 </c:if>
                 <c:if test="${empty param.p}">
                     <td><a href="/data-board/detail?post_no=${item.post_no}">${item.post_no}</a></td>
-                    <td><a href="/data-board/detail?post_no=${item.post_no}">${item.post_title} [${item.reply_cnt}]</a></td>
+                    <td><a href="/data-board/detail?post_no=${item.post_no}">${item.post_title} [${item.reply_cnt}]</a>
+                    </td>
                 </c:if>
                 <td>${item.writer_name}</td>
                 <td><fmt:formatDate pattern="yyyy.MM.dd" value="${item.reg_date}"></fmt:formatDate></td>
@@ -160,15 +179,24 @@
 </div>
 
 <div class="write-button">
-    <c:if test="${!empty param.p}">
-    <h2>
-        <button onclick="location.href='write?p=${param.p}&f=${param.f}&k=${param.k}'" type="button" class="btn btn-primary btn-lg">글 쓰기</button>
-    </h2>
+    <c:if test="${login != null}">
+        <c:if test="${!empty param.p}">
+            <h2>
+                <button onclick="location.href='write?p=${param.p}&f=${param.f}&k=${param.k}'" type="button"
+                        class="btn btn-primary btn-lg">글 쓰기
+                </button>
+            </h2>
+        </c:if>
+        <c:if test="${empty param.p}">
+            <h2>
+                <button onclick="location.href='write'" type="button" class="btn btn-primary btn-lg">글 쓰기</button>
+            </h2>
+        </c:if>
     </c:if>
-    <c:if test="${empty param.p}">
-    <h2>
-        <button onclick="location.href='write'" type="button" class="btn btn-primary btn-lg">글 쓰기</button>
-    </h2>
+    <c:if test="${login == null}">
+        <h2>
+            <button onclick="alert('로그인 후 이용 가능합니다.');" type="button" class="btn btn-primary btn-lg">글 쓰기</button>
+        </h2>
     </c:if>
 </div>
 
@@ -207,3 +235,5 @@
 <%@ include file="../html/footer.jsp" %>
 </body>
 </html>
+
+<%--yaho--%>

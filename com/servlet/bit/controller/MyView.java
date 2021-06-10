@@ -1,4 +1,4 @@
-package hello.servlet.bit.controller;
+package com.servlet.bit.controller;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

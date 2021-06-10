@@ -1,4 +1,4 @@
-package hello.servlet.bit.mybatis;
+package com.servlet.bit.mybatis;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -27,7 +27,7 @@ public class MyBatisManager extends HttpServlet {
         }
     }
 
-    public static org.apache.ibatis.session.SqlSessionFactory getInstance() {
+    public static SqlSessionFactory getInstance() {
         return factory;
     }
 

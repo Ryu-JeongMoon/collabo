@@ -37,6 +37,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="">일정 관리</a>
                 </li>
+                <c:choose>
+                    <c:when test="${login != null }">
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://localhost:8080/u/controller?type=out" onclick="return confirm('로그아웃?');">${login}님 로그아웃</a>
+                        </li>
+                    </c:when>
+                    <c:when test="${login == null }">
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://localhost:8080/u/login.jsp">로그인</a>
+                        </li>
+                    </c:when>
+                </c:choose>
             </ul>
         </div>
     </div>

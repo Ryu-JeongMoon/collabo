@@ -1,7 +1,6 @@
-package hello.servlet.bit.domain;
+package com.servlet.bit.domain;
 
 import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;

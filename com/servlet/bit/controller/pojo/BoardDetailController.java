@@ -1,8 +1,8 @@
-package hello.servlet.bit.controller.pojo;
+package com.servlet.bit.controller.pojo;
 
-import hello.servlet.bit.controller.BoardController;
-import hello.servlet.bit.domain.DataBoardDAO;
-import hello.servlet.bit.domain.DataBoardVO;
+import com.servlet.bit.controller.BoardController;
+import com.servlet.bit.domain.DataBoardDAO;
+import com.servlet.bit.domain.DataBoardVO;
 
 import java.util.Map;
 

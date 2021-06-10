@@ -1,6 +1,5 @@
-package hello.servlet.bit.domain;
+package com.servlet.bit.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

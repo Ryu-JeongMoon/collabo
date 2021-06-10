@@ -1,8 +1,8 @@
-package hello.servlet.bit.controller.pojo;
+package com.servlet.bit.controller.pojo;
 
-import hello.servlet.bit.controller.BoardController;
-import hello.servlet.bit.domain.DataBoardDAO;
-import hello.servlet.bit.domain.DataBoardVOView;
+import com.servlet.bit.controller.BoardController;
+import com.servlet.bit.domain.DataBoardDAO;
+import com.servlet.bit.domain.DataBoardVOView;
 
 import java.util.ArrayList;
 import java.util.List;

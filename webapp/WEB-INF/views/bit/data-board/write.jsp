@@ -76,7 +76,7 @@
                 <td>
                     <div class="form-group">
                         <fieldset>
-                            <input class="form-control" name="writer_name" id="writer_name" type="text">
+                            <input class="form-control" name="writer_name" id="writer_name" value="${login}" readonly type="text">
                         </fieldset>
                     </div>
                 </td>

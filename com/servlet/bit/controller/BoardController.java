@@ -1,4 +1,4 @@
-package hello.servlet.bit.controller;
+package com.servlet.bit.controller;
 
 import java.util.Map;
 
