@@ -156,7 +156,7 @@
         <tbody>
         <c:forEach var="item" items="${list}">
             <tr class="table-primary">
-                <c:if test="${!empty param.p}">
+                <c:if test="${!empty param.p || !empty param.f}">
                     <td>
                         <a href="/data-board/detail?post_no=${item.post_no}&p=${param.p}&f=${param.f}&k=${param.k}">${item.post_no}</a>
                     </td>
@@ -164,7 +164,7 @@
                         <a href="/data-board/detail?post_no=${item.post_no}&p=${param.p}&f=${param.f}&k=${param.k}">${item.post_title}
                             [${item.reply_cnt}]</a></td>
                 </c:if>
-                <c:if test="${empty param.p}">
+                <c:if test="${empty param.p && empty param.f}">
                     <td><a href="/data-board/detail?post_no=${item.post_no}">${item.post_no}</a></td>
                     <td><a href="/data-board/detail?post_no=${item.post_no}">${item.post_title} [${item.reply_cnt}]</a>
                     </td>
@@ -180,14 +180,14 @@
 
 <div class="write-button">
     <c:if test="${login != null}">
-        <c:if test="${!empty param.p}">
+        <c:if test="${!empty param.p || !empty param.f}">
             <h2>
                 <button onclick="location.href='write?p=${param.p}&f=${param.f}&k=${param.k}'" type="button"
                         class="btn btn-primary btn-lg">글 쓰기
                 </button>
             </h2>
         </c:if>
-        <c:if test="${empty param.p}">
+        <c:if test="${empty param.p && empty param.f}">
             <h2>
                 <button onclick="location.href='write'" type="button" class="btn btn-primary btn-lg">글 쓰기</button>
             </h2>
@@ -228,7 +228,7 @@
     </c:if>
 </div>
 <div style="text-align: right">
-    <span>${(empty param.p)?1:param.p} / ${lastNum} 페이지</span>
+    <span>${(empty param.p)?1:param.p} / ${lastNum!=0?lastNum:1} 페이지</span>
 </div>
 
 <%--footer--%>

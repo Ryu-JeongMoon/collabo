@@ -76,7 +76,8 @@
                 <td>
                     <div class="form-group">
                         <fieldset>
-                            <input class="form-control" name="writer_name" id="writer_name" value="${login}" readonly type="text">
+                            <input class="form-control" name="writer_name" id="writer_name" value="${login}" readonly
+                                   type="text">
                         </fieldset>
                     </div>
                 </td>
@@ -112,13 +113,14 @@
                         onclick="alert('입력 내용은 저장되지 않습니다. 다시 입력하시겠습니까?')"
                         type="reset">다시 입력
                 </button>
-                <c:if test="${!empty param.p}">
+                <c:if test="${!empty param.p || !empty param.f}">
+
                     <button class="btn btn-secondary btn-lg"
                             onclick="location.href='list?p=${param.p}&f=${param.f}&k=${param.k}'"
                             type="button">목록으로
                     </button>
                 </c:if>
-                <c:if test="${empty param.p}">
+                <c:if test="${empty param.p && empty param.f}">
                     <button class="btn btn-secondary btn-lg"
                             onclick="location.href='list'"
                             type="button">목록으로

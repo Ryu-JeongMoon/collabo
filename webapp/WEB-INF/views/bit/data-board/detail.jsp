@@ -165,13 +165,13 @@
                 <button class="btn btn-danger btn-lg" onclick="alert('본인이 작성한 글만 수정할 수 있습니다.');" type="reset">수정</button>
                 <button class="btn btn-danger btn-lg" onclick="alert('본인이 작성한 글만 삭제할 수 있습니다.');" type="reset">삭제</button>
             </c:if>
-            <c:if test="${!empty param.p}">
+            <c:if test="${!empty param.p || !empty param.f}">
             <button class="btn btn-secondary btn-lg"
                     onclick="location.href='list?p=${param.p}&f=${param.f}&k=${param.k}'"
                     type="button">목록으로
             </button>
             </c:if>
-            <c:if test="${empty param.p}">
+            <c:if test="${empty param.p && empty param.f}">
                 <button class="btn btn-secondary btn-lg"
                         onclick="location.href='list'"
                         type="button">목록으로
