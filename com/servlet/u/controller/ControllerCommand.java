@@ -1,4 +1,4 @@
-package com.servlet.u.controller;
+package u.controller;
 
 import java.io.IOException;
 
@@ -8,15 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.u.model.MemberDAO;
-import com.u.model.command.Command;
-import com.u.model.command.LoginCommand;
-import com.u.model.command.signCommand;
-import com.u.model.command.signupCommand;
+import u.model.MemberDAO;
 
 
 @WebServlet("/controller2")
 public class ControllerCommand extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,4 +1,4 @@
-package com.servlet.u.mybatis;
+package u.mybatis;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -16,7 +16,7 @@ public class DBService {
 	static {
 		try {
 			factory = new SqlSessionFactoryBuilder()
-					.build(Resources.getResourceAsReader("com/u/mybatis/config.xml"));
+					.build(Resources.getResourceAsReader("u/mybatis/config.xml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

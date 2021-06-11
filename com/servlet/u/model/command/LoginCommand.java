@@ -1,4 +1,4 @@
-package com.servlet.u.model.command;
+package u.model.command;
 
 import java.io.IOException;
 
@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.servlet.u.model.MemberDAO;
-import com.servlet.u.model.MemberVO;
+import u.model.MemberDAO;
+import u.model.MemberVO;
 
 public class LoginCommand implements Command{
 
@@ -21,13 +21,11 @@ public class LoginCommand implements Command{
 		
 		vo.setId(request.getParameter("id"));
 		vo.setPassword(request.getParameter("password"));
-		System.out.print(vo);
-		System.out.print(dao.login(vo));
 		MemberVO vvo = dao.login(vo);
 		
 		if(vvo != null) {	//성공
 			HttpSession session = request.getSession();
-			session.setAttribute("login", request.getParameter("id"));
+			session.setAttribute("login",vvo);
 			return "header.jsp";
 		}else {
 			return"loginfail.jsp";

@@ -1,4 +1,4 @@
-package com.servlet.u.model;
+package u.model;
 
 public class MemberVO {
 	private String id, password,name,email,phone;

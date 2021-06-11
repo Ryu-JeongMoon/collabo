@@ -1,8 +1,8 @@
-package com.servlet.u.model;
+package u.model;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.servlet.u.mybatis.DBService;
+import u.mybatis.DBService;
 
 
 public class MemberDAO {
@@ -45,4 +45,20 @@ public class MemberDAO {
 		ss.close();
 		return member;
 	}
+	
+	//회원 탈퇴
+	public void deletemember(String id) {
+		SqlSession ss = DBService.getFactory().openSession(true);
+		ss.delete("bc.deletemember",id);
+		ss.close();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
