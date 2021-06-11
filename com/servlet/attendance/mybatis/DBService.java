@@ -15,7 +15,7 @@ public class DBService {
 	static {
 		try {
 			factory = new SqlSessionFactoryBuilder()
-					.build(Resources.getResourceAsReader("com/bp/attendance/mybatis/config.xml"));
+					.build(Resources.getResourceAsReader("com/servlet/attendance/mybatis/config.xml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
