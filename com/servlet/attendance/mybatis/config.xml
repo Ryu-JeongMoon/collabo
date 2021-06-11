@@ -7,7 +7,7 @@
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	<typeAliases>
-		<typeAlias type="com.bp.attendance.vo.AttVO" alias="AttVO"/>
+		<typeAlias type="com.servlet.attendance.vo.AttVO" alias="AttVO"/>
 	</typeAliases>
 
   <environments default="development">
@@ -23,7 +23,7 @@
   </environments>
   
   <mappers>
-    <mapper resource="com/bp/attendance/mybatis/mapper.xml"/>
+    <mapper resource="com/servlet/attendance/mybatis/mapper.xml"/>
   </mappers>
 </configuration>
 
