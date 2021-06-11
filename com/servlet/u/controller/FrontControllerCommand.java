@@ -1,4 +1,4 @@
-package com.servlet.u.controller;
+package u.controller;
 
 import java.io.IOException;
 
@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.u.model.MemberDAO;
-import com.u.model.command.Command;
-import com.u.model.command.LoginCommand;
-import com.u.model.command.LogoutCommand;
-import com.u.model.command.signCommand;
-import com.u.model.command.signupCommand;
+import u.model.MemberDAO;
+import u.model.command.Command;
+import u.model.command.DeleteCommand;
+import u.model.command.LoginCommand;
+import u.model.command.LogoutCommand;
+import u.model.command.signCommand;
+import u.model.command.signupCommand;
 
 
 @WebServlet("/controller")
@@ -34,6 +35,8 @@ public class FrontControllerCommand extends HttpServlet {
 			command = new LoginCommand();
 		}else if("signup".equals(type)) {
 			command = new signupCommand();
+		}else if("delete".equals(type)) {
+			command = new DeleteCommand();
 		}
 		String path = command.exec(request, response);
 		request.getRequestDispatcher(path).forward(request, response);

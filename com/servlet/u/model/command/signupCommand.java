@@ -1,4 +1,4 @@
-package com.servlet.u.model.command;
+package u.model.command;
 
 import java.io.IOException;
 
@@ -6,8 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.servlet.u.model.MemberDAO;
-import com.servlet.u.model.MemberVO;
+import u.model.MemberDAO;
+import u.model.MemberVO;
 
 
 public class signupCommand implements Command {
@@ -27,7 +27,6 @@ public class signupCommand implements Command {
 		//2 DB 입력 
 		MemberDAO memberDAO = new MemberDAO();
 		memberDAO.insert(vo);
-		
 		
 		//vo 값 보내기
 		request.setAttribute("vo", vo);
