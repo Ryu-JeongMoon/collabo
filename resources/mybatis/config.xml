@@ -11,7 +11,7 @@
     </settings>
 
     <typeAliases>
-        <typeAlias type="hello.servlet.bit.domain.DataBoardVO" alias="DataBoardVO"/>
+        <typeAlias type="com.servlet.bit.domain.DataBoardVO" alias="DataBoardVO"/>
     </typeAliases>
     <!-- 오라클 연결하는 부분 : getConnection() -->
     <environments default="development"><!-- 개발 환경을 만든다 -->
