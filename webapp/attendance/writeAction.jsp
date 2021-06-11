@@ -1,6 +1,6 @@
-<%@page import="com.bp.attendance.mybatis.DBService"%>
+<%@page import="com.servlet.attendance.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
-<%@page import="com.bp.attendance.DAO.DAO"%>
+<%@page import="com.servlet.attendance.DAO.DAO"%>
 <%@page import="java.io.PrintWriter"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -25,7 +25,7 @@
 	//1. 파라미터 값 추출해서 VO에 저장
 %>	
 	
-	<jsp:useBean id="AttVO" class="com.bp.attendance.vo.AttVO"/>
+	<jsp:useBean id="AttVO" class="com.servlet.attendance.vo.AttVO"/>
 	<jsp:setProperty property="*" name="AttVO" />
 <%
 	System.out.println("> AttVO : " + AttVO);
