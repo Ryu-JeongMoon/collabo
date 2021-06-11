@@ -1,7 +1,7 @@
-<%@page import="com.bp.attendance.common.Paging"%>
-<%@page import="com.bp.attendance.mybatis.DBService"%>
+<%@page import="com.servlet.attendance.common.Paging"%>
+<%@page import="com.servlet.attendance.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
-<%@page import="com.bp.attendance.DAO.DAO"%>
+<%@page import="com.servlet.attendance.DAO.DAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.bp.attendance.vo.AttVO"%>
 <%@page import="java.util.List"%>
