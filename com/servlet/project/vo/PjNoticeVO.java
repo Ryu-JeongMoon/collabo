@@ -1,4 +1,4 @@
-package bitcamp.project.vo;
+package com.servlet.project.vo;
 
 public class PjNoticeVO {
 	private String pj_idx, writer, pwd, regdate, editdate, hit, title, content, file_name, com_count;

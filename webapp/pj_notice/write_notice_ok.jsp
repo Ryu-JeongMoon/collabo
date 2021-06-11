@@ -1,8 +1,8 @@
 <%@page import="java.io.File"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
-<%@page import="bitcamp.project.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@ page import="com.servlet.project.mybatis.DBService" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,7 +10,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 %>
-	<jsp:useBean id="PjNoticeVO" class="bitcamp.project.vo.PjNoticeVO" />
+	<jsp:useBean id="PjNoticeVO" class="com.servlet.project.vo.PjNoticeVO" />
 	<jsp:setProperty property="*" name="PjNoticeVO"/>
 <%--	//파일 업로드 확인
 	//파일 저장 위치

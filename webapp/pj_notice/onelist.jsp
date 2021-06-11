@@ -1,9 +1,9 @@
-<%@page import="bitcamp.project.model.DAO"%>
-<%@page import="bitcamp.project.vo.PjCommentVO"%>
 <%@page import="java.util.List"%>
-<%@page import="bitcamp.project.vo.PjNoticeVO"%>
-<%@page import="bitcamp.project.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@ page import="com.servlet.project.vo.PjNoticeVO" %>
+<%@ page import="com.servlet.project.vo.PjCommentVO" %>
+<%@ page import="com.servlet.project.model.DAO" %>
+<%@ page import="com.servlet.project.mybatis.DBService" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -23,7 +23,7 @@
 	System.out.println("cPage: "+cPage);
 	
 	SqlSession ss = DBService.getFactory().openSession(true);
-	PjNoticeVO vo = ss.selectOne("pjnotice.one", pj_idx);	
+	PjNoticeVO vo = ss.selectOne("pjnotice.one", pj_idx);
 	ss.close();
 	//System.out.println("vo: "+vo);
 	

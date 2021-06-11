@@ -1,4 +1,7 @@
-package bitcamp.project.controller;
+package com.servlet.project.controller;
+
+import com.servlet.project.model.DAO;
+import com.servlet.project.vo.PjNoticeVO;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,10 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bitcamp.project.model.DAO;
-import bitcamp.project.vo.PjNoticeVO;
+
 //검색컨트롤러
-@WebServlet("/search")
+@WebServlet("/pj_notice/search")
 public class SearchController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
@@ -24,15 +26,18 @@ public class SearchController extends HttpServlet{
 		String c_query = request.getParameter("q");	//입력한 검색어 value값
 		
 		String field = "writer";  //검색목록-작성자
-		if(c_field != null && c_field.equals("")) {
-			c_field = field;
+		if(c_field != null && !c_field.equals("")) {
+			field = c_field;
 		}
 		String query = "";
-		if(c_query != null && c_query.equals("")) {
-			c_query = query;
+		if(c_query != null && !c_query.equals("")) {
+			query = c_query;
 		}
-	
-		request.getRequestDispatcher("pj_notice/search.jsp").forward(request, response);		
+
+		List<PjNoticeVO> list = DAO.getListWithKeyword(field, query);
+		request.setAttribute("list", list);
+
+		request.getRequestDispatcher("/pj_notice/search.jsp").forward(request, response);
 	}
 
 	@Override

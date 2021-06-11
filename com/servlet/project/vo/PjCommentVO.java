@@ -1,4 +1,4 @@
-package bitcamp.project.vo;
+package com.servlet.project.vo;
 
 public class PjCommentVO {
 

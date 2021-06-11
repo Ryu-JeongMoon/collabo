@@ -1,5 +1,5 @@
-<%@page import="bitcamp.project.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@ page import="com.servlet.project.mybatis.DBService" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -7,7 +7,7 @@
 
 	//파라미터 값 추출해서 vo에 저장
 %>
-	<jsp:useBean id="vo" class="bitcamp.project.vo.PjNoticeVO" />
+	<jsp:useBean id="vo" class="com.servlet.project.vo.PjNoticeVO" />
 	<jsp:setProperty property="*" name="vo" />
 <%
 	//System.out.println("local vo: "+vo);

@@ -1,6 +1,6 @@
-<%@page import="bitcamp.project.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
-<%@page import="bitcamp.project.vo.PjCommentVO"%>
+<%@ page import="com.servlet.project.vo.PjCommentVO" %>
+<%@ page import="com.servlet.project.mybatis.DBService" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%

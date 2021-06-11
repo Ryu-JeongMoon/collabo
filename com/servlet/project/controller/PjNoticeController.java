@@ -1,4 +1,4 @@
-package bitcamp.project.controller;
+package com.servlet.project.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,14 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
+import com.servlet.project.model.DAO;
+import com.servlet.project.paging.Paging;
+import com.servlet.project.vo.PjNoticeVO;
 import org.apache.ibatis.session.SqlSession;
 
-import bitcamp.project.model.DAO;
-import bitcamp.project.mybatis.DBService;
-import bitcamp.project.paging.Paging;
-import bitcamp.project.vo.PjNoticeVO;
 
-@WebServlet("/pjnotice")	
+@WebServlet("/pjnotice")
 public class PjNoticeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
@@ -79,7 +78,6 @@ public class PjNoticeController extends HttpServlet {
 	
 	//응답페이지 전환
 	req.getRequestDispatcher("/pj_notice/pjnotice.jsp").forward(req, resp);
-	
 }
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

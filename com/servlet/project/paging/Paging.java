@@ -1,4 +1,4 @@
-package bitcamp.project.paging;
+package com.servlet.project.paging;
 
 //게시판의 페이징 처리를 위한 값을 저장 관리
 public class Paging {
@@ -6,7 +6,7 @@ public class Paging {
 	private int nowBlock = 1; //현재 블록(페이지 담는 단위)
 	
 	private int numPerPage = 10; //하나의 페이지에 표시할 게시글 수
-	private int pagePerBlock = 3; //블록당 표시하는 페이지 갯수
+	private int pagePerBlock = 5; //블록당 표시하는 페이지 갯수
 	
 	private int totalRecord = 0; //총 게시물 갯수(원본 게시글 수)
 	private int totalPage = 0; //전체 페이지 갯수

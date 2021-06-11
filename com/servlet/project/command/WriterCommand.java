@@ -1,4 +1,4 @@
-package bitcamp.project.command;
+package com.servlet.project.command;
 
 import java.io.IOException;
 

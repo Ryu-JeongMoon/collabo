@@ -45,9 +45,7 @@
     <form name="writeForm" action="save" method="post" enctype="multipart/form-data">
         <table class="table table-hover" border="1">
             <thead>
-            <%--            <tr>--%>
-            <%--                <th scope="col"><h2>글 쓰기</h2></th>--%>
-            <%--            </tr>--%>
+
             </thead>
             <tbody>
             <tr class="table-active">
