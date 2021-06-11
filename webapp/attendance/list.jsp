@@ -3,7 +3,7 @@
 <%@page import="org.apache.ibatis.session.SqlSession"%>
 <%@page import="com.servlet.attendance.DAO.DAO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.bp.attendance.vo.AttVO"%>
+<%@page import="com.servlet.attendance.vo.AttVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
