@@ -10,7 +10,7 @@
 	</select>
 	
 	<!-- 페이지 해당 게시글 조회 -->
-	<select id="list" resultType="com.bp.attendance.vo.AttVO" parameterType="map">
+	<select id="list" resultType="com.servlet.attendance.vo.AttVO" parameterType="map">
 		SELECT *
 		  FROM (SELECT ROWNUM R_NUM, ATT.*
 		          FROM (SELECT *
