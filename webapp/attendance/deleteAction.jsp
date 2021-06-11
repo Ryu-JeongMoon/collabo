@@ -1,7 +1,7 @@
-<%@page import="com.bp.attendance.mybatis.DBService"%>
+<%@page import="com.servlet.attendance.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
-<%@page import="com.bp.attendance.DAO.DAO"%>
-<%@page import="com.bp.attendance.vo.AttVO"%>
+<%@page import="com.servlet.attendance.DAO.DAO"%>
+<%@page import="com.servlet.attendance.vo.AttVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
