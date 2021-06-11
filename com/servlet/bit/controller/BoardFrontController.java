@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -93,8 +95,11 @@ public class BoardFrontController extends HttpServlet {
                  .forEachRemaining(paramName -> paramMap.put((String) paramName, multi
                          .getParameter((String) paramName)));
 
-            paramMap.put("fileName", multi.getFilesystemName("attached_file"));
-            paramMap.put("originalFileName", multi.getOriginalFileName("attached_file"));
+//            paramMap.put("fileName", new String(multi.getFilesystemName("attached_file").getBytes(StandardCharsets.UTF_8), "EUC-KR"));
+//            paramMap.put("originalFileName", new String(multi.getOriginalFileName("attached_file").getBytes(StandardCharsets.UTF_8), "EUC-KR"));
+
+            paramMap.put("fileName", URLDecoder.decode(multi.getFilesystemName("attached_file"), "UTF-8"));
+            paramMap.put("originalFileName", URLDecoder.decode(multi.getOriginalFileName("attached_file"), "UTF-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }

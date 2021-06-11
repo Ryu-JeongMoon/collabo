@@ -1,6 +1,6 @@
 <%@page import="org.apache.ibatis.session.SqlSession"%>
 <%@ page import="com.servlet.project.mybatis.DBService" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	request.setCharacterEncoding("utf-8");
@@ -25,7 +25,7 @@
 %>
 	<script>
 		alert("[예외 발생]\n목록페이지로 이동합니다.");
-		location.href="../pjnotice";
+		location.href="http://localhost:8080/pjnotice";
 	</script>
 <%
 		} finally {

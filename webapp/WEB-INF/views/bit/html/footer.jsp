@@ -8,8 +8,8 @@
     a:hover { text-decoration: underline; }
 </style>
 
-<hr class="my-4">
 <footer id="footer">
+    <hr class="my-4">
     <div class="content-container">
         <div id="company-info">
             <dl>

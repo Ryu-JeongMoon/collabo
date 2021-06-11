@@ -29,10 +29,10 @@
                     <a class="nav-link" href="">공지사항 게시판</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">프로젝트 게시판</a>
+                    <a class="nav-link" href="http://localhost:8080/pjnotice">프로젝트 게시판</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="list">자료 게시판</a>
+                    <a class="nav-link" href="http://localhost:8080/data-board/list">자료 게시판</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="">일정 관리</a>
@@ -40,7 +40,7 @@
                 <c:choose>
                     <c:when test="${login != null }">
                         <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/u/controller?type=out" onclick="return confirm('로그아웃?');">${login}님 로그아웃</a>
+                            <a class="nav-link" href="http://localhost:8080/u/controller?type=out" onclick="return confirm('로그아웃 하시겠습니까??');">${login}님 로그아웃</a>
                         </li>
                     </c:when>
                     <c:when test="${login == null }">

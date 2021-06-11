@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -33,7 +33,7 @@
 <div id="container">
     <h1>공지사항 작성</h1>
     <hr>
-    <p><a href="../pjnotice">[뒤로가기]</a></p>
+    <p><a href="pjnotice">[뒤로가기]</a></p>
     <form action="write_notice_ok.jsp" method="post">
         <table>
             <tbody>

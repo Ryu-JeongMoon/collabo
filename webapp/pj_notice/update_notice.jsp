@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html;charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -8,6 +8,16 @@
           integrity="undefined" crossorigin="anonymous">
     <title>수정</title>
 
+    <style>
+        footer {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 

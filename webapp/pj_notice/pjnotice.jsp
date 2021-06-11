@@ -4,16 +4,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css"
-          integrity="undefined" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
 
     <title>프로젝트 공지사항 리스트(메인)</title>
-
-
     <style>
-        th, td {
-            border: 1px solid black;
+        * {
+            font-family: NanumGothic, 'Malgun Gothic';
         }
 
         .paging {
@@ -41,6 +41,13 @@
             color: white;
         }
 
+        .search-form {
+            text-align: right;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-around;
+        }
+
         footer {
             position: absolute;
             left: 0;
@@ -48,6 +55,26 @@
             width: 100%;
             padding: 15px 0;
             text-align: center;
+        }
+
+        tfoot {
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .page-form {
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        table {
+            table-layout: fixed;
+            word-break: break-all;
+        }
+
+        .write-button {
+            text-align: right;
+            margin-right: 50px;
         }
     </style>
 
@@ -57,8 +84,8 @@
 <%--navbar--%>
 <%@ include file="/WEB-INF/views/bit/html/navbar.jsp" %>
 
-<div id="container">
-    <h1 class="text-center">프로젝트 공지사항</h1>
+<div class="container-fluid search-form">
+    <%--    <h1 class="text-center">프로젝트 공지사항</h1>--%>
     <form class="d-flex" action="pj_notice/search" method="get">
         <%--검색 --%>
         <div class="input-group">
@@ -71,25 +98,28 @@
             </div>
             <!-- 검색 버튼-->
             <input class="form-control me-sm-2" type="text" placeholder="Search" name="q">
-<%--            <input type="hidden" name="type" value="writerList">--%>
+            <%--            <input type="hidden" name="type" value="writerList">--%>
             <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
         </div>
     </form>
-    <table>
+</div>
+
+<div class="content-container">
+    <table border="1" class="table table-hover">
         <thead>
         <tr>
-            <th>글번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-            <th>수정일</th>
-            <th>조회수</th>
+            <th scope="col">글번호</th>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+            <th scope="col">작성일</th>
+            <th scope="col">수정일</th>
+            <th scope="col">조회수</th>
         </tr>
         </thead>
         <tbody>
         <c:if test="${not empty list }">
             <c:forEach var="vo" items="${list }">
-                <tr>
+                <tr class="table-primary">
                     <td>${vo.getPj_idx() }</td>
                     <td>
                         <a href="pj_notice/onelist.jsp?pj_idx=${vo.pj_idx}&cPage=${pvo.nowPage}">${vo.title }
@@ -106,64 +136,112 @@
             </c:forEach>
         </c:if>
         <c:if test="${empty list}">
-            <tr>
+            <tr class="table-primary">
                 <td colspan="6">
                     <h2>현재 등록된 게시글이 없습니다.</h2>
                 </td>
             </tr>
         </c:if>
         </tbody>
-        <tfoot>
-        <tr>
-            <td colspan="6">
-                <ol class="paging">
-                    <%--이전으로 --%>
-                    <c:if test="${pvo.beginPage == 1 }"> <!-- 시작페이지가 1일 경우 비활성화 -->
-                        <li class="disable">prev</li>
-                    </c:if>
-                    <c:if test="${pvo.beginPage != 1 }">
-                        <li>
-                            <a href="pjnotice?cPage=${pvo.beginPage - 1}">prev</a>
-                        </li>
-                    </c:if>
-
-                    <%--블록 내 표시할 페이지 태그 작성 --%>
-                    <c:forEach var="pageNo" begin="${pvo.beginPage }" end="${pvo.endPage }">
-                        <c:choose>
-                            <c:when test="${pageNo == pvo.nowPage  }"> <%--현재 페이지랑 누른 페이지 같으면 링크처리x --%>
-                                <li class="now">${pageNo }</li>
-                            </c:when>
-                            <c:otherwise>
-                                <li>
-                                    <a href="pjnotice?cPage=${pageNo}">${pageNo}</a> <%--현재 페이지랑 누른 페이지 다르면 링크처리 --%>
-                                </li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-
-                    <%--다음으로 --%>
-                    <c:if test="${pvo.endPage >= pvo.totalPage }">
-                        <li class="disable">next</li>
-                    </c:if>
-                    <c:if test="${pvo.endPage < pvo.totalPage }">
-                        <li>
-                            <a href="pjnotice?cPage=${pvo.endPage + 1 }">next</a>
-                        </li>
-                    </c:if>
-                </ol>
-            </td>
-        </tr>
-        </tfoot>
     </table>
-    <form method="post">
-        <%--공지사항 작성--%>
-        <a type="button" class="btn btn-primary" href="pj_notice/write_notice.jsp">공지사항 작성</a>
-    </form>
+</div>
+
+<div class="page-form">
+    <c:if test="${pvo.beginPage != 1 }">
+        <button class="btn btn-outline-primary" onclick="location.href='pjnotice?cPage=${pvo.beginPage - 1}'">
+            이전
+        </button>
+    </c:if>
+    <c:if test="${pvo.beginPage == 1}">
+        <button class="btn btn-outline-primary" onclick="alert('이전 페이지가 없습니다');">이전</button>
+    </c:if>
+
+    <c:forEach var="pageNo" begin="${pvo.beginPage }" end="${pvo.endPage }">
+        <c:choose>
+            <c:when test="${pageNo == pvo.nowPage  }"> <%--현재 페이지랑 누른 페이지 같으면 링크처리x --%>
+                <a class="now">${pageNo }</a>
+            </c:when>
+            <c:otherwise>
+                <a href="pjnotice?cPage=${pageNo}">${pageNo}</a> <%--현재 페이지랑 누른 페이지 다르면 링크처리 --%>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+
+    <c:if test="${pvo.endPage < pvo.totalPage }">
+        <button class="btn btn-outline-primary" onclick="location.href='pjnotice?cPage=${pvo.endPage+1}'">
+            다음
+        </button>
+    </c:if>
+    <c:if test="${pvo.endPage >= pvo.totalPage }">
+        <button class="btn btn-outline-primary" onclick="alert('다음 페이지가 없습니다');">다음</button>
+    </c:if>
+</div>
+
+<%--<div class="page-form">--%>
+<%--    <ol class="paging">--%>
+<%--        &lt;%&ndash;이전으로 &ndash;%&gt;--%>
+<%--        <c:if test="${pvo.beginPage == 1 }"> <!-- 시작페이지가 1일 경우 비활성화 -->--%>
+<%--            <li class="disable">prev</li>--%>
+<%--        </c:if>--%>
+<%--        <c:if test="${pvo.beginPage != 1 }">--%>
+<%--            <li>--%>
+<%--                <a href="pjnotice?cPage=${pvo.beginPage - 1}">prev</a>--%>
+<%--            </li>--%>
+<%--        </c:if>--%>
+
+<%--블록 내 표시할 페이지 태그 작성 --%>
+<%--        <c:forEach var="pageNo" begin="${pvo.beginPage }" end="${pvo.endPage }">--%>
+<%--            <c:choose>--%>
+<%--                <c:when test="${pageNo == pvo.nowPage  }"> &lt;%&ndash;현재 페이지랑 누른 페이지 같으면 링크처리x &ndash;%&gt;--%>
+<%--                    <li class="now">${pageNo }</li>--%>
+<%--                </c:when>--%>
+<%--                <c:otherwise>--%>
+<%--                    <li>--%>
+<%--                        <a href="pjnotice?cPage=${pageNo}">${pageNo}</a> &lt;%&ndash;현재 페이지랑 누른 페이지 다르면 링크처리 &ndash;%&gt;--%>
+<%--                    </li>--%>
+<%--                </c:otherwise>--%>
+<%--            </c:choose>--%>
+<%--        </c:forEach>--%>
+
+<%--        &lt;%&ndash;다음으로 &ndash;%&gt;--%>
+<%--        <c:if test="${pvo.endPage >= pvo.totalPage }">--%>
+<%--            <li class="disable">next</li>--%>
+<%--        </c:if>--%>
+<%--        <c:if test="${pvo.endPage < pvo.totalPage }">--%>
+<%--            <li>--%>
+<%--                <a href="pjnotice?cPage=${pvo.endPage + 1 }">next</a>--%>
+<%--            </li>--%>
+<%--        </c:if>--%>
+<%--    </ol>--%>
+<%--</div>--%>
+
+<div class="write-button">
+    <c:if test="${login != null}">
+        <c:if test="${!empty param.p || !empty param.f}">
+            <h2>
+                <button onclick="location.href='write?p=${param.p}&f=${param.f}&q=${param.q}'" type="button"
+                        class="btn btn-primary btn-lg">공지사항 작성
+                </button>
+            </h2>
+        </c:if>
+        <c:if test="${empty param.p && empty param.f}">
+            <h2>
+                <button onclick="location.href='pj_notice/write_notice.jsp'" type="button"
+                        class="btn btn-primary btn-lg">공지사항 작성
+                </button>
+            </h2>
+        </c:if>
+    </c:if>
+    <c:if test="${login == null}">
+        <h2>
+            <button onclick="alert('로그인 후 이용 가능합니다.');" type="button" class="btn btn-primary btn-lg">공지사항 작성</button>
+        </h2>
+    </c:if>
 </div>
 
 <%--footer--%>
 <footer id="footer">
-<%@ include file="/WEB-INF/views/bit/html/footer.jsp" %>
+    <%@ include file="/WEB-INF/views/bit/html/footer.jsp" %>
 </footer>
 </body>
 </html>

@@ -5,8 +5,8 @@
 <html>
 <head>
     <title>자료 게시판</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -62,6 +62,16 @@
             table-layout: fixed;
             word-break: break-all;
         }
+
+        footer {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+        }
+
     </style>
 </head>
 
@@ -91,7 +101,7 @@
                     <a class="nav-link" href="">공지사항 게시판</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">프로젝트 게시판</a>
+                    <a class="nav-link" href="http://localhost:8080/pjnotice">프로젝트 게시판</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="list">자료 게시판</a>
@@ -102,8 +112,8 @@
                 <c:choose>
                     <c:when test="${login != null }">
                         <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/u/controller?type=out"
-                               onclick="return confirm('로그아웃?');">${login}님 로그아웃</a>
+                            <a class="nav-link" href="http://localhost:8080/u/login.jsp"
+                               onclick="return confirm('로그아웃 하시겠습니까?');">${login}님 로그아웃</a>
                         </li>
                     </c:when>
                     <c:when test="${login == null }">
@@ -134,7 +144,6 @@
         <div class="form-group">
             <button class="btn btn-outline-dark" type="submit">검색</button>
         </div>
-
     </form>
 </div>
 
@@ -227,12 +236,15 @@
         <button class="btn btn-outline-primary" onclick="alert('다음 페이지가 없습니다');">다음</button>
     </c:if>
 </div>
+
 <div style="text-align: right">
     <span>${(empty param.p)?1:param.p} / ${lastNum!=0?lastNum:1} 페이지</span>
 </div>
 
 <%--footer--%>
-<%@ include file="../html/footer.jsp" %>
+<footer>
+    <%@ include file="../html/footer.jsp" %>
+</footer>
 </body>
 </html>
 
