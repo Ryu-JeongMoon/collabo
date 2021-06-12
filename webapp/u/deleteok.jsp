@@ -8,15 +8,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입완료화면</title>
+<title>탈퇴완료화면</title>
 <script>
-alert("회원가입이 정상 처리 되었습니다.");
+alert("회원탈퇴가 정상 처리 되었습니다.");
 location.href="${contextPath }/login.jsp";
 </script>
 </head>
 <body>
-	
- 
+
+
 
 </body>
 </html>
