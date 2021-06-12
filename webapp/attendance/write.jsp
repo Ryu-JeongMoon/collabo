@@ -12,76 +12,121 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
 	<meta charset="UTF-8">
 	<title>글쓰기</title>
+	<style>
+    * {
+        font-family: NanumGothic, 'Malgun Gothic';
+    }
+    .col {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 10px;
+        align-items: center;
+    }
+    .col button {
+        padding: 10px;
+        margin: 2px;
+    }
+    footer {
+        position: relative;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        padding: 15px 0;
+        text-align: center;
+    }
+</style>
 </head>
 <body>
+<%--navbar--%>
 <%@include file ="navbar.jsp" %>
-
 <div class="container">
 	<div class="py-5 text-center">
-		<form method="post" action="writeAction.jsp">
+        <h2>글 작성</h2>
+    </div>
+	<form method="post" action="writeAction.jsp">
 <!-- 		post를 해줘야 화면에 안 보이고 보내진다..? -->
-			<table class="table table-hover" border="1">
-			<thead>
-				<tr>
-					<th colspan="2" style="background-color: #eee; text-align: center;">글쓰기 </th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="table-active">
-					<th scope="row">분류</th>
-					<td>
-						<div class="form-group" style="text-align: center; margin: 0 auto;">
-							<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-								<input type="radio" class="btn-check" name="a_type" id="sick" autocomplete="off" value="병결" checked>
-  									<label class="btn btn-outline-primary" for="sick">병결</label>
-								<input type="radio" class="btn-check" name="a_type" id="half" autocomplete="off" checked="" value="조퇴">
-  									<label class="btn btn-outline-primary" for="half">조퇴</label>
-								<input type="radio" class="btn-check" name="a_type" id="job" autocomplete="off" checked="" value="취업활동">
-  									<label class="btn btn-outline-primary" for="job">취업활동</label>
-								<input type="radio" class="btn-check" name="a_type" id="untact" autocomplete="off" checked="" value="비대면">
-  									<label class="btn btn-outline-primary" for="untact">비대면</label>
-							</div>
+		<table class="table table-hover" border="1">
+		<thead>
+			<tr>
+<!-- 				<th colspan="2" style="background-color: #eee; text-align: center;">글쓰기 </th> -->
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="table-active">
+				<th scope="row">분류</th>
+				<td>
+					<div class="form-group" style="text-align: center; margin: 0 auto;">
+						<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+							<input type="radio" class="btn-check" name="a_type" id="sick" autocomplete="off" value="병결" checked>
+ 									<label class="btn btn-outline-primary" for="sick">병결</label>
+							<input type="radio" class="btn-check" name="a_type" id="half" autocomplete="off" checked="" value="조퇴">
+ 									<label class="btn btn-outline-primary" for="half">조퇴</label>
+							<input type="radio" class="btn-check" name="a_type" id="job" autocomplete="off" checked="" value="취업활동">
+ 									<label class="btn btn-outline-primary" for="job">취업활동</label>
+							<input type="radio" class="btn-check" name="a_type" id="untact" autocomplete="off" checked="" value="비대면">
+ 									<label class="btn btn-outline-primary" for="untact">비대면</label>
 						</div>
-					<td>
-				</tr>
-				<tr>
-					<td style="width: 110px"><h5>글 제목</h5></td>
-					<td><input type="text" class = "form-control" placeholder="글 제목" name="a_title" maxlength="50" ></td>
-				</tr>
-				<tr>
-					<td style="width: 110px"><h5>글쓴이</h5></td>
-					<td><input type="text" class = "form-control" placeholder="글쓴이" name="a_writer" maxlength="50" ></td>
-				</tr>
-				
-				<tr>
-					<td style="width: 110px"><h5>글 내용</h5></td>
-					<td><textarea class = "form-control" placeholder="글 내용" name="a_content" maxlength="2048" style="height : 350px"><c:out value="${a_content}" /> </textarea></td>
-				</tr>
-				<tr>
-					<td style="width: 110px">첨부파일</td>
-					<td>
-					  <div class="form-group">
-					      <input class="form-control" type="file" id="file" name="file_name">
-					  </div>
-					 </td>
-					 
-				</tr>
-<!-- 				각각 tr에 넣어줘야 위 아래로 글쓰는 표가 된다 -->
-
-			</tbody>
-			</table>
-			<button type="submit" class="btn btn-info" value="글쓰기">글쓰기 완료</button>
-<!-- 			<input type="submit" href="writeAction.jsp" class="btn btn-primary pull-right" value="글쓰기"> -->
-			<input type="button" class="btn btn-secondary" value="뒤로 가기" onclick="go_back()">
-			
-		</form>
+					</div>
+				<td>
+			</tr>
+            <tr class="table-active">
+            	<th scope="row">제목</th>
+				<td>
+					<div class="form-group">
+                        <fieldset>
+                            <input class="form-control" id="a_title" name="a_title" type="text" >
+                        </fieldset>
+                    </div>
+				</td>
+			</tr>
+            <tr class="table-active">
+                <th scope="row">글쓴이</th>
+				<td>
+					<div class="form-group">
+                        <fieldset>
+                            <input class="form-control" name="a_writer" id="a_writer" value="${login}" 
+                                   type="text">
+                        </fieldset>
+                    </div>
+				</td>
+			</tr>
+            <tr class="table-active">
+                <th scope="row">내용</th>
+                <td>
+                    <div class="form-group">
+                        <fieldset>
+                            <input class="form-control" id="a_content" name="a_content" type="text"  placeholder="글 내용"
+                             maxlength="2048" style="height : 200px">
+                        </fieldset>
+                    </div>
+                </td>
+				<td>
+			</tr>
+            <tr class="table-active">
+                <th scope="row">첨부파일</th>
+				<td>
+				  <div class="form-group">
+				      <input class="form-control" type="file" id="file" name="file_name">
+				  </div>
+				</td>
+			</tr>
+		</tbody>
+		</table>
+		<div class="row">
+            <div class="col">
+				<button type="submit" onclick="location.href='writeAction.jsp'" class="btn btn-info btn-lg" value="글쓰기">글쓰기 완료</button>
+				<button class="btn btn-danger btn-lg"
+                        onclick="alert('입력 내용은 저장되지 않습니다. 다시 입력하시겠습니까?')"
+                        type="reset">다시 입력
+                </button>
+                <button class="btn btn-secondary btn-lg"
+                            onclick="location.href='list.jsp'"
+                            type="button">목록으로
+                </button>
+			</div>
 		</div>
-	</div>
-	<script>
-	function go_back() {
-// 		alert("go_back 함수 실행 중");
-		location.href="list.jsp";
-	}
-	</script>
+	</form>
+</div>
 </body>
 </html>
