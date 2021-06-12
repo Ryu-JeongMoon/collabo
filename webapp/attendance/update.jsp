@@ -5,17 +5,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewpoint" content="width=device-width", initial-scale="1">
-	<link rel="stylesheet" href="css/bootstrap.css">
 	<meta charset="UTF-8">
+	<meta name="viewpoint" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css" 
+				integrity="undefined" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
 	<title>수정화면</title>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	
 	<script>
-		function go_back() {
-			history.back();
-		}
-		
 		//radio value값 가지고 오기  ????모르겠음
 		function getRadioValue(){
 			var a_type = $('#a_type').val();
@@ -29,24 +28,33 @@
 	</script>
 </head>
 <body>
-<%@include file ="header.jsp" %>
+<%@include file ="navbar.jsp" %>
 
-<h2>글 수정화면</h2>
-	<hr>
-<div id="container">
-	
-	<div class="row">
-		<form method="post" action="updateAction.jsp?a_idx=${AttVO.a_idx }">
+<div class="container">
+	 <div class="py-5 text-center">
+	        <h2>글 수정</h2>
+	 </div>
+	<form method="post" action="updateAction.jsp?a_idx=${AttVO.a_idx }">
 <!-- 		post를 해줘야 화면에 안 보이고 보내진다..? -->
-			<table class="table table-striped" style="text-align: center; border: 1px solid #ddd">
+		<table class="table table-hover" border="1">
 			<thead>
 				<tr>
-					<th colspan="2" style="background-color: #eee; text-align: center;">글쓰기 </th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>분류</td>
+				<tr class="table-active">
+					<th scope="row">글 제목</th>
+					<td>
+						<div class="form-group">
+	                        <fieldset>
+	                            <input class="form-control" name="a_title" type="text"
+	                                   value="${AttVO.a_title }">
+	                        </fieldset>
+	                    </div>
+					</td>
+				</tr>
+				<tr class="table-active">
+					<th scope="row">분류</th>
 					<td>
 						<input type="hidden" id="a_type" name="a_type" value="${AttVO.a_type}" />
 						<div class="form-group" style="text-align: center; margin: 0 auto;" >
@@ -67,38 +75,77 @@
 						</div>
 					</td>
 				</tr>
-				<tr>
-					<th style="width: 120px">글 제목</th>
-					<td><input type="text" class = "form-control" value="${AttVO.a_title }" name="a_title" maxlength="50" ></td>
+				<tr class="table-active">
+					<th scope="row">작성자</th>
+					<td>
+	                    <div class="form-group">
+	                        <fieldset>
+	                            <input class="form-control" id="a_writer" name="a_writer" type="text"
+	                                   value="${AttVO.a_writer }">
+	                        </fieldset>
+	                    </div>
+                	</td>
 				</tr>
-				<tr>
-					<th style="width: 120px">작성자</th>
-					<td><input type="text" class = "form-control" value="${AttVO.a_writer }" name="a_writer" maxlength="50" ></td>
+				<tr class="table-active">
+					<th scope="row">글 내용</th>
+						<td>
+		                    <div class="form-group">
+		                        <fieldset>
+		                            <input class="form-control" id="post_content" name="a_content" type="text"
+		                                   value='${AttVO.a_content }' maxlength="2048" style="height : 200px">
+		                        </fieldset>
+		                    </div>
+		                </td>
 				</tr>
-				<tr>
-					<th style="width: 120px">글 내용</th>
-					<td><textarea class = "form-control"  name="a_content" maxlength="2048" style="height : 350px"><c:out value='${AttVO.a_content }' escapeXml="false" /></textarea></td>
-				</tr>
-				<tr>
-					<td style="width: 110px">첨부파일</td>
+				<tr class="table-active">
+					<td scope="row">첨부파일</td>
 					<td>
 					  <div class="form-group">
 					      <input class="form-control" type="file" id="formFile">
 					  </div>
-					 </td>
+					</td>
 					 
 				</tr>
 <!-- 				각각 tr에 넣어줘야 위 아래로 글쓰는 표가 된다 -->
 			</tbody>
-			</table>
-			<input type="submit" href="updateAction.jsp" class="btn btn-warning" value="수정 완료">
-			<input type="button" class="btn btn-secondary" value="뒤로 가기" onclick="go_back()">
-			
-		</form>
-		</div>
-	</div>
-
-
+		</table>
+		<div class="row" align="center">	
+			<div class="col">
+				<button class="btn btn-primary btn-lg"
+                        onclick="location.href='updateAction.jsp'"
+                        type="submit">완료
+                </button>
+                <button class="btn btn-danger btn-lg"
+                        onclick="alert('입력한 내용을 삭제합니다. 다시 입력 해주세요.');"
+                        type="reset">취소
+                </button>
+<%--                 <c:if test="${!empty pvo.nowPage}"> --%>
+<!-- 	                <button class="btn btn-secondary btn-lg" -->
+<%-- 	                        onclick="location.href='list?p=${param.p}&f=${param.f}&k=${param.k}'" --%>
+<!-- 	                        type="button">목록으로 -->
+<!-- 	                </button> -->
+<%--                 </c:if> --%>
+                <c:if test="${empty pvo.nowPage}">
+                    <button class="btn btn-secondary btn-lg"
+                            onclick="location.href='list.jsp'"
+                            type="button">목록으로
+                    </button>
+                </c:if>
+			</div>
+		</div>	
+	</form>
+</div>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

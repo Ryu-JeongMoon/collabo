@@ -233,7 +233,7 @@
 	}
 %>
 	<h2 class="text-center" style="margin: 20px">출결 신청 목록</h2>
-	<div class="content-container">
+	<div class="content-container"  style="margin: 20px"> 
 		<table class="table table-hover" border="1">
 			<thead>
 				<tr>
@@ -244,7 +244,6 @@
 					<th scope="col">작성일</th>
 					<th scope="col">수정일</th>
 					<th scope="col">확인 상태</th>
-					
 				</tr>
 			</thead>
 
@@ -284,14 +283,18 @@
 	</div>		
 <!-- 글쓰기 -->
 	<div class="write-button">
-	
+		<h2>
+             <button onclick="location.href='write.jsp'" type="button"
+                     class="btn btn-primary btn-lg">글 쓰기
+             </button>
+         </h2>
 	</div>
 			
 <!-- paging-->
 	<div class="page-form">
 		<!--[이전페이지] -->
 		<c:if test="${pvo.beginPage == 1 }">
-			<button class="btn btn-outline-primary" onclick="alert('이전 페이지가 없습니다');">
+			<button class="btn btn-outline-primary" onclick="alert('이전 페이지가 없습니다');" disabled>
 				이전
 			</button>
 		</c:if>
@@ -325,6 +328,8 @@
 	    <span>${(empty pvo.nowPage)?1:pvo.nowPage} / ${pvo.endPage!=0?pvo.totalPage:1} 페이지</span>
 	</div>	
 		
-<%@include file ="footer.jsp" %>
+<footer>
+    <%@ include file="footer.jsp" %>
+</footer>
 </body>
 </html>

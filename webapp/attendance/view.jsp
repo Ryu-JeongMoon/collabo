@@ -27,7 +27,7 @@
 // 	}
 
 	//줄바꿈 + taglib prefix="fn"도 해줘야함 
-	pageContext.setAttribute("br", "<br/>");
+	pageContext.setAttribute("br", "<br>");
 	pageContext.setAttribute("cn", "\n");
 
 %>
@@ -60,7 +60,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewpoint" content="width=device-width, initial-scale=1">
+	<meta name="viewpoint" content="width=device-width, initial-scale="1">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css" 
 				integrity="undefined" crossorigin="anonymous">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -87,11 +87,10 @@
 </head>
 <body>
 <%@include file ="navbar.jsp" %>
-
-<h2 class="text-center">상세화면</h2>
-<hr>
 <div class="container">
 	<div class="py-5 text-center">
+		<h2>글 상세보기</h2>
+	</div>
 	<form method="post" action="download.jsp" >
 		<table class="table table-hover" border="1">
 		<thead>
@@ -105,7 +104,7 @@
 				<td>
 					<div class="form-group">
                         <fieldset>
-                            <input class="form-control" name="post_no" id="post_no" type="text" value="${AttVO.a_title }"
+                            <input class="form-control" name="a_title" id="a_title" type="text" value="${AttVO.a_title }"
                                    readonly="">
                         </fieldset>
                     </div>
@@ -116,7 +115,7 @@
 				<td>
 					<div class="form-group">
                         <fieldset>
-                            <input class="form-control" name="post_no" id="post_no" type="text" value="${AttVO.a_type }"
+                            <input class="form-control" name="a_type" id="a_type" type="text" value="${AttVO.a_type }"
                                    readonly="">
                         </fieldset>
                     </div>
@@ -127,7 +126,7 @@
 				<td>
 					<div class="form-group">
                         <fieldset>
-                            <input class="form-control" name="post_no" id="post_no" type="text" value="${AttVO.a_writer }"
+                            <input class="form-control" name="a_writer" id="a_writer" type="text" value="${AttVO.a_writer }"
                                    readonly="">
                         </fieldset>
                     </div>
@@ -138,7 +137,7 @@
 				<td>
 					<div class="form-group">
                         <fieldset>
-                            <input class="form-control" name="post_no" id="post_no" type="text" value="${AttVO.write_date }"
+                            <input class="form-control" name="write_date" id="write_date" type="text" value="${AttVO.write_date }"
                                    readonly="">
                         </fieldset>
                     </div>
@@ -149,7 +148,7 @@
 				<td>
 					<div class="form-group" style="height:200px">
                         <fieldset>
-                            <input class="form-control" name="post_no" id="post_no" type="text" value="${fn:replace(AttVO.a_content, cn, br)}"
+                            <input class="form-control" name="write_date" id="write_date" type="text" value="${fn:replace(AttVO.a_content, cn, br)}"
                                    readonly=""  style="height:200px">
                         </fieldset>
                     </div>
@@ -158,13 +157,15 @@
 			<tr class="table-active">
 				<th>첨부 파일</th>
 				<td>
-                    <div class="form-group">
-                        <fieldset>
-                            <input class="form-control" name="reg_date" id="reg_date" type="text"
-                                    pattern="yyyy.MM.dd  hh:mm:ss" value="업로드된 파일.jpg">
-                                  
-                        </fieldset>
-                    </div>
+					<div align="center">
+						<a style="text-align:left; ">업로드된 파일.jpg</a>
+					</div>
+<!--                     <div class="form-group"> -->
+<!--                         <fieldset> -->
+<!--                             <input class="form-control" name="reg_date" id="reg_date" type="text" -->
+<!--                                     pattern="yyyy.MM.dd  hh:mm:ss" value="업로드된 파일.jpg"> -->
+<!--                         </fieldset> -->
+<!--                     </div> -->
                 </td>
 <%-- 				<td colspan="2">${AttVO.file_name } --%>
 <%-- 				<a href = "download.jsp?path=upload&name=<%=mr.getFilesystemName("file_name")%>"> --%>
@@ -184,20 +185,20 @@
 			</tr>
 		</tbody>
 		</table>
-		
-		<button class="btn btn-primary btn-lg" onclick="update_go(this.form)" type="button">
-			수정
-        </button>
-		<button class="btn btn-danger btn-lg" onclick="delete_go(this.form)" type="button">
-			삭제
-        </button>
-		<button class="btn btn-secondary btn-lg" onclick="location.href='list.jsp'" type="button">
-			목록
-        </button>
+		<div class="col" align="center">
+			<button class="btn btn-primary btn-lg" onclick="update_go(this.form)" type="button">
+				수정
+	        </button>
+			<button class="btn btn-danger btn-lg" onclick="delete_go(this.form)" type="button">
+				삭제
+	        </button>
+			<button class="btn btn-secondary btn-lg" onclick="location.href='list.jsp'" type="button">
+				목록
+	        </button>
+	    </div>
 	</form>
-	</div>
-
 </div>
+
 
 
 
