@@ -3,7 +3,7 @@
 <%@page import="com.servlet.attendance.vo.AttVO"%>
 <%@page import="com.servlet.attendance.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -59,83 +59,141 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewpoint" content="width=device-width", initial-scale="1">
-<link rel="stylesheet" href="css/bootstrap.css">
-<title>상세 페이지 화면</title>
-<script>
-	function update_go(frm){
-		frm.action = "update.jsp";
-		frm.submit();
-	}
-	function delete_go(frm){
-		frm.action = "delete.jsp";
-		frm.submit();
-	}
-	
-</script>
+	<meta charset="UTF-8">
+	<meta name="viewpoint" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css" 
+				integrity="undefined" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+	<title>상세 페이지 화면</title>
+	<script>
+		function update_go(frm){
+			frm.action = "update.jsp";
+			frm.submit();
+		}
+		function delete_go(frm){
+			confirm("정말로 삭제하시겠습니까?")
+			if (true) {
+				frm.action = "deleteAction.jsp?a_idx=${a_idx }";
+				frm.submit();
+			} else {
+				history.back();
+			}
+			
+		}
+		
+	</script>
 
 </head>
 <body>
+<%@include file ="navbar.jsp" %>
+
 <h2 class="text-center">상세화면</h2>
 <hr>
 <div class="container">
-	<div class="row">
-	<form method="post" action="download.jsp" enctype="multipart/form-data">
-		<table class="table table-striped">
+	<div class="py-5 text-center">
+	<form method="post" action="download.jsp" >
+		<table class="table table-hover" border="1">
 		<thead>
 			<tr>
-				<th colspan="3">게시판 글 보기</th>
+				<th colspan="3" style="background-color: #325d88; color:white; text-align: center;" >게시판 글 보기</th>
 			</tr>		
 		</thead>
 		<tbody>
-			<tr>
-				<td>글 제목</td>
-				<td><c:out value='${AttVO.a_title }' escapeXml="false" /></td>
+			<tr class="table-active">
+				<th scope="row">글 제목</th>
+				<td>
+					<div class="form-group">
+                        <fieldset>
+                            <input class="form-control" name="post_no" id="post_no" type="text" value="${AttVO.a_title }"
+                                   readonly="">
+                        </fieldset>
+                    </div>
+				</td>
 			</tr>
-			<tr>
-				<td>분류</td>
-				<td colspan="2">${AttVO.a_type }</td>
+			<tr class="table-active">
+				<th scope="row">분류</th>
+				<td>
+					<div class="form-group">
+                        <fieldset>
+                            <input class="form-control" name="post_no" id="post_no" type="text" value="${AttVO.a_type }"
+                                   readonly="">
+                        </fieldset>
+                    </div>
+				</td>
 			</tr>
-			<tr>
-				<td>글쓴이</td>
-				<td colspan="2">${AttVO.a_writer }</td>
+			<tr class="table-active">
+				<th scope="row">글쓴이</th>
+				<td>
+					<div class="form-group">
+                        <fieldset>
+                            <input class="form-control" name="post_no" id="post_no" type="text" value="${AttVO.a_writer }"
+                                   readonly="">
+                        </fieldset>
+                    </div>
+				</td>
 			</tr>
-			<tr>
-				<td>작성일</td>
-				<td colspan="2">${AttVO.write_date }</td>
+			<tr class="table-active">
+				<th scope="row">작성일</th>
+				<td>
+					<div class="form-group">
+                        <fieldset>
+                            <input class="form-control" name="post_no" id="post_no" type="text" value="${AttVO.write_date }"
+                                   readonly="">
+                        </fieldset>
+                    </div>
+				</td>
 			</tr>
-			<tr>
-				<td style="height : 200px">글 내용</td>
-<%-- 				<td colspan='2'><c:out value="${AttVO.a_content }" escapeXml="false"/></td> --%>
-				<td colspan='2'>${fn:replace(AttVO.a_content, cn, br)}</td>
+			<tr class="table-active">
+				<th scope="row">글 내용</th>
+				<td>
+					<div class="form-group" style="height:200px">
+                        <fieldset>
+                            <input class="form-control" name="post_no" id="post_no" type="text" value="${fn:replace(AttVO.a_content, cn, br)}"
+                                   readonly=""  style="height:200px">
+                        </fieldset>
+                    </div>
+				</td>
 			</tr>
-			<tr>
-				<td>첨부 파일</td>
-				<td colspan="2">업로드된 파일.jpg</td>
+			<tr class="table-active">
+				<th>첨부 파일</th>
+				<td>
+                    <div class="form-group">
+                        <fieldset>
+                            <input class="form-control" name="reg_date" id="reg_date" type="text"
+                                    pattern="yyyy.MM.dd  hh:mm:ss" value="업로드된 파일.jpg">
+                                  
+                        </fieldset>
+                    </div>
+                </td>
 <%-- 				<td colspan="2">${AttVO.file_name } --%>
 <%-- 				<a href = "download.jsp?path=upload&name=<%=mr.getFilesystemName("file_name")%>"> --%>
 <%-- 					다운로드할 파일(<%=mr.getOriginalFileName("file_name") %>)</a> --%>
 <!-- 				</td> -->
 
 			</tr>
-			<tr>
-				<td>확인 여부</td>
-				<td colspan="2"><button type="button" class="btn btn-outline-success">${AttVO.status }</button></td>
-<%-- 				<td colspan="2">${AttVO.status }</td> --%>
+			<tr class="table-active">
+				<th >확인 여부</th>
+				<td>
+                    <div class="form-group">
+                        <fieldset>
+                           <button type="button" class="btn btn-outline-primary form-control">${AttVO.status }</button>
+                        </fieldset>
+                    </div>
+                </td>
 			</tr>
 		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="2">
-					<a type="button" class="btn btn-primary" href="list.jsp">목록</a>
-					<button type="button" class="btn btn-warning" onclick="update_go(this.form)">수정</button>
-					<a type="button" class="btn btn-danger" onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?a_idx=${a_idx }">삭제</a>
-				</td>
-			</tr>
-		</tfoot>
 		</table>
-	
+		
+		<button class="btn btn-primary btn-lg" onclick="update_go(this.form)" type="button">
+			수정
+        </button>
+		<button class="btn btn-danger btn-lg" onclick="delete_go(this.form)" type="button">
+			삭제
+        </button>
+		<button class="btn btn-secondary btn-lg" onclick="location.href='list.jsp'" type="button">
+			목록
+        </button>
 	</form>
 	</div>
 

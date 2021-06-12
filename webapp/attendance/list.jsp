@@ -5,7 +5,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.servlet.attendance.vo.AttVO"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%-- 현재 페이지에 표시할 데이터를 화면에 표시
@@ -89,52 +89,143 @@
 <head>
 	<meta charset="UTF-8">
 	<title>출결 목록 보기</title>
-	<meta name="viewpoint" content="width=device-width", initial-scale="1">
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/custom.css">
+	<meta name="viewpoint" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css" 
+				integrity="undefined" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+   	<style type="text/css">
+        * {
+            font-family: NanumGothic, 'Malgun Gothic';
+        }
+
+        .-text-highlight {
+            color: #0f0f0f;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        a:link {
+            text-decoration: none;
+        }
+
+        a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .search-form {
+            text-align: right;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .page-form {
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .write-button {
+            text-align: right;
+            margin-right: 50px;
+        }
+
+        ul li {
+            list-style-type: none;
+        }
+
+        table {
+            table-layout: fixed;
+            word-break: break-all;
+        }
+    </style>
+    <script>
+   var btn;
+   //버튼 비활성화 --실패
+   function btn_off() {
+	   confirm('확인하셨습니까?');
+	   if (true) {
+		   btn = $('.oxbtn');
+		   btn.disabled = 'disabled';
+		   btn.addClass('okay');
+	   }
+   }
+    </script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<%--navbar--%>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbarResponsive">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">BIIT</a>
+        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02"
+                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Home
-            <span class="visually-hidden">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Separated link</a>
-          </div>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <input class="form-control me-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
+        <div class="navbar-collapse collapse" id="navbarColor02">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="">HOME
+                        <span class="visually-hidden">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">공지사항 게시판</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost:8080/pjnotice">프로젝트 게시판</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="list">자료 게시판</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">일정 관리</a>
+                </li>
+                <c:choose>
+                    <c:when test="${login != null }">
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://localhost:8080/u/login.jsp"
+                               onclick="return confirm('로그아웃 하시겠습니까?');">${login}님 로그아웃</a>
+                        </li>
+                    </c:when>
+                    <c:when test="${login == null }">
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://localhost:8080/u/login.jsp">로그인</a>
+                        </li>
+                    </c:when>
+                </c:choose>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
+
+<%--Search Form--%>
+<div class="container-fluid search-form">
+    <form class="d-flex">
+        <div class="form-group">
+            <legend class="hidden">공지사항 검색 필드</legend>
+            <label class="hidden">검색분류</label>
+            <select class="form-select" name="f">
+                <option value="a_title" selected>제목</option>
+                <option value="a_writer">작성자</option>
+                <option value="a_writer">내용</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input class="form-control me-sm-2" type="text" name="k"  placeholder="검색어 입력">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-outline-dark" type="submit">검색</button>
+        </div>
+    </form>
+</div>
+
 <%
 	int pageNumber = 1;
 	if(request.getParameter("pageNumber") != null) {
@@ -142,57 +233,43 @@
 	}
 %>
 	<h2 class="text-center" style="margin: 20px">출결 신청 목록</h2>
-	<div id="container">
-		<table class="table table-striped" style="text-align: center; border: 1px solid #ddd">
+	<div class="content-container">
+		<table class="table table-hover" border="1">
 			<thead>
 				<tr>
-					<th>글 번호</th>
-					<th>분류</th>
-<!-- 					<th> -->
-<!-- 						<ul class="nav nav-pills"> -->
-<!-- 							 <li class="nav-item dropdown"> -->
-<!-- 							    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">분류</a> -->
-<!-- 							    <div class="dropdown-menu show" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(0px, 42px);" data-popper-placement="bottom-start"> -->
-<!-- 							      <a class="dropdown-item" href="#">병결</a> -->
-<!-- 							      <a class="dropdown-item" href="#">조퇴</a> -->
-<!-- 							      <a class="dropdown-item" href="#">취업활동</a> -->
-<!-- 							      <div class="dropdown-divider"></div> -->
-<!-- 							      <a class="dropdown-item" href="#">비대면</a> -->
-<!-- 							    </div> -->
-<!-- 							  </li> -->
-<!-- 						</ul> -->
-<!-- 					</th> -->
-					<th style="width: 30%;">제목</th>
-					<th>글쓴이</th>
-					<th>작성일</th>
-					<th>수정일</th>
-					<th>확인 상태</th>
+					<th scope="col">글 번호</th>
+					<th scope="col">분류</th>
+					<th scope="col" style="width: 30%;">제목</th>
+					<th scope="col">글쓴이</th>
+					<th scope="col">작성일</th>
+					<th scope="col">수정일</th>
+					<th scope="col">확인 상태</th>
 					
 				</tr>
 			</thead>
 
 			<tbody>
-			<c:if test="${empty list }">
-				<tr>
-					<td colspan="7">
-						<h2>현재 등록된 게시글이 없습니다.</h2>
-					</td>
-				</tr>
-			</c:if>
+<%-- 			<c:if test="${empty list }"> --%>
+<!-- 				<tr> -->
+<!-- 					<td colspan="7"> -->
+<!-- 						<h2>현재 등록된 게시글이 없습니다.</h2> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
+<%-- 			</c:if> --%>
 			<c:if test="${not empty list }">
 				<c:forEach var="vo" items="${list }">
-					<tr>
+					<tr class="table-primary">
 						<td>${vo.a_idx }</td>
 						<td>${vo.a_type }</td>
-						<td><a href="view.jsp?a_idx=${vo.a_idx}&cPage=${pvo.nowPage}"><c:out value='${vo.a_title}' escapeXml="false"/></a></td>
+						<td><a href="view.jsp?a_idx=${vo.a_idx}&cPage=${pvo.nowPage}" class="text-info"><c:out value='${vo.a_title}' escapeXml="false"/></a></td>
 						<td>${vo.a_writer }</td>
 						<td>${vo.write_date }</td>
 						<td>${vo.mod_date }</td>
 						<c:if test="${vo.status == 1 }">
-							<td><button type="button" class="btn btn-success disabled">O</button></td>
+							<td><button type="button" class="btn btn-primary disabled oxbtn okay" >O</button></td>
 						</c:if>
 						<c:if test="${vo.status == 0 }">
-							<td><button type="button" class="btn btn-outline-success">X</button></td>
+							<td><button type="button" class="btn btn-outline-primary oxbtn" onclick="btn_off()">X</button></td>
 						</c:if>
 					</tr>
 				</c:forEach>
@@ -203,80 +280,51 @@
 <!-- 				</tr> -->
 <%-- 			</c:if> --%>
 			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="4" >
-						<ul class="pagination">
-						<c:if test="${pvo.beginPage == 1 }">
-							<li class="page-item disabled">
-								<a class="page-link">이전</a>
-							</li>
-						</c:if>
-						<c:if test="${pvo.beginPage != 1 }">
-							<li class="page-item">
-								<a class="page-link" href="list.jsp?cPage=${pvo.beginPage - 1}" >이전</a> 
-							</li>
-						</c:if>
-						<!-- 블록 내 표시할 페이지 태그 작성 -->
-						<c:forEach var="pageNo" begin="${pvo.beginPage }" end="${pvo.endPage }">
-							<c:choose>
-								<c:when test="${pageNo == pvo.nowPage }">
-									<li class="page-item active">
-										<a class="page-link">${pageNo }</a>
-									</li>
-								</c:when>
-								<c:otherwise>
-									<li class="page-item">
-										<a class="page-link" href="list.jsp?cPage=${pageNo}">${pageNo }</a>
-									</li>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-						<%--[다음으로] 사용여부 처리 --%>
-						<c:if test="${pvo.endPage >= pvo.totalPage }">
-							<li class="page-item disabled">
-								<a class="page-link">다음</a></li>
-						</c:if>
-						<c:if test="${pvo.endPage < pvo.totalPage }">
-							<li class="page-item">
-								<a class="page-link" href="list.jsp?cPage=${pvo.endPage + 1 }">다음</a>
-							</li>
-						</c:if>
-						</ul>
-					</td>
-					<td>
-<!-- 						<div> -->
-<!-- 							<form> -->
-<!-- 								<fieldset> -->
-<!-- 				                    <legend>글 검색 필드</legend>                     -->
-<!-- 				                    <label>검색분류</label> -->
-<!-- 				                        <select name = "f"> -->
-<%-- 				                            <option ${(param.f == "title")? "selected" : ""} value = "title">제목</option> --%>
-<%-- 				                            <option ${(param.f == "writer_Id")? "selected" : ""} value = "writer_Id">작성자</option> --%>
-<!-- 				                        </select> -->
-<!-- 				                    <label>검색어</label> -->
-<%-- 				                        <input type = "text" name = "q" value = "${param.q}"/> --%>
-<!-- 				                        <input type = "submit" value = "검색">                 -->
-<!-- 				                </fieldset>         -->
-<!-- 							</form>	 -->
-<!-- 						</div>	 -->
-	
-					
-						<form class="d-flex">
-					        <input class="form-control me-sm-2" type="text" placeholder="검색할 내용을 입력하세요">
-					        <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="width: 110px">검색</button>
-				     	</form>
-					</td>
-					<td>
-						
-					</td>
-					<td>
-						<a href="write.jsp" class="btn btn-info">글쓰기</a>
-					</td>
-				</tr>
-			</tfoot>
 		</table>
+	</div>		
+<!-- 글쓰기 -->
+	<div class="write-button">
+	
+	</div>
+			
+<!-- paging-->
+	<div class="page-form">
+		<!--[이전페이지] -->
+		<c:if test="${pvo.beginPage == 1 }">
+			<button class="btn btn-outline-primary" onclick="alert('이전 페이지가 없습니다');">
+				이전
+			</button>
+		</c:if>
+		<c:if test="${pvo.beginPage != 1 }">
+			<button class="btn btn-outline-primary" onclick="location.href='list.jsp?cPage=${pvo.beginPage - 1}'">
+				이전
+			</button>
+		</c:if>
+		<!--[현재페이지] -->
+		<c:forEach var="pageNo" begin="${pvo.beginPage }" end="${pvo.endPage }">
+			<c:choose>
+				<c:when test="${pageNo == pvo.nowPage }">
+					${pageNo }
+				</c:when>
+				<c:otherwise>
+					<a class="-text-highlight text-info" href="list.jsp?cPage=${pageNo}">${pageNo }</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
 		
-
+		<%--[다음으로] 사용여부 처리 --%>
+		<c:if test="${pvo.endPage >= pvo.totalPage }">
+			<button class="btn btn-outline-primary" onclick="alert('다음 페이지가 없습니다');">다음</button>
+		</c:if>
+		<c:if test="${pvo.endPage < pvo.totalPage }">
+			<button class="btn btn-outline-primary" onclick='location.href="list.jsp?cPage=${pvo.endPage + 1 }"'>다음</button>>
+		</c:if>
+	</div>	
+	
+	<div style="text-align: right">
+	    <span>${(empty pvo.nowPage)?1:pvo.nowPage} / ${pvo.endPage!=0?pvo.totalPage:1} 페이지</span>
+	</div>	
+		
+<%@include file ="footer.jsp" %>
 </body>
 </html>

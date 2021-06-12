@@ -1,29 +1,34 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewpoint" content="width=device-width", initial-scale="1">
-<link rel="stylesheet" href="css/bootstrap.css">
-<meta charset="UTF-8">
-<title>글쓰기</title>
+	<meta name="viewpoint" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css" 
+				integrity="undefined" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+	<meta charset="UTF-8">
+	<title>글쓰기</title>
 </head>
 <body>
+<%@include file ="navbar.jsp" %>
+
 <div class="container">
-		<div class="row">
+	<div class="py-5 text-center">
 		<form method="post" action="writeAction.jsp">
 <!-- 		post를 해줘야 화면에 안 보이고 보내진다..? -->
-			<table class="table table-striped" style="text-align: center; border: 1px solid #ddd">
+			<table class="table table-hover" border="1">
 			<thead>
 				<tr>
 					<th colspan="2" style="background-color: #eee; text-align: center;">글쓰기 </th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>분류</td>
+				<tr class="table-active">
+					<th scope="row">분류</th>
 					<td>
 						<div class="form-group" style="text-align: center; margin: 0 auto;">
 							<div class="btn-group" role="group" aria-label="Basic radio toggle button group">

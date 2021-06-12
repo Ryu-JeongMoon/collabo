@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
@@ -29,6 +29,8 @@
 	</script>
 </head>
 <body>
+<%@include file ="header.jsp" %>
+
 <h2>글 수정화면</h2>
 	<hr>
 <div id="container">
@@ -45,25 +47,25 @@
 			<tbody>
 				<tr>
 					<td>분류</td>
-					<td></td>
+					<td>
 						<input type="hidden" id="a_type" name="a_type" value="${AttVO.a_type}" />
 						<div class="form-group" style="text-align: center; margin: 0 auto;" >
 							<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
 								<input type="radio" class="btn-check" name="a_type" id="sick" autocomplete="off" 
-									${(AttVO.a_type == "sick")?"selected":""}>
+									${(AttVO.a_type eq "sick")?"checked":""}>
   									<label class="btn btn-outline-primary" for="sick">병결</label>
 								<input type="radio" class="btn-check" name="a_type" id="half" autocomplete="off" 
-									${(AttVO.a_type == "half")?"checked":""}>
+									${(AttVO.a_type eq "half")?"checked":""}>
   									<label class="btn btn-outline-primary" for="half">조퇴</label>
 								<input type="radio" class="btn-check" name="a_type" id="job" autocomplete="off" 
-									${(AttVO.a_type == "job")?"checked":""}>
+									${(AttVO.a_type eq "job")?"checked":""}>
   									<label class="btn btn-outline-primary" for="job">취업활동</label>
 								<input type="radio" class="btn-check" name="a_type" id="untact" autocomplete="off" 
-									${(AttVO.a_type == "untact")?"checked":""}>
+									${(AttVO.a_type eq "untact")?"checked":""}>
   									<label class="btn btn-outline-primary" for="untact">비대면</label>
 							</div>
 						</div>
-					<td>
+					</td>
 				</tr>
 				<tr>
 					<th style="width: 120px">글 제목</th>
