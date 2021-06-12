@@ -29,6 +29,15 @@
         padding: 10px;
         margin: 2px;
     }
+
+    footer {
+        position: relative;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        padding: 15px 0;
+        text-align: center;
+    }
 </style>
 
 <%--body--%>
@@ -137,7 +146,7 @@
                         type="button">완료
                 </button>
                 <button class="btn btn-danger btn-lg"
-                        onclick="confirm('입력한 내용은 저장되지 않습니다. 다시 입력하시겠습니까?');"
+                        onclick="alert('입력한 내용을 삭제합니다. 다시 입력 해주세요.');"
                         type="reset">취소
                 </button>
                 <c:if test="${!empty param.p}">
@@ -158,7 +167,9 @@
 </div> <!-- /container -->
 
 <%--footer--%>
+<footer>
 <%@ include file="../html/footer.jsp" %>
+</footer>
 
 <script>
     function button_event() {

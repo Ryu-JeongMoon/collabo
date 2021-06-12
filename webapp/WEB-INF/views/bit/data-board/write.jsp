@@ -25,6 +25,15 @@
         padding: 10px;
         margin: 2px;
     }
+
+    footer {
+        position: relative;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        padding: 15px 0;
+        text-align: center;
+    }
 </style>
 
 <%--body--%>
@@ -132,7 +141,9 @@
 </div>
 
 <%--footer--%>
-<%@ include file="../html/footer.jsp" %>
+<footer>
+    <%@ include file="../html/footer.jsp" %>
+</footer>
 
 <script>
     function button_event() {

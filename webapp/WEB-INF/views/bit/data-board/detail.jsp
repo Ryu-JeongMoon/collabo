@@ -1,16 +1,16 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="EUC-KR" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <meta charset="EUC-KR">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
-    <title>ªÛºº ∆‰¿Ã¡ˆ</title>
+    <title>ÏÉÅÏÑ∏ ÌéòÏù¥ÏßÄ</title>
 </head>
 <style>
     * {
@@ -31,7 +31,7 @@
     }
 
     footer {
-        position: absolute;
+        position: relative;
         left: 0;
         bottom: 0;
         width: 100%;
@@ -54,7 +54,7 @@
 
 <div class="container">
     <div class="py-5 text-center">
-        <h2>±€ ªÛºº</h2>
+        <h2>Í∏Ä ÏÉÅÏÑ∏</h2>
     </div>
     <form action="delete" method="post">
         <table class="table table-hover" border="1">
@@ -63,7 +63,7 @@
             </thead>
             <tbody>
             <tr class="table-active">
-                <th scope="row">±€ π¯»£</th>
+                <th scope="row">Í∏Ä Î≤àÌò∏</th>
                 <td>
                     <div class="form-group">
                         <fieldset>
@@ -74,7 +74,7 @@
                 </td>
             </tr>
             <tr class="table-active">
-                <th scope="row">¿€º∫¿œ</th>
+                <th scope="row">ÏûëÏÑ±Ïùº</th>
                 <td>
                     <div class="form-group">
                         <fieldset>
@@ -86,7 +86,7 @@
                 </td>
             </tr>
             <tr class="table-active">
-                <th scope="row">±€æ¥¿Ã</th>
+                <th scope="row">Í∏ÄÏì¥Ïù¥</th>
                 <td>
                     <div class="form-group">
                         <fieldset>
@@ -98,7 +98,7 @@
                 </td>
             </tr>
             <tr class="table-active">
-                <th scope="row">¡¶∏Ò</th>
+                <th scope="row">Ï†úÎ™©</th>
                 <td>
                     <div class="form-group">
                         <fieldset>
@@ -110,7 +110,7 @@
                 </td>
             </tr>
             <tr class="table-active">
-                <th>≥ªøÎ</th>
+                <th>ÎÇ¥Ïö©</th>
                 <td>
                     <%--                    <textarea name="post_content" id="post_content" cols="30" rows="10"--%>
                     <%--                              placeholder="${list.post_content}" readonly="" ></textarea>--%>
@@ -125,7 +125,7 @@
                 <%--                <td><input type="text" size="100" name="post_content"></td>--%>
             </tr>
             <tr class="table-active">
-                <th>√∑∫Œ∆ƒ¿œ</th>
+                <th>Ï≤®Î∂ÄÌååÏùº</th>
                 <td>
                     <div class="form-group">
                         <%--                        <fieldset>--%>
@@ -139,7 +139,7 @@
                 </td>
             </tr>
             <tr class="table-active">
-                <th>¡∂»∏ºˆ</th>
+                <th>Ï°∞ÌöåÏàò</th>
                 <td>
                     <div class="form-group">
                         <fieldset>
@@ -157,38 +157,38 @@
                 <c:if test="${!empty param.p}">
                     <button class="btn btn-primary btn-lg"
                             onclick="location.href='update?post_no=${list.post_no}&p=${param.p}&f=${param.f}&k=${param.k}'"
-                            type="button">ºˆ¡§
+                            type="button">ÏàòÏ†ï
                     </button>
                 </c:if>
                 <c:if test="${empty param.p}">
                     <button class="btn btn-primary btn-lg"
                             onclick="location.href='update?post_no=${list.post_no}'"
-                            type="button">ºˆ¡§
+                            type="button">ÏàòÏ†ï
                     </button>
                 </c:if>
                 <button class="btn btn-danger btn-lg"
                     <%--                onclick="location.href='delete?post_no=${list.post_no}'"--%>
                         onclick="button_event(this.form);"
                         formmethod="post"
-                        type="button">ªË¡¶
+                        type="button">ÏÇ≠Ï†ú
                 </button>
             </c:if>
             <c:if test="${login == null || login != list.writer_name}">
-                <button class="btn btn-danger btn-lg" onclick="alert('∫ª¿Œ¿Ã ¿€º∫«— ±€∏∏ ºˆ¡§«“ ºˆ ¿÷Ω¿¥œ¥Ÿ.');" type="reset">ºˆ¡§
+                <button class="btn btn-danger btn-lg" onclick="alert('Î≥∏Ïù∏Ïù¥ ÏûëÏÑ±Ìïú Í∏ÄÎßå ÏàòÏ†ïÌï† Ïàò ÏûàÏäµÎãàÎã§.');" type="button">ÏàòÏ†ï
                 </button>
-                <button class="btn btn-danger btn-lg" onclick="alert('∫ª¿Œ¿Ã ¿€º∫«— ±€∏∏ ªË¡¶«“ ºˆ ¿÷Ω¿¥œ¥Ÿ.');" type="reset">ªË¡¶
+                <button class="btn btn-danger btn-lg" onclick="alert('Î≥∏Ïù∏Ïù¥ ÏûëÏÑ±Ìïú Í∏ÄÎßå ÏÇ≠Ï†úÌï† Ïàò ÏûàÏäµÎãàÎã§.');" type="button">ÏÇ≠Ï†ú
                 </button>
             </c:if>
             <c:if test="${!empty param.p || !empty param.f}">
                 <button class="btn btn-secondary btn-lg"
                         onclick="location.href='list?p=${param.p}&f=${param.f}&k=${param.k}'"
-                        type="button">∏Ò∑œ¿∏∑Œ
+                        type="button">Î™©Î°ùÏúºÎ°ú
                 </button>
             </c:if>
             <c:if test="${empty param.p && empty param.f}">
                 <button class="btn btn-secondary btn-lg"
                         onclick="location.href='list'"
-                        type="button">∏Ò∑œ¿∏∑Œ
+                        type="button">Î™©Î°ùÏúºÎ°ú
                 </button>
             </c:if>
         </div>
@@ -200,13 +200,13 @@
     <%@ include file="../html/footer.jsp" %>
 </footer>
 
-<%--¿⁄πŸΩ∫≈©∏≥∆Æø°º≠ form ∞¥√º¥¬ πËø≠ ¡˝«’¿Ãπ«∑Œ form ∞¥√º ¡ﬂ æÓ∂≤ ∞Õ¿Œ¡ˆ ∆Ø¡§«ÿº≠ √≥∏Æ«ÿæﬂ«‘--%>
+<%--ÏûêÎ∞îÏä§ÌÅ¨Î¶ΩÌä∏ÏóêÏÑú form Í∞ùÏ≤¥Îäî Î∞∞Ïó¥ ÏßëÌï©Ïù¥ÎØÄÎ°ú form Í∞ùÏ≤¥ Ï§ë Ïñ¥Îñ§ Í≤ÉÏù∏ÏßÄ ÌäπÏ†ïÌï¥ÏÑú Ï≤òÎ¶¨Ìï¥ÏïºÌï®--%>
 <script type="text/javascript">
     function button_event(frm) {
-        if (confirm("¡§∏ª ªË¡¶«œΩ√∞⁄Ω¿¥œ±Ó??") == true) {    //»Æ¿Œ
+        if (confirm("Ï†ïÎßê ÏÇ≠Ï†úÌïòÏãúÍ≤†ÏäµÎãàÍπå??") == true) {    //ÌôïÏù∏
             //document.form[0].submit();
             frm.submit();
-        } else {   //√Îº“
+        } else {   //Ï∑®ÏÜå
             return false;
         }
     }

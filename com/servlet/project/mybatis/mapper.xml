@@ -61,7 +61,7 @@
 		SELECT * FROM (
         		SELECT ROWNUM R_NUM, PJ_NOTICE.* FROM (
         				SELECT * FROM PJ_NOTICE
-        					ORDER BY REGDATE DESC
+        					ORDER BY PJ_IDX DESC
         				)PJ_NOTICE 
 					) WHERE R_NUM BETWEEN ${begin} AND ${end}
 	</select>

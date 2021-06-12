@@ -11,6 +11,9 @@
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            crossorigin="anonymous"></script>
 
     <style type="text/css">
         * {
@@ -64,7 +67,7 @@
         }
 
         footer {
-            position: absolute;
+            position: relative;
             left: 0;
             bottom: 0;
             width: 100%;
@@ -76,10 +79,6 @@
 </head>
 
 <body>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-        crossorigin="anonymous"></script>
 
 <%--navbar--%>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbarResponsive">
@@ -115,6 +114,9 @@
                             <a class="nav-link" href="http://localhost:8080/u/login.jsp"
                                onclick="return confirm('로그아웃 하시겠습니까?');">${login}님 로그아웃</a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="http://localhost:8080/u/mypage.jsp">마이페이지</a>
+                        </li>
                     </c:when>
                     <c:when test="${login == null }">
                         <li class="nav-item">
@@ -122,10 +124,12 @@
                         </li>
                     </c:when>
                 </c:choose>
+
             </ul>
         </div>
     </div>
 </nav>
+
 
 <%--Search Form--%>
 <div class="container-fluid search-form">
@@ -237,9 +241,10 @@
     </c:if>
 </div>
 
-<div style="text-align: right">
+<div class="page-form" style="text-align: right; margin-right: 20px; font-weight: bold">
     <span>${(empty param.p)?1:param.p} / ${lastNum!=0?lastNum:1} 페이지</span>
 </div>
+<%--style="text-align: right; margin-right: 30px"--%>
 
 <%--footer--%>
 <footer>

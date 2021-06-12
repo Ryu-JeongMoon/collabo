@@ -42,6 +42,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="http://localhost:8080/u/controller?type=out" onclick="return confirm('로그아웃 하시겠습니까??');">${login}님 로그아웃</a>
                         </li>
+                        <li>
+                            <a class="nav-link" href="http://localhost:8080/u/mypage.jsp">마이페이지</a>
+                        </li>
                     </c:when>
                     <c:when test="${login == null }">
                         <li class="nav-item">
