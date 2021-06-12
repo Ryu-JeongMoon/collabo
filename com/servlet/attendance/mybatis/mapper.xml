@@ -30,33 +30,58 @@
 	</select>
 	
 	<!-- 제목으로 검색 -->
-	<select id="titleSearch" parameterType="string" resultType="AttVO">
+<!-- 	<select id="titleSearch" parameterType="string" resultType="AttVO"> -->
+<!-- 		SELECT A_IDX, A_TYPE, A_TITLE, A_WRITER, WRITE_DATE, MOD_DATE, STATUS -->
+<!-- 		    FROM ATTENDANCE  -->
+<!-- 		    WHERE A_TITLE LIKE '% #{a_title} %' -->
+<!-- 		    ORDER BY WRITE_DATE DESC -->
+<!-- 	</select> -->
+	
+	<!-- 내용으로 검색 -->
+	<select id="contentSearch" parameterType="string" resultType="AttVO">
 		SELECT A_IDX, A_TYPE, A_TITLE, A_WRITER, WRITE_DATE, MOD_DATE, STATUS
 		    FROM ATTENDANCE 
-		    WHERE A_TITLE LIKE '%다%'
+		    WHERE A_CONTENT LIKE '% #{a_content} %'
 		    ORDER BY WRITE_DATE DESC
-	
 	</select>
 	
 	<!-- 이름으로 검색 -->
 	<select id="writerSearch" parameterType="string" resultType="AttVO">
 		SELECT A_IDX, A_TYPE, A_TITLE, A_WRITER, WRITE_DATE, MOD_DATE, STATUS
 		    FROM ATTENDANCE 
-		    WHERE A_WRITER LIKE '%#{a_writer}%'
+		    WHERE A_WRITER LIKE '% #{a_writer} %'
 		    ORDER BY WRITE_DATE DESC
-	
 	</select>
+	
+	<!-- 분류로 검색 -->
+	<select id="typeSearch" parameterType="string" resultType="AttVO">
+		SELECT A_IDX, A_TYPE, A_TITLE, A_WRITER, WRITE_DATE, MOD_DATE, STATUS
+		    FROM ATTENDANCE 
+		    WHERE A_TYPE LIKE '%#{a_type}%'
+		    ORDER BY A_IDX DESC
+	</select>
+	
+	<!-- 월별로 검색 -->
+	<select id="monthSearch" parameterType="string" resultType="AttVO">
+		SELECT A_IDX, A_TYPE, A_TITLE, A_WRITER, WRITE_DATE, MOD_DATE, STATUS
+		    FROM ATTENDANCE 
+		    WHERE WRITE_DATE BETWEEN TO_DATE('2021-#{month}-01', 'yyyy-MM-dd') AND TO_DATE('2021-#{month}-31', 'yyyy-MM-dd')
+    ORDER BY WRITE_DATE DESC
+	</select>
+	
+	
+	
+	
+	
 	
 	
 	<!-- insert문 -->
 	<insert id="insert" parameterType="AttVO">
-	
 		INSERT INTO ATTENDANCE 
    		 (A_IDX, A_TITLE, A_CONTENT, A_TYPE, A_WRITER, USER_ID, WRITE_DATE, MOD_DATE, 
    		 	ORI_NAME, AVAILABLE, STATUS, FILE_NAME ) 
    			 VALUES (A_SEQ.NEXTVAL, #{a_title}, #{a_content}, #{a_type}, #{a_writer}, #{user_id}, sysdate, sysdate, 
    			 #{ori_name}, 1, 0, #{file_name}) 
-	
 	</insert>
 	
 	<!-- update문 -->

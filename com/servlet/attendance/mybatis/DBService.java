@@ -1,4 +1,4 @@
-package com.bp.attendance.mybatis;
+package com.servlet.attendance.mybatis;
 
 import java.io.IOException;
 

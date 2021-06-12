@@ -1,4 +1,4 @@
-package com.bp.attendance.DAO;
+package com.servlet.attendance.DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,8 +11,8 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.bp.attendance.mybatis.DBService;
-import com.bp.attendance.vo.AttVO;
+import com.servlet.attendance.mybatis.DBService;
+import com.servlet.attendance.vo.AttVO;
 
 
 public class DAO {
@@ -33,6 +33,7 @@ public class DAO {
 		return list;
 	}
 	
+	//페이징 포함한 게시글 전체보기 
 	public static List<AttVO> getList(int begin, int end) {
 		SqlSession ss = DBService.getFactory().openSession();
 		Map<String, Integer> map = new HashMap<String, Integer>();
@@ -51,13 +52,69 @@ public class DAO {
 		return vo;
 	}
 	
+	//게시글 수정
+	public static int update(int a_idx) {
+		SqlSession ss = DBService.getFactory().openSession();
+		int vo =  ss.update("attendance.update", a_idx);
+		ss.close();
+		return vo;
+	}
+	
+	//게시글 삭제
 	public static int delete(int a_idx) {
 		SqlSession ss = DBService.getFactory().openSession();
 		int vo =  ss.delete("attendance.delete", a_idx);
 		ss.close();
 		return vo;
-		
 	}
+	
+	//제목으로 검색
+	public static List<AttVO> getListByTitle(String a_title) {
+		SqlSession ss = DBService.getFactory().openSession();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		List<AttVO> list = ss.selectList("attendance.titleSearch", a_title);
+		ss.close();
+		return list;
+	}
+	
+	//내용으로 검색
+	public static List<AttVO> getListByContent(String a_content) {
+		SqlSession ss = DBService.getFactory().openSession();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		List<AttVO> list = ss.selectList("attendance.contentSearch", a_content);
+		ss.close();
+		return list;
+	}
+	
+	//작성자으로 검색
+	public static List<AttVO> getListByWriter(String a_writer) {
+		SqlSession ss = DBService.getFactory().openSession();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		List<AttVO> list = ss.selectList("attendance.writerSearch", a_writer);
+		ss.close();
+		return list;
+	}
+	
+	//분류로 검색
+	public static List<AttVO> getListByType(String a_type) {
+		SqlSession ss = DBService.getFactory().openSession();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		List<AttVO> list = ss.selectList("attendance.typeSearch", a_type);
+		ss.close();
+		return list;
+	}
+	
+	//월별로 검색
+	public static List<AttVO> getListByMonth(int month) {
+		SqlSession ss = DBService.getFactory().openSession();
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		List<AttVO> list = ss.selectList("attendance.monthSearch", month);
+		ss.close();
+		return list;
+	}
+	
+	
+	
 	
 	
 	

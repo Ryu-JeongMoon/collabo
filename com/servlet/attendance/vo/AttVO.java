@@ -1,4 +1,4 @@
-package com.bp.attendance.vo;
+package com.servlet.attendance.vo;
 
 public class AttVO {
 	
