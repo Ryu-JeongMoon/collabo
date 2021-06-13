@@ -1,16 +1,16 @@
 <%@page import="java.io.File"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="bitcamp.project.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
-<%@ page import="com.servlet.project.mybatis.DBService" %>
-<%@ page language="java" contentType="text/html;charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
 	request.setCharacterEncoding("utf-8");
 %>
-	<jsp:useBean id="PjNoticeVO" class="com.servlet.project.vo.PjNoticeVO" />
+	<jsp:useBean id="PjNoticeVO" class="bitcamp.project.vo.PjNoticeVO" />
 	<jsp:setProperty property="*" name="PjNoticeVO"/>
 <%--	//파일 업로드 확인
 	//파일 저장 위치
@@ -41,34 +41,36 @@
 	System.out.println("> PjNoticeVO: "+PjNoticeVO);
 	
 	SqlSession ss = DBService.getFactory().openSession(true);
-	
-	//빈칸 있는 경우
 %>
-	<c:if test="${PjNoticeVO.writer == null || PjNoticeVO.pwd == null || 
-					PjNoticeVO.title == null || PjNoticeVO.content == null ||
-					PjNoticeVO.writer.equals(' ') || PjNoticeVO.pwd.equals(' ') ||
-					PjNoticeVO.title.equals(' ') || PjNoticeVO.content.equals(' ')}">
+<%--빈칸 있는 경우 --%>
+<c:if test="${PjNoticeVO.title == null || PjNoticeVO.content == null 
+					|| PjNoticeVO.title.equals(' ') || PjNoticeVO.content.equals(' ')}">
 	 <script>
 	 	alert("입력이 안 된 항목이 있습니다.");
 	 	history.back();
 	 </script>
-	</c:if>
-	
+</c:if>
+
+<%--빈칸 없는 경우 --%>
+<c:if test="${PjNoticeVO.title != null && PjNoticeVO.content != null}">
+	<script>
+		alert("정상적으로 입력되었습니다.");
+		location.href="../pjnotice";
+	</script>
+</c:if>
+
 <%	
 	try {
 		ss.insert("pjnotice.insert", PjNoticeVO);
 %>
-	<script>
-		alert("정상적으로 입력되었습니다.");
-		location.href="http://localhost:8080/pjnotice";
-	</script>
+
 <%
 	} catch (Exception e) {
 		e.printStackTrace();
 %>
 	<script>
-		alert("[예외 발생]\n목록페이지로 이동합니다.");
-		history.back();  <%--예외발생하면 목록페이지로 이동--%>
+		alert("[예외 발생]\n이전페이지로 이동합니다.");
+		location.href="../pjnotice";  <%--예외발생하면 목록페이지로 이동--%>
 	</script>
 <%
 	} finally {
