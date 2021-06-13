@@ -1,7 +1,7 @@
-package com.servlet.project.vo;
+package bitcamp.project.vo;
 
 public class PjNoticeVO {
-	private String pj_idx, writer, pwd, regdate, editdate, hit, title, content, file_name, com_count;
+	private String pj_idx, writer, pwd, regdate, editdate, hit, title, content, com_count;
 
 	public String getPj_idx() {
 		return pj_idx;
@@ -67,14 +67,6 @@ public class PjNoticeVO {
 		this.content = content;
 	}
 
-	public String getFile_name() {
-		return file_name;
-	}
-
-	public void setFile_name(String file_name) {
-		this.file_name = file_name;
-	}
-
 	public String getCom_count() {
 		return com_count;
 	}
@@ -87,7 +79,7 @@ public class PjNoticeVO {
 	public String toString() {
 		return "PjNoticeVO [pj_idx=" + pj_idx + ", writer=" + writer + ", pwd=" + pwd + ", regdate=" + regdate
 				+ ", editdate=" + editdate + ", hit=" + hit + ", title=" + title + ", content=" + content
-				+ ", file_name=" + file_name + ", com_count=" + com_count +"]";
+				+ ", com_count=" + com_count +"]";
 	}
 	
 }
