@@ -10,10 +10,11 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css" 
-integrity="undefined" crossorigin="anonymous">
+		integrity="undefined" crossorigin="anonymous">
 <!-- <link rel="stylesheet" href="css/jm.css"> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <meta charset="UTF-8">
+
 <title>BIT 공지사항</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,6 +73,37 @@ integrity="undefined" crossorigin="anonymous">
             table-layout: fixed;
             word-break: break-all;
         }
+        
+		.paging { list-style: none; }
+		.paging li {
+		   float: left;
+		   margin-right: 8px;
+		}
+		.paging li a {
+		   text-decoration: none;
+		   display: block;
+		   padding: 3px 7px;
+		   border: 1px solid #00B3DC;
+		   font-weight: bold;
+		   color: black;
+		}
+		.paging .disable {
+		   padding: 3px 7px;
+		   color: silver;
+		}
+		.paging .now {
+		   border: 1px solid #00B3DC;
+		   padding: 3px 7px;
+		   background-color: #ff4aa5;
+		}
+		footer {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -82,6 +114,10 @@ integrity="undefined" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         crossorigin="anonymous"></script>
+        
+<div class="py-5 text-center">
+<h1 class="text-center">비트캠프 공지사항</h1>
+</div>
 
 <%-- 검색 --%>
 <div class="container-fluid search-form">
@@ -91,8 +127,8 @@ integrity="undefined" crossorigin="anonymous">
            <label class="hidden">검색분류</label>
            <select class="form-select" name="f">
                <option ${(param.f=="subject")?"selected":""} value="subject">제목</option>
-               <option ${(param.f=="writer")?"selected":""} value="writer">작성자</option>
                <option ${(param.f=="content")?"selected":""} value="content">내용</option>
+               <option ${(param.f=="writer")?"selected":""} value="writer">작성자</option>
            </select>
        </div>
        <div class="form-group">
@@ -110,115 +146,103 @@ integrity="undefined" crossorigin="anonymous">
 
 <%-- Table --%>
 <div class="content-container">
-	<h1 class="text-center">비트캠프 공지사항</h1>
 	<table border="1" class="table table-hover">
 		<thead>
-		<th scope="col">번호</th>
-		<th scope="col">제목</th>
-		<th scope="col">작성자</th>
-		<th scope="col">작성일</th>
-		<th scope="col">조회수</th>
+			<tr>
+				<th scope="col">번호</th>
+				<th scope="col">제목</th>
+				<th scope="col">작성자</th>
+				<th scope="col">작성일</th>
+				<th scope="col">조회수</th>
+			</tr>
 		</thead>
 		<tbody>
-		<c:if test="${not empty list }">
 		<c:forEach var="vo" items="${list }">
 		   <tr class="table-primary">   
-		      <td>${vo.getB_idx() }</td>
-		      <td>
-		         <a href="C_list/onelist.jsp?b_idx=${vo.b_idx}&cPage=${pvo.nowPage}">${vo.subject }</a>
-		      </td>
-		      <td>${vo.getWriter() }</td>
-		      <td>${vo.write_date }</td>
-		      <td>${vo.hit }</td>
+				<c:if test="${not empty list }">
+					<td>${vo.getB_idx() }</td>
+					<td>
+					   <a href="C_list/onelist.jsp?b_idx=${vo.b_idx}&cPage=${pvo.nowPage}">${vo.subject }</a>
+					</td>
+					<td>${vo.getWriter() }</td>
+					<td>${vo.write_date }</td>
+					<td>${vo.hit }</td>
+				</c:if>      
 		   </tr>
+			<c:if test="${empty list}">
+				<tr>
+					<td colspan="5">
+				    <h2>현재 등록된 게시글이 없습니다.</h2>
+				    </td>
+				</tr>
+			</c:if>
 		</c:forEach>
-		</c:if>      
-		<c:if test="${empty list}">
-		<tr>
-			<td colspan="5">
-		    <h2>현재 등록된 게시글이 없습니다.</h2>
-		    </td>
-		</tr>
-		</c:if>
 		</tbody>
 	</table>
-	<form method="post"> 
 	
    <%--공지사항 작성--%>
 	<div class="write-button">
 	    <c:if test="${login == null}">
 	        <h2>
 	            <button onclick="alert('로그인 후 이용 가능합니다.');" type="button" 
-	            		class="btn btn-primary btn-lg">공지사항 작성</button>
+	            		class="btn btn-primary btn-lg">공지사항 작성
+	            </button>
 	        </h2>
 	    </c:if>
-	</div>
 	   <c:if test="${login != null}">
 	   		<h2>
 	   			<a type="button" class="btn btn-primary" href="C_list/write.jsp">공지사항 작성</a>
 	   		</h2>   
 	   </c:if>
-	</form>
+	</div>
 </div>
+<%-- Page --%>
+<table>
+	<tr>
+		<td colspan="5">
+			<ol class="paging">
+		    <%--이전으로 --%>
+			<c:if test="${pvo.beginPage == 1 }">  <!-- 시작페이지가 1일 경우 비활성화 -->
+				<li class="disable">prev</li>               
+			</c:if>
+			<c:if test="${pvo.beginPage != 1 }">
+				<li>
+		   			<a href="C_list?cPage=${pvo.beginPage - 1}">prev</a>
+				</li>
+			</c:if>
 	
-	<%-- 내일 고쳐야 할 부분..ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ... --%>
-    <%-- Page --%>
-	<div class="page-form">	
-	<ul class="pagination">
-     <c:if test="${pvo.beginPage == 1 }">  <!-- 시작페이지가 1일 경우 비활성화 -->
-        <li class="page-item disabled">
-        	<a class="page-link">&laquo;</a>
-        </li>               
-     </c:if>
-     <c:if test="${pvo.beginPage != 1 }">
-        <li class="page-item disabled">
-           <a class="page-link" href="C_list?cPage=${pvo.beginPage - 1}">&laquo;</a>
-        </li>
-     </c:if>
-     
-     <%--블록 내 표시할 페이지 태그 작성 --%>
-     <c:forEach var="pageNo" begin="${pvo.beginPage }" end="${pvo.endPage }">
-     <c:choose>
-     <c:when test="${pageNo == pvo.nowPage  }"> <%--현재 페이지랑 누른 페이지 같으면 링크처리x --%>
-        <li class="page-item active">
-        	<a class="page-link"> ${pageNo } </a>
-        </li>
-     </c:when>
-     <c:otherwise>
-        <li class="page-item">
-           <a class="page-link" href="C_list?cPage=${pageNo}">${pageNo}</a> <%--현재 페이지랑 누른 페이지 다르면 링크처리 --%>
-        </li>
-     </c:otherwise>
-     </c:choose>   
-     </c:forEach>
-     
-     <%--다음으로 --%>
-     <c:if test="${pvo.endPage >= pvo.totalPage }">
-        <button class="btn btn-outline-primary">
-        	<a class="page-link" href="#">다음</a>
-        </button>
-     </c:if>
-     
-     <c:if test="${startNum+5<=lastNum}">
-        <button class="btn btn-outline-primary" onclick="location.href='?p=${startNum+5}&f=${param.f}&k=${param.k}'">
-            다음
-        </button>
-    </c:if>
-     
-     
-     <c:if test="${pvo.endPage < pvo.totalPage }">
-        <li>
-           <a class="page-link" href="C_list?cPage=${pvo.endPage + 1 }">다음</a>
-           <!-- &raquo; -->
-        </li>
-     </c:if>
-     </ul>
-	</div>     
+			<%--블록 내 표시할 페이지 태그 작성 --%>
+			<c:forEach var="pageNo" begin="${pvo.beginPage }" end="${pvo.endPage }">
+				<c:choose>
+					<c:when test="${pageNo == pvo.nowPage  }"> <%--현재 페이지랑 누른 페이지 같으면 링크처리x --%>
+					<li class="now">${pageNo }</li>
+					</c:when>
+					<c:otherwise>
+						<li>
+						   <a href="C_list?cPage=${pageNo}">${pageNo}</a> <%--현재 페이지랑 누른 페이지 다르면 링크처리 --%>
+						</li>
+					</c:otherwise>
+				</c:choose>   
+			</c:forEach>
 	
+			<%--다음으로 --%>
+			<c:if test="${pvo.endPage >= pvo.totalPage }">
+				<li class="disable">next</li>
+			</c:if>
+			<c:if test="${pvo.endPage < pvo.totalPage }">
+				<li>
+			    	<a href="C_list?cPage=${pvo.endPage + 1 }">next</a>
+				</li>
+			</c:if>
+			</ol>
+		</td>
+	</tr>
+</table>	
 
-   
 <%--footer--%>
+<footer>
 <%@include file="footer.jsp" %>
+</footer>
 
 </body>
 </html>
