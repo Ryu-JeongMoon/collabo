@@ -23,6 +23,10 @@
 		SELECT * FROM EVENTS
 	</select>
 	
+	<select id="oneEvent" resultType="com.bc.calendar.model.vo.CalendarVO" parameterType="string">
+		SELECT * FROM EVENTS WHERE ID = #{id}
+	</select>
+	
 	<!-- 
 	<select id="test" resultType="com.bc.model.vo.CalendarVO">
 		SELECT * FROM EVENTS
@@ -31,15 +35,19 @@
 	</select>
 	-->
 	
-	<insert id="addEventFast" parameterType="HashMap">
-		INSERT INTO EVENTS(PROJECT_ID, START_DATE, END_DATE) 
-		VALUES('PRO001',#{start_date}, #{end_date})
+	<insert id="addEvent" parameterType="HashMap">
+		INSERT INTO EVENTS(PROJECT_ID, TITLE, START_DATE, END_DATE, COLOR, TEXT_COLOR, DETAIL, ID) 
+		VALUES('PRO001', #{title}, #{start_date}, #{end_date},#{color}, #{text_color}, #{detail}, EVENTS_ID_SEQ.nextval)
 	</insert>
 	
-	<update id="updateEventFast" parameterType="HashMap">
-		UPDATE EVENTS SET TITLE = #{title}, START_DATE =#{start_date}, END_DATE = #{end_date} WHERE ID = #{id}
+	<update id="updateEvent" parameterType="HashMap">
+		UPDATE EVENTS SET TITLE = #{title}, START_DATE =#{start_date}, END_DATE = #{end_date},
+		COLOR = #{color}, TEXT_COLOR = #{text_color}, DETAIL = #{detail}
+		WHERE ID = #{id}
 	
 	</update>
 
-	
+	<delete id="deleteEvent" parameterType="string">
+		DELETE FROM EVENTS WHERE ID = #{id}
+	</delete>
 </mapper>

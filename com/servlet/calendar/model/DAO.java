@@ -12,39 +12,62 @@ public class DAO {
 	
 	//일정 조회
 	public static List<CalendarVO> getEvent() {
-		//SqlSession ss = DBService.getFactory().openSession();
+		
 		SqlSession ss = DBService.getFactory().openSession();
 		List<CalendarVO> list = ss.selectList("bitcamp.allEvent");
 		ss.close();
-		System.out.println("IN DAO");
-		//System.out.println(list);
+		
 		return list;
 		
 	}
 	
+	public static CalendarVO getOneEvent(String id) {
+		
+		SqlSession ss = DBService.getFactory().openSession();
+		CalendarVO vo = ss.selectOne("bitcamp.oneEvent", id);
+		
+		ss.close();
+		return vo;
+		
+	}
+	
 	//일정 수정
-	public static void updateEventFast(String title, String start_date, String end_date, String id) {
+	public static void updateEvent(String title, String start_date, String end_date, String detail, String color, String text_color, String id ) {
 		SqlSession ss = DBService.getFactory().openSession(true);
+		System.out.println("IN DAO");
 		HashMap<String, String> hsMap = new HashMap<String, String>();
 		hsMap.put("start_date", start_date);
 		hsMap.put("end_date", end_date);
 		hsMap.put("title", title);
 		hsMap.put("id", id);
-		ss.update("bitcamp.updateEventFast", hsMap);
+		hsMap.put("detail", detail);
+		hsMap.put("color", color);
+		hsMap.put("text_color", text_color);
+		ss.update("bitcamp.updateEvent", hsMap);
+		
 		ss.close();
 	}
 	
 	//일정 추가
-	public static void addEventFast(String start_date, String end_date) {
+	public static void addEvent(String title, String start_date, String end_date, String detail, String color, String text_color) {
 		SqlSession ss = DBService.getFactory().openSession(true);
 		HashMap<String, String> hsMap = new HashMap<String, String>();
+		hsMap.put("title", title);
 		hsMap.put("start_date", start_date);
 		hsMap.put("end_date", end_date);
+		hsMap.put("detail", detail);
+		hsMap.put("color", color);
+		hsMap.put("text_color", text_color);
 		
-		System.out.println(hsMap);
-		
-		ss.insert("bitcamp.addEventFast", hsMap);
+		ss.insert("bitcamp.addEvent", hsMap);
 		ss.close();
 		
 	}
+	
+	public static void deleteEvent(String id) {
+		SqlSession ss = DBService.getFactory().openSession(true);
+		ss.selectList("bitcamp.deleteEvent", id);
+		ss.close();
+	}
+
 }
