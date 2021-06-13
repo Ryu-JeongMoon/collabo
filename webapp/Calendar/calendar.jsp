@@ -195,7 +195,7 @@
 	#week-calendar {
     	float: left;
     	width: 900px;
-    	margin: 0 60px 60px 0;
+    	margin: 50px 60px 60px 0;
     	border: 2px solid black;
 	}
 
@@ -204,16 +204,29 @@
 		
 	}
 
-	
+	#footer {
+
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:70px;   
+    background:#ccc;
+
+	}
 </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/views/bit/html/navbar.jsp" %>
 	<div id='all'>
 		<div id='month-calendar'></div>
 		<div id='week-calendar'></div>
 	</div>
 	<div id='ajaxArea'>
-	
 	</div>
+<div id="footer">
+<footer>
+<%@ include file="/WEB-INF/views/bit/html/footer.jsp" %>
+</footer>
+</div>
 </body>
 </html>
