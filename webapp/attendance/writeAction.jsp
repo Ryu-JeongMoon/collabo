@@ -16,8 +16,6 @@
 </head>
 
 <body onload="add()">
-<%@include file ="header.jsp" %>
-
 
 <%
 	//0. 한글처리
@@ -25,7 +23,6 @@
 
 	//1. 파라미터 값 추출해서 VO에 저장
 %>	
-	
 	<jsp:useBean id="AttVO" class="com.servlet.attendance.vo.AttVO"/>
 	<jsp:setProperty property="*" name="AttVO" />
 <%
@@ -42,6 +39,11 @@
 			alert("입력 안 된 사항이 있습니다. \n 빈 칸을 확인해 주세요.");
 			history.back();
 		</script>
+	</c:if>
+	
+	<!-- 2-3 분류 받아주기 -->
+	<c:if test="${AttVO.a_type == 'sick' }">
+		
 	</c:if>
 
 <%

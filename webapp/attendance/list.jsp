@@ -76,6 +76,7 @@
 	ss.close();
 	pageContext.setAttribute("attr_list", aList);
 	System.out.println("aList" + aList);
+
 	
 // 	//-----------------이름으로 검색-------------------------------
 // 	SqlSession ss2 = DBService.getFactory().openSession();
@@ -144,19 +145,30 @@
             table-layout: fixed;
             word-break: break-all;
         }
-    </style>
-    <script>
-   var btn;
-   //버튼 비활성화 --실패
-   function btn_off() {
-	   confirm('확인하셨습니까?');
-	   if (true) {
-		   btn = $('.oxbtn');
-		   btn.disabled = 'disabled';
-		   btn.addClass('okay');
-	   }
-   }
-    </script>
+   </style>
+   <script>
+//    var btn;
+//    //버튼 비활성화 --실패
+//    function btn_off() {
+// 	   confirm('확인하셨습니까?');
+// 	   if (true) {
+// 		   btn = $('.oxbtn');
+// 		   btn.disabled = 'disabled';
+// 		   btn.addClass('okay');
+// 	   }
+//    }
+   
+//    function btn_change() {
+// 	  $('.ox').click(function(){
+// 		   if( $(this).val() == '0' ) {
+// 			      $(this).val() == '1';
+// 			    }
+// 			    else {
+// 			      $(this).val() == '0';
+// 			    }
+// 	  })
+//    }
+   </script>
 </head>
 <body>
 <%--navbar--%>
@@ -196,7 +208,7 @@
                     </c:when>
                     <c:when test="${login == null }">
                         <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/u/login.jsp">로그인</a>
+                            <a class="nav-link" href="login.jsp">로그인</a>
                         </li>
                     </c:when>
                 </c:choose>
@@ -265,14 +277,21 @@
 						<td>${vo.write_date }</td>
 						<td>${vo.mod_date }</td>
 						<c:if test="${vo.status == 1 }">
-							<td><button type="button" class="btn btn-primary disabled oxbtn okay" >O</button></td>
+							<td><input type="submit" class="btn btn-primary oxbtn disabled" value="o" name="status"></td>
 						</c:if>
 						<c:if test="${vo.status == 0 }">
-							<td><button type="button" class="btn btn-outline-primary oxbtn" onclick="btn_off()">X</button></td>
+							<td><input type="submit" class="btn btn-outline-primary oxbtn disabled" value="x" name="status"></td>
 						</c:if>
 					</tr>
 				</c:forEach>
 			</c:if>
+<%-- 			<c:if test="${empty list }"> --%>
+<!-- 				<tr> -->
+<!-- 					<td colspan="7"> -->
+<!-- 						<h2>현재 등록된 게시글이 없습니다.</h2> -->
+<!-- 					</td> -->
+<!-- 				</tr> -->
+<%-- 			</c:if> --%>
 <%-- 			<c:if test="${attr_list.size() <= 0 }"> --%>
 <!-- 				<tr> -->
 <!-- 					<td colspan="4">검색된 데이터가 없습니다.</td> -->
@@ -283,12 +302,45 @@
 	</div>		
 <!-- 글쓰기 -->
 	<div class="write-button">
-		<h2>
-             <button onclick="location.href='write.jsp'" type="button"
-                     class="btn btn-primary btn-lg">글 쓰기
-             </button>
-         </h2>
+	    <c:if test="${login != null}">
+	        <c:if test="${!empty param.p || !empty param.f}">
+	            <h2>
+	                <button onclick="location.href='write?p=${param.p}&f=${param.f}&q=${param.q}'" type="button"
+	                        class="btn btn-primary btn-lg">글 쓰기
+	                </button>
+	            </h2>
+	        </c:if>
+	        <c:if test="${empty param.p && empty param.f}">
+	            <h2>
+	                <button onclick="location.href='write.jsp'" type="button"
+	                        class="btn btn-primary btn-lg">글 쓰기
+	                </button>
+	            </h2>
+	        </c:if>
+	    </c:if>
+	    <c:if test="${login == null}">
+	        <h2>
+	            <button onclick="alert('로그인 후 이용 가능합니다.');" type="button" class="btn btn-primary btn-lg">글쓰기</button>
+	        </h2>
+	    </c:if>
 	</div>
+
+<!-- 	<div class="write-button"> -->
+<%-- 		<c:if test="${login == null}"> --%>
+<!-- 			<h2> -->
+<!-- 	             <button onclick="alert('로그인 후 이용 가능합니다.');" type="button" -->
+<!-- 	                     class="btn btn-primary btn-lg">글 쓰기 -->
+<!-- 	             </button> -->
+<!-- 	         </h2> -->
+<%-- 		 </c:if> --%>
+<%-- 		<c:if test="${login != null}"> --%>
+<!-- 			<h2> -->
+<!-- 	             <button onclick="location.href='write.jsp'" type="button" -->
+<!-- 	                     class="btn btn-primary btn-lg">글 쓰기 -->
+<!-- 	             </button> -->
+<!-- 	         </h2> -->
+<%-- 		 </c:if> --%>
+<!-- 	</div> -->
 			
 <!-- paging-->
 	<div class="page-form">

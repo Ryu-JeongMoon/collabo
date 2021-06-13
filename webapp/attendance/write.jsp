@@ -36,6 +36,7 @@
         text-align: center;
     }
 </style>
+
 </head>
 <body>
 <%--navbar--%>
@@ -58,13 +59,13 @@
 				<td>
 					<div class="form-group" style="text-align: center; margin: 0 auto;">
 						<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-							<input type="radio" class="btn-check" name="a_type" id="sick" autocomplete="off" value="병결" checked>
+							<input type="radio" class="btn-check" name="a_type" value="sick" autocomplete="off" checked>
  									<label class="btn btn-outline-primary" for="sick">병결</label>
-							<input type="radio" class="btn-check" name="a_type" id="half" autocomplete="off" checked="" value="조퇴">
+							<input type="radio" class="btn-check" name="a_type" value="half" autocomplete="off" >
  									<label class="btn btn-outline-primary" for="half">조퇴</label>
-							<input type="radio" class="btn-check" name="a_type" id="job" autocomplete="off" checked="" value="취업활동">
+							<input type="radio" class="btn-check" name="a_type" value="job" autocomplete="off" >
  									<label class="btn btn-outline-primary" for="job">취업활동</label>
-							<input type="radio" class="btn-check" name="a_type" id="untact" autocomplete="off" checked="" value="비대면">
+							<input type="radio" class="btn-check" name="a_type" value="untact" autocomplete="off" >
  									<label class="btn btn-outline-primary" for="untact">비대면</label>
 						</div>
 					</div>
@@ -72,7 +73,7 @@
 			</tr>
             <tr class="table-active">
             	<th scope="row">제목</th>
-				<td>
+				<td colspan="2">
 					<div class="form-group">
                         <fieldset>
                             <input class="form-control" id="a_title" name="a_title" type="text" >
@@ -82,11 +83,11 @@
 			</tr>
             <tr class="table-active">
                 <th scope="row">글쓴이</th>
-				<td>
+				<td colspan="2">
 					<div class="form-group">
                         <fieldset>
                             <input class="form-control" name="a_writer" id="a_writer" value="${login}" 
-                                   type="text">
+                                   type="text" readonly="">
                         </fieldset>
                     </div>
 				</td>
@@ -96,7 +97,7 @@
                 <td>
                     <div class="form-group">
                         <fieldset>
-                            <input class="form-control" id="a_content" name="a_content" type="text"  placeholder="글 내용"
+                            <input class="form-control" id="a_content" name="a_content" type="text"
                              maxlength="2048" style="height : 200px">
                         </fieldset>
                     </div>
@@ -105,7 +106,7 @@
 			</tr>
             <tr class="table-active">
                 <th scope="row">첨부파일</th>
-				<td>
+				<td colspan="2">
 				  <div class="form-group">
 				      <input class="form-control" type="file" id="file" name="file_name">
 				  </div>

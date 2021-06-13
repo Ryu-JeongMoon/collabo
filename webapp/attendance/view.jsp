@@ -1,3 +1,6 @@
+<%@page import="com.servlet.u.model.MemberVO"%>
+<%@page import="com.servlet.attendance.DAO.DAO"%>
+<%@page import="java.io.PrintWriter"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="com.servlet.attendance.vo.AttVO"%>
@@ -12,7 +15,8 @@
 <%
 	String a_idx = request.getParameter("a_idx");
 	System.out.println("a_idx : " + a_idx);
-	
+// 	int a_index = Integer.parseInt(a_idx);
+
 	SqlSession ss = DBService.getFactory().openSession();
 	
 	AttVO vo = ss.selectOne("attendance.one", a_idx);
@@ -21,6 +25,37 @@
 	
 	session.setAttribute("AttVO", vo);
 	System.out.println("> session AttVO : " + session.getAttribute("AttVO"));
+	
+	//로그인 확인
+// 	String userID = null;
+// 	if (session.getAttribute("userID") != null ) { //id가 있으면 그 아이디 유지하게 하는 것
+// 		userID = (String) session.getAttribute("userID");
+// 	}
+	
+// 	if (userID == null ) {
+// 		PrintWriter script = response.getWriter();
+// 		script.println("<script>");
+// 		script.println("alert('로그인을 해주세요')");
+// 		script.println("location.href = 'login.jsp'"); //로그인이 안 된 사람은 로그인페이지로 가게
+// 		script.println("</script>");
+// 	}
+// 	//글 확인
+// 	if ( a_index == 0 ) {
+// 		PrintWriter script = response.getWriter();
+// 		script.println("<script>");
+// 		script.println("alert('유효하지 않은 글입니다..')");
+// 		script.println("location.href = 'list.jsp'"); 
+// 		script.println("</script>");
+// 	}
+// 	MemberVO mvo = new DAO().selectOne(a_idx);
+// 	vo = new DAO().selectOne(a_idx); //id값을 가지고 그 글을 가져오는 거임 
+// 	if (!id.equals(vo.getId())) {
+// 		PrintWriter script = response.getWriter();
+// 		script.println("<script>");
+// 		script.println("alert('권한이 없습니다.')");
+// 		script.println("location.href = 'login.jsp'"); //로그인이 안 된 사람은 로그인페이지로 가게
+// 		script.println("</script>");
+// 	}
 
 // 	if (request.getParameter("a_idx") != null) {
 // 		System.out.println(request.getParameter("a_idx");
@@ -60,7 +95,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewpoint" content="width=device-width, initial-scale="1">
+	<meta name="viewpoint" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css" 
 				integrity="undefined" crossorigin="anonymous">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -79,8 +114,14 @@
 			} else {
 				history.back();
 			}
-			
 		}
+		
+		$(function(){
+			$(".chk").on("click",function(){
+				console.log("클릭");
+				$(this).val("O");
+			})
+		})
 		
 	</script>
 
@@ -115,8 +156,8 @@
 				<td>
 					<div class="form-group">
                         <fieldset>
-                            <input class="form-control" name="a_type" id="a_type" type="text" value="${AttVO.a_type }"
-                                   readonly="">
+                            <input class="form-control" name="a_type" id="a_type" type="text" value="${AttVO.a_type}"
+                                readonly="">
                         </fieldset>
                     </div>
 				</td>
@@ -148,7 +189,7 @@
 				<td>
 					<div class="form-group" style="height:200px">
                         <fieldset>
-                            <input class="form-control" name="write_date" id="write_date" type="text" value="${fn:replace(AttVO.a_content, cn, br)}"
+                            <input class="form-control" name="write_content" id="write_date" type="text" value="${fn:replace(AttVO.a_content, cn, br)}"
                                    readonly=""  style="height:200px">
                         </fieldset>
                     </div>
@@ -178,7 +219,7 @@
 				<td>
                     <div class="form-group">
                         <fieldset>
-                           <button type="button" class="btn btn-outline-primary form-control">${AttVO.status }</button>
+                           <input type="button" class="btn btn-outline-primary form-control chk" id="status0" name="status" value='${(AttVO.status==0)?"X":"O" }' />
                         </fieldset>
                     </div>
                 </td>
@@ -186,6 +227,7 @@
 		</tbody>
 		</table>
 		<div class="col" align="center">
+		
 			<button class="btn btn-primary btn-lg" onclick="update_go(this.form)" type="button">
 				수정
 	        </button>

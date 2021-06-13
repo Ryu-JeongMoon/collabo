@@ -15,6 +15,17 @@
 	
 	SqlSession ss = DBService.getFactory().openSession(true);
 	
+	if (!userID.equals(bbs.getUserID())) {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('권한이 없습니다.')");
+		script.println("location.href = 'bbs.jsp'"); //로그인이 안 된 사람은 로그인페이지로 가게
+		script.println("</script>");
+	} 
+	
+	
+	
+	
 		try {
 			ss.delete("attendance.fakeDelete", vo.getA_idx());
 %>

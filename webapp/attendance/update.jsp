@@ -18,9 +18,9 @@
 		//radio value값 가지고 오기  ????모르겠음
 		function getRadioValue(){
 			var a_type = $('#a_type').val();
-			var btn-check = $(".btn-check").val();
+			var btn_check = $(".btn-check").val();
 			if (a_type = checked) {
-				btn-check = a_type;
+				btn_check = a_type;
 				
 			}
 			return btn-check;
@@ -59,16 +59,16 @@
 						<input type="hidden" id="a_type" name="a_type" value="${AttVO.a_type}" />
 						<div class="form-group" style="text-align: center; margin: 0 auto;" >
 							<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-								<input type="radio" class="btn-check" name="a_type" id="sick" autocomplete="off" 
+								<input type="radio" class="btn-check" name="a_type" 
 									${(AttVO.a_type eq "sick")?"checked":""}>
   									<label class="btn btn-outline-primary" for="sick">병결</label>
-								<input type="radio" class="btn-check" name="a_type" id="half" autocomplete="off" 
+								<input type="radio" class="btn-check" name="a_type"  
 									${(AttVO.a_type eq "half")?"checked":""}>
   									<label class="btn btn-outline-primary" for="half">조퇴</label>
-								<input type="radio" class="btn-check" name="a_type" id="job" autocomplete="off" 
+								<input type="radio" class="btn-check" name="a_type"  
 									${(AttVO.a_type eq "job")?"checked":""}>
   									<label class="btn btn-outline-primary" for="job">취업활동</label>
-								<input type="radio" class="btn-check" name="a_type" id="untact" autocomplete="off" 
+								<input type="radio" class="btn-check" name="a_type" 
 									${(AttVO.a_type eq "untact")?"checked":""}>
   									<label class="btn btn-outline-primary" for="untact">비대면</label>
 							</div>
@@ -91,7 +91,7 @@
 						<td>
 		                    <div class="form-group">
 		                        <fieldset>
-		                            <input class="form-control" id="post_content" name="a_content" type="text"
+		                            <input class="form-control" id="a_content" name="a_content" type="text"
 		                                   value='${AttVO.a_content }' maxlength="2048" style="height : 200px">
 		                        </fieldset>
 		                    </div>
