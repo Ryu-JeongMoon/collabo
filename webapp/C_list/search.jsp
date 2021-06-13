@@ -1,120 +1,139 @@
+<%@ taglib prefix ="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css"
-      integrity="undefined" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <title>검색</title>
-    <style>
-        #container {
-            width: 512px;
-            margin: auto;
-            /*border: 1px solid blue;*/
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css" 
+	integrity="undefined" crossorigin="anonymous">
+	<title>검색</title>
+</head>
+<style type="text/css">
+        * {
+            font-family: NanumGothic, 'Malgun Gothic';
         }
 
-        #container table {
-            width: 500px;
-            padding: 0 5px;
-            border: 1px solid black;
-            border-collapse: collapse;
+        .-text-highlight {
+            color: #0f0f0f;
         }
 
-        th, td {
-            border: 1px solid black;
+        .hidden {
+            display: none;
         }
 
-        .paging {
-            list-style: none;
-        }
-
-        .paging li {
-            float: left;
-            margin-right: 8px;
-        }
-
-        .paging li a {
+        a:link {
             text-decoration: none;
-            display: block;
-            padding: 3px 7px;
-            border: 1px solid #00B3DC;
-            font-weight: bold;
-            color: black;
         }
 
-        .paging .disable {
-            padding: 3px 7px;
-            color: silver;
+        a:visited {
+            text-decoration: none;
         }
 
-        .paging .now {
-            border: 1px solid #00B3DC;
-            padding: 3px 7px;
-            background-color: #ff4aa5;
+        a:hover {
+            text-decoration: underline;
         }
 
-        .paging li a:hover {
-            background-color: #00B3DC;
-            color: white;
+        .search-form {
+            text-align: right;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .page-form {
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .write-button {
+            text-align: right;
+            margin-right: 50px;
+        }
+
+        ul li {
+            list-style-type: none;
+        }
+
+        table {
+            table-layout: fixed;
+            word-break: break-all;
         }
 
         footer {
-            position: absolute;
+            position: relative;
             left: 0;
             bottom: 0;
             width: 100%;
             padding: 15px 0;
             text-align: center;
         }
-    </style>
-</head>
+
+</style>
 <body>
 
 <%--navbar--%>
 <%@ include file="navbar.jsp" %>
 
-<div id="container">
-    <h1>검색 결과</h1>
-    <hr>
-    <p><a href="../C_list">[목록으로 이동]</a></p>
-    <table>
-        <thead>
-        <tr>
-            <th>글번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-            <th>수정일</th>
-            <th>조회수</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:if test="${!empty list }">
-            <c:forEach var="vo" items="${list }">
-                <tr>
-                    <td>${vo.GetB_idx() }</td>
-                    <td>
-                        <a href="onelist.jsp?idx=${vo.b_idx}">${vo.subject }</a></td>
-                    <td>${vo.getWriter() }</td>
-                    <td>${vo.write_date }</td>
-                    <td>${vo.hit }</td>
-                </tr>
-            </c:forEach>
-        </c:if>
-        <c:if test="${empty list}">
-            <tr>
-                <td colspan="6">검색된 데이터가 없습니다</td>
-            </tr>
-        </c:if>
-        </tbody>
-    </table>
+<div class="content-container">
+   <div class="py-5 text-center">
+        <h2>검색 결과</h2>
+    </div>
+    
+   <table border="1" class="table table-hover">
+      <thead>
+      <tr>
+         <th scope="col">글 번호</th>
+           <th scope="col">제목</th>
+           <th scope="col">글쓴이</th>
+           <th scope="col">작성일</th>
+           <th scope="col">조회수</th>
+       </tr>
+      </thead>
+      <tbody>
+       <c:if test="${!empty list }">
+      <c:forEach var="vo" items="${list }">
+         <tr class="table-primary">   
+            <td>${vo.getB_idx() }</td>
+            <td>
+               <a href="C_list/onelist.jsp?b_idx=${vo.b_idx}">${vo.subject }</a></td>
+            <td>${login }</td>
+            <td>${vo.write_date }</td>
+            <td>${vo.hit }</td>
+         </tr>
+      </c:forEach>
+      </c:if>   
+      <c:if test="${empty list}">
+         <tr class="table-primary">
+            <td colspan="5">검색된 데이터가 없습니다</td>
+         </tr>
+      </c:if>
+      </tbody>
+   </table>
+   <div class="row">
+      <div class="col">
+         <button class="btn btn-secondary btn-lg" onclick="location.href='../C_list'">목록으로</button>
+      </div>
+   </div>   
 </div>
+<%--검색 게시판 내에서 글쓰기 눌렀을 때 --%>
+<form method="post"> 
+<div class="write-button">
+    <c:if test="${login == null}">
+        <h2>
+            <button onclick="alert('로그인 후 이용 가능합니다.');" type="button" class="btn btn-primary btn-lg">공지사항 작성</button>
+        </h2>
+    </c:if>
+     <c:if test="${login != null}">
+      <a type="button" class="btn btn-primary" href="write.jsp">공지사항 작성</a>
+    </c:if>
+</div>
+</form>
 
 <%--footer--%>
-<%@include file="footer.jsp" %>
-
+<footer>
+    <%@ include file="footer.jsp" %>
+</footer>
 </body>
 </html>
