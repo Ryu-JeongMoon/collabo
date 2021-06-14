@@ -1,8 +1,6 @@
-package com.bc.bit.mybatis;
+package com.servlet.hansol.bit.mybatis;
 
 import java.io.IOException;
-import java.io.Reader;
-
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -13,7 +11,7 @@ public class DBService {
 	static {
 		try {
 			factory = new SqlSessionFactoryBuilder()
-					.build(Resources.getResourceAsReader("com/bc/bit/mybatis/config.xml"));
+					.build(Resources.getResourceAsReader("hansol/config.xml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -6,13 +6,10 @@
     <meta charset="UTF-8">
     <title>회원가입</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"--%>
-<%--          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">--%>
-<%--    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>--%>
-<%--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>--%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
             crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
         * {
@@ -60,44 +57,50 @@
         //핸드폰 번호 정규식
         var phoneJ = /^01([0|1|6|7|8|9]?)?([0-9]{3,4})?([0-9]{4})$/;
 
+        //비밀번호 정규식 최소 8자 하나의 숫자
+        var passwordj = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
         function send_go1(frm) {
             frm.action = "controller?type=signup";
             frm.submit();
         }
 
-
-        function check() {
-            if (document.addjoin.password.value == "") {
+        function check(){
+            if(document.addjoin.password.value==""){
                 alert("비밀번호를 입력하세요");
                 document.addjoin.password.focus();
                 exit;
-            } else if (document.addjoin.repassword.value == "") {
+            }else if(document.addjoin.repassword.value==""){
                 alert("비밀번호를 다시 입력하세요");
                 document.addjoin.repassword.focus();
                 exit;
-            } else if (document.addjoin.name.value == "") {
+            }else if(document.addjoin.name.value==""){
                 alert("이름을 입력하세요");
                 document.addjoin.name.focus();
                 exit;
-            } else if (document.addjoin.email.value == "") {
+            }else if(document.addjoin.email.value==""){
                 alert("이메일을 입력하세요");
                 document.addjoin.email.focus();
                 exit;
-            } else if (exp.test(document.addjoin.email.value) == false) {
+            }else if(exp.test(document.addjoin.email.value)==false){
                 alert("올바른 이메일 형식이 아닙니다");
                 document.addjoin.email.focus();
                 exit;
-            } else if (document.addjoin.phone.value == "") {
+            }else if(document.addjoin.phone.value==""){
                 alert("핸드폰 번호를 입력하세요")
                 document.addjoin.phone.focus();
                 exit;
-            } else if (phoneJ.test(document.addjoin.phone.value) == false) {
+            }else if(phoneJ.test(document.addjoin.phone.value)==false){
                 alert("올바른 핸드폰 번호 형식이 아닙니다 ");
                 document.addjoin.phone.focus();
                 exit;
+            }else if (passwordj.test(document.addjoin.password.value)==false){
+                alert("올바른 비밀번호 형식이 아닙니다.\n최소 8자 이상 소문자+숫자 조합만 가능합니다")
+                document.addjoin.password.focus();
+                exit;
             }
 
-            if (document.addjoin.password.value != document.addjoin.repassword.value) {
+            if(document.addjoin.password.value!=document.addjoin.repassword.value){
                 alert("입력한 비밀번호가 일치하지 않습니다");
                 document.addjoin.password.focus();
                 exit;

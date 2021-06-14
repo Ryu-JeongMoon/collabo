@@ -21,7 +21,7 @@
         }
 
         .-text-highlight {
-            color: #0f0f0f;
+            color: #8832c4;
         }
 
         .hidden {
@@ -83,7 +83,12 @@
 <%--navbar--%>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbarResponsive">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">BIIT</a>
+        <c:if test="${!empty login}">
+            <a href="http://localhost:8080/u/main.jsp"><img src="/u/Blogo.svg" alt="로고" height="30" width="40"></a>
+        </c:if>
+        <c:if test="${empty login}">
+            <img src="/u/Blogo.svg" alt="로고" height="30" width="40">
+        </c:if>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02"
                 aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -92,12 +97,7 @@
         <div class="navbar-collapse collapse" id="navbarColor02">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="">HOME
-                        <span class="visually-hidden">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">공지사항 게시판</a>
+                    <a class="nav-link" href="http://localhost:8080/C_list">공지사항 게시판</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost:8080/pjnotice">프로젝트 게시판</a>
@@ -106,12 +106,15 @@
                     <a class="nav-link" href="list">자료 게시판</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">일정 관리</a>
+                    <a class="nav-link" href="http://localhost:8080/attendance/list.jsp">출결 관리</a>
                 </li>
                 <c:choose>
                     <c:when test="${login != null }">
                         <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/u/login.jsp"
+                            <a class="nav-link" href="http://localhost:8080/Calendar/calendar.jsp">캘린더</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="http://localhost:8080/u/controller?type=out"
                                onclick="return confirm('로그아웃 하시겠습니까?');">${login}님 로그아웃</a>
                         </li>
                         <li>

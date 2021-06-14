@@ -6,11 +6,18 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewpoint" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css" 
-				integrity="undefined" crossorigin="anonymous">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+<%--	<meta name="viewpoint" content="width=device-width, initial-scale=1">--%>
+<%--	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css" --%>
+<%--				integrity="undefined" crossorigin="anonymous">--%>
+<%--    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>--%>
+<%--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>--%>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		  integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+			crossorigin="anonymous"></script>
 	<title>수정화면</title>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	
@@ -26,9 +33,20 @@
 			return btn-check;
 		}
 	</script>
+	<style>
+		footer {
+			position: relative;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			padding: 15px 0;
+			text-align: center;
+		}
+	</style>
 </head>
 <body>
-<%@include file ="navbar.jsp" %>
+<%--navbar--%>
+<%@ include file="/WEB-INF/views/bit/html/navbar.jsp" %>
 
 <div class="container">
 	 <div class="py-5 text-center">
@@ -59,17 +77,13 @@
 						<input type="hidden" id="a_type" name="a_type" value="${AttVO.a_type}" />
 						<div class="form-group" style="text-align: center; margin: 0 auto;" >
 							<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-								<input type="radio" class="btn-check" name="a_type" 
-									${(AttVO.a_type eq "sick")?"checked":""}>
+								<input type="radio" class="btn-check" name="a_type">
   									<label class="btn btn-outline-primary" for="sick">병결</label>
-								<input type="radio" class="btn-check" name="a_type"  
-									${(AttVO.a_type eq "half")?"checked":""}>
+								<input type="radio" class="btn-check" name="a_type">
   									<label class="btn btn-outline-primary" for="half">조퇴</label>
-								<input type="radio" class="btn-check" name="a_type"  
-									${(AttVO.a_type eq "job")?"checked":""}>
+								<input type="radio" class="btn-check" name="a_type">
   									<label class="btn btn-outline-primary" for="job">취업활동</label>
-								<input type="radio" class="btn-check" name="a_type" 
-									${(AttVO.a_type eq "untact")?"checked":""}>
+								<input type="radio" class="btn-check" name="a_type" >
   									<label class="btn btn-outline-primary" for="untact">비대면</label>
 							</div>
 						</div>
@@ -135,6 +149,10 @@
 		</div>	
 	</form>
 </div>
+
+<footer>
+	<%@ include file="/WEB-INF/views/bit/html/footer.jsp" %>
+</footer>
 
 </body>
 </html>

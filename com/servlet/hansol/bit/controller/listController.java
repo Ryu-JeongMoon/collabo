@@ -1,4 +1,8 @@
-package com.bc.bit.controller;
+package com.servlet.hansol.bit.controller;
+
+import com.servlet.hansol.bit.common.Paging;
+import com.servlet.hansol.bit.dao.DAO;
+import com.servlet.hansol.bit.vo.BITVO;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,9 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bc.bit.common.Paging;
-import com.bc.bit.dao.DAO;
-import com.bc.bit.vo.BITVO;
 
 @WebServlet("/C_list")
 public class listController extends HttpServlet {

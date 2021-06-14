@@ -2,9 +2,10 @@
 <%@page import="com.servlet.attendance.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
 <%@page import="com.servlet.attendance.DAO.DAO"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="com.servlet.attendance.vo.AttVO"%>
 <%@page import="java.util.List"%>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -14,65 +15,70 @@
 	3. (DB) 전체 데이터 건수 조회
 	4. (DB) 현재 페이지 표시할 데이터 조회
 	5. 데이터 화면 표시(화면컨트롤 - 스타일 지정)
---%>    
+--%>
 
-<%
+<%!
+	public static final Paging P = new Paging();
+%><%
 	//페이징 처리를 위한 Paging 객체 생성해서 값 읽고 설정
-	Paging p = new Paging();
+	Paging P = new Paging();
 
 	//1. 전체 게시물의 수량 구하기
-	p.setTotalRecord(DAO.getTotalCount());
-	p.setTotalPage();
-	System.out.println("> 전체 게시글 수 : " + p.getTotalRecord());
-	System.out.println("> 전체 페이지 수 : " + p.getTotalPage());
+	P.setTotalRecord(DAO.getTotalCount());
+	P.setTotalPage();
+	System.out.println("> 전체 게시글 수 : " + P.getTotalRecord());
+	System.out.println("> 전체 페이지 수 : " + P.getTotalPage());
 
 	//2. 현재 페이지 구하기
   	String cPage = request.getParameter("cPage");
   	if (cPage != null) {
-  		p.setNowPage(Integer.parseInt(cPage));
+  		P.setNowPage(Integer.parseInt(cPage));
   	}
 	
   	//3. 현재 페이지에 표시할 게시글 시작번호(begin), 끝번호(end) 구하기
-  	p.setEnd(p.getNowPage() * p.getNumPerPage()); //현재페이지번호 * 페이지당 게시글 수
-  	p.setBegin(p.getEnd() - p.getNumPerPage() + 1);
+  	P.setEnd(P.getNowPage() * P.getNumPerPage()); //현재페이지번호 * 페이지당 게시글 수
+  	P.setBegin(P.getEnd() - P.getNumPerPage() + 1);
   	
-  	if (p.getEnd() > p.getTotalRecord()) {
-  		p.setEnd(p.getTotalRecord());
+  	if (P.getEnd() > P.getTotalRecord()) {
+  		P.setEnd(P.getTotalRecord());
   	}
-  	System.out.println(">>현재페이지 : " + p.getNowPage());
-  	System.out.println(">>시작번호(begin) : " + p.getBegin());
-  	System.out.println(">>끝번호(end) : " + p.getEnd());
+  	System.out.println(">>현재페이지 : " + P.getNowPage());
+  	System.out.println(">>시작번호(begin) : " + P.getBegin());
+  	System.out.println(">>끝번호(end) : " + P.getEnd());
   	
   	//------ 블록(block) 계산하기 -----
   	//4. 블록의 시작페이지, 끝페이지 구하기(현재 페이지 번호)
   	//시작페이지 번호 구하기
-  	int nowPage = p.getNowPage();
-  	int beginPage = (nowPage - 1) / p.getPagePerBlock() * p.getPagePerBlock() + 1;
-  	p.setBeginPage(beginPage);
-  	p.setEndPage(p.getBeginPage() + p.getPagePerBlock());
+  	int nowPage = P.getNowPage();
+  	int beginPage = (nowPage - 1) / P.getPagePerBlock() * P.getPagePerBlock() + 1;
+  	P.setBeginPage(beginPage);
+  	P.setEndPage(P.getBeginPage() + P.getPagePerBlock());
   	
   	//4-1. 끝페이지(endPage)가 전체페이지 수(totalPage) 보다 크면
   	//끝페이지를 전체페이지 수로 변경처리
-  	if (p.getEndPage() > p.getTotalPage()) {
-  		p.setEndPage(p.getTotalPage());
+  	if (P.getEndPage() > P.getTotalPage()) {
+  		P.setEndPage(P.getTotalPage());
   	}
-  	System.out.println(">>시작페이지(beginPage) : " + p.getBeginPage());
-  	System.out.println(">>끝페이지(endPage) : " + p.getEndPage());
+  	System.out.println(">>시작페이지(beginPage) : " + P.getBeginPage());
+  	System.out.println(">>끝페이지(endPage) : " + P.getEndPage());
   	
   	//=======================================
   	//현재 페이지 기준으로 DB 데이터(게시글) 가져오기
   	//시작번호(begin), 끝번호(end) 사용
-  	List<AttVO> list = DAO.getList(p.getBegin(), p.getEnd());
+  	List<AttVO> list = DAO.getList(P.getBegin(), P.getEnd());
   	System.out.println("> 현재페이지 글목록(list) : " + list);
   	
   	//============================
   	// EL, JSTL 사용을 위해 scope에 데이터 등록(page 영역)
   	pageContext.setAttribute("list", list);
-  	pageContext.setAttribute("pvo", p);
+  	pageContext.setAttribute("pvo", P);
 
   	//----------------------------------------------------------
 	SqlSession ss = DBService.getFactory().openSession();
-	List<AttVO> aList = ss.selectList("attendance.list");
+	Map<String, Object> beginAndEnd = new HashMap<>();
+	beginAndEnd.put("begin", P.getBegin());
+	beginAndEnd.put("end", P.getEnd());
+	List<AttVO> aList = ss.selectList("attendance.list", beginAndEnd);
 	ss.close();
 	pageContext.setAttribute("attr_list", aList);
 	System.out.println("aList" + aList);
@@ -85,16 +91,24 @@
 // 	pageContext.setAttribute("wList", wList);
 // 	System.out.println("wList" + wList);
 %>
-<!DOCTYPE html>
+
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>출결 목록 보기</title>
-	<meta name="viewpoint" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css" 
-				integrity="undefined" crossorigin="anonymous">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+<%--	<meta name="viewpoint" content="width=device-width, initial-scale=1">--%>
+<%--	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css" --%>
+<%--				integrity="undefined" crossorigin="anonymous">--%>
+<%--    <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>--%>
+<%--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>--%>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		  integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+			crossorigin="anonymous"></script>
    	<style type="text/css">
         * {
             font-family: NanumGothic, 'Malgun Gothic';
@@ -145,77 +159,24 @@
             table-layout: fixed;
             word-break: break-all;
         }
+
+		footer {
+			position: relative;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			padding: 15px 0;
+			text-align: center;
+		}
    </style>
    <script>
-//    var btn;
-//    //버튼 비활성화 --실패
-//    function btn_off() {
-// 	   confirm('확인하셨습니까?');
-// 	   if (true) {
-// 		   btn = $('.oxbtn');
-// 		   btn.disabled = 'disabled';
-// 		   btn.addClass('okay');
-// 	   }
-//    }
-   
-//    function btn_change() {
-// 	  $('.ox').click(function(){
-// 		   if( $(this).val() == '0' ) {
-// 			      $(this).val() == '1';
-// 			    }
-// 			    else {
-// 			      $(this).val() == '0';
-// 			    }
-// 	  })
-//    }
+
    </script>
 </head>
 <body>
-<%--navbar--%>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbarResponsive">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">BIIT</a>
-        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02"
-                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="navbar-collapse collapse" id="navbarColor02">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="">HOME
-                        <span class="visually-hidden">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">공지사항 게시판</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://localhost:8080/pjnotice">프로젝트 게시판</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="list">자료 게시판</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="">일정 관리</a>
-                </li>
-                <c:choose>
-                    <c:when test="${login != null }">
-                        <li class="nav-item">
-                            <a class="nav-link" href="http://localhost:8080/u/login.jsp"
-                               onclick="return confirm('로그아웃 하시겠습니까?');">${login}님 로그아웃</a>
-                        </li>
-                    </c:when>
-                    <c:when test="${login == null }">
-                        <li class="nav-item">
-                            <a class="nav-link" href="login.jsp">로그인</a>
-                        </li>
-                    </c:when>
-                </c:choose>
-            </ul>
-        </div>
-    </div>
-</nav>
+<%--navbar--%>
+<%@ include file="/WEB-INF/views/bit/html/navbar.jsp" %>
 
 <%--Search Form--%>
 <div class="container-fluid search-form">
@@ -260,13 +221,7 @@
 			</thead>
 
 			<tbody>
-<%-- 			<c:if test="${empty list }"> --%>
-<!-- 				<tr> -->
-<!-- 					<td colspan="7"> -->
-<!-- 						<h2>현재 등록된 게시글이 없습니다.</h2> -->
-<!-- 					</td> -->
-<!-- 				</tr> -->
-<%-- 			</c:if> --%>
+
 			<c:if test="${not empty list }">
 				<c:forEach var="vo" items="${list }">
 					<tr class="table-primary">
@@ -378,10 +333,10 @@
 	
 	<div style="text-align: right">
 	    <span>${(empty pvo.nowPage)?1:pvo.nowPage} / ${pvo.endPage!=0?pvo.totalPage:1} 페이지</span>
-	</div>	
-		
+	</div>
+
 <footer>
-    <%@ include file="footer.jsp" %>
+	<%@ include file="/WEB-INF/views/bit/html/footer.jsp" %>
 </footer>
 </body>
 </html>

@@ -48,7 +48,7 @@
         crossorigin="anonymous"></script>
 
 <%--navbar--%>
-<%@ include file="../html/navbar.jsp"%>
+<%@ include file="../html/navbar.jsp" %>
 
 <div class="container">
     <div class="py-5 text-center">
@@ -122,7 +122,8 @@
                 <th>첨부파일</th>
                 <td>
                     <div class="form-group">
-                        <input class="form-control" type="file" name="attached_file" id="attached_file" value="${list.attached_file}">
+                        <input class="form-control" type="file" name="attached_file" id="attached_file"
+                               value="${list.attached_file}">
                     </div>
                 </td>
             </tr>
@@ -150,10 +151,10 @@
                         type="reset">취소
                 </button>
                 <c:if test="${!empty param.p}">
-                <button class="btn btn-secondary btn-lg"
-                        onclick="location.href='list?p=${param.p}&f=${param.f}&k=${param.k}'"
-                        type="button">목록으로
-                </button>
+                    <button class="btn btn-secondary btn-lg"
+                            onclick="location.href='list?p=${param.p}&f=${param.f}&k=${param.k}'"
+                            type="button">목록으로
+                    </button>
                 </c:if>
                 <c:if test="${empty param.p}">
                     <button class="btn btn-secondary btn-lg"
@@ -168,7 +169,7 @@
 
 <%--footer--%>
 <footer>
-<%@ include file="../html/footer.jsp" %>
+    <%@ include file="../html/footer.jsp" %>
 </footer>
 
 <script>

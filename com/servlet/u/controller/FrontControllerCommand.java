@@ -1,4 +1,4 @@
-package u.controller;
+package com.servlet.u.controller;
 
 import java.io.IOException;
 
@@ -8,16 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import u.model.MemberDAO;
-import u.model.command.Command;
-import u.model.command.DeleteCommand;
-import u.model.command.LoginCommand;
-import u.model.command.LogoutCommand;
-import u.model.command.signCommand;
-import u.model.command.signupCommand;
+import com.servlet.u.model.command.*;
 
-
-@WebServlet("/controller")
+@WebServlet("/u/controller")
 public class FrontControllerCommand extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -35,9 +28,12 @@ public class FrontControllerCommand extends HttpServlet {
 			command = new LoginCommand();
 		}else if("signup".equals(type)) {
 			command = new signupCommand();
-		}else if("delete".equals(type)) {
+		} else if("delete".equals(type)) {
 			command = new DeleteCommand();
+		} else if("update".equals(type)) {
+			command = new UpdateCommand();
 		}
+
 		String path = command.exec(request, response);
 		request.getRequestDispatcher(path).forward(request, response);
 	}

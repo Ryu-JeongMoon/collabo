@@ -24,6 +24,17 @@
 	<select id="email" resultType = "com.servlet.u.model.MemberVO">
 	select * from member where email = #{email}
 	</select>
+
+	<!-- 회원 정보 삭제 -->
+	<delete id="deletemember" parameterType="string">
+		DELETE FROM MEMBER
+		WHERE ID = #{id}
+	</delete>
+
+	<update id="update" parameterType="com.servlet.u.model.MemberVO">
+		update member set password = #{password}, name = #{name}, email = #{email}, phone = #{phone}
+		where id = #{id}
+	</update>
 </mapper>
 
 

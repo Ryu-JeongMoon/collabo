@@ -1,7 +1,6 @@
-package u.mybatis;
+package com.servlet.u.mybatis;
 
 import java.io.IOException;
-import java.io.Reader;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -16,7 +15,7 @@ public class DBService {
 	static {
 		try {
 			factory = new SqlSessionFactoryBuilder()
-					.build(Resources.getResourceAsReader("u/mybatis/config.xml"));
+					.build(Resources.getResourceAsReader("u/config.xml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

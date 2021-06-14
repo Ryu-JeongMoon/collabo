@@ -11,7 +11,7 @@
 <title>탈퇴완료화면</title>
 <script>
 alert("회원탈퇴가 정상 처리 되었습니다.");
-location.href="${contextPath }/login.jsp";
+location.href="login.jsp";
 </script>
 </head>
 <body>

@@ -1,5 +1,5 @@
-<%@page import="com.bc.bit.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@ page import="com.servlet.hansol.bit.mybatis.DBService" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -10,7 +10,7 @@
 	//1. 파라미터 값 추출해서 VO 에 저장
 	
 %>  
-	<jsp:useBean id="vo" class="com.bc.bit.vo.BITVO" />
+	<jsp:useBean id="vo" class="com.servlet.hansol.bit.vo.BITVO" />
 	<jsp:setProperty property="*" name="vo" />
 <%
 	System.out.println("> local vo : "+vo);

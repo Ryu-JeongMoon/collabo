@@ -1,65 +1,60 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+         pageEncoding="UTF-8" %>
 <html>
 <head>
-<meta charset="UTF-8">
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">    
-    
-	<title>수정 페이지</title>
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>수정 페이지</title>
+
+    <style>
+        @import "/WEB-INF/views/bit/css/reset.css";
+
+        * {
+            font-family: NanumGothic, 'Malgun Gothic';
+        }
+
+        .col {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding: 10px;
+            align-items: center;
+        }
+
+        .col button {
+            padding: 10px;
+            margin: 2px;
+        }
+
+        footer {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            padding: 15px 0;
+            text-align: center;
+        }
+    </style>
 </head>
-<style>
-    * {
-        font-family: NanumGothic, 'Malgun Gothic';
-    }
-    .col {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        padding: 10px;
-        align-items: center;
-    }
-    .col button {
-        padding: 10px;
-        margin: 2px;
-    }
-</style>
 
-<script>
-	function save_go(frm){
-		//DB 수정 작업 요청
-		frm.action = "modify_ok.jsp";
-		frm.submit();
-	}
- 	function list_go(frm){
-		frm.action = "../C_list"; //목록 페이지
-		frm.submit();
-	}
-</script>
-
-<%--body--%>
 <body>
 
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-        crossorigin="anonymous"></script>
-
 <%--navbar--%>
-<%@ include file="navbar.jsp"%>
+<%@ include file="/WEB-INF/views/bit/html/navbar.jsp" %>
 
 <div class="container">
     <div class="py-5 text-center">
         <h2>글 수정</h2>
     </div>
-</div>
 
-<form name="updateForm" role="form" action="updateSave" method="post">
+    <form name="updateForm" role="form" action="updateSave" method="post">
         <table class="table table-hover" border="1">
             <thead>
             </thead>
@@ -105,7 +100,7 @@
                     <div class="form-group">
                         <fieldset>
                             <input class="form-control" id="subject" name="subject" type="text"
-                            	   value="${BITVO.subject }"
+                                   value="${BITVO.subject }"
                                    placeholder="제목을 입력하세요">
                         </fieldset>
                     </div>
@@ -117,7 +112,7 @@
                     <div class="form-group">
                         <fieldset>
                             <input class="form-control" id="content" name="content" type="text"
-                            	   value="${BITVO.content }"
+                                   value="${BITVO.content }"
                                    placeholder="내용을 입력하세요">
                         </fieldset>
                     </div>
@@ -134,11 +129,11 @@
                     </div>
                 </td>
             </tr>
-            </tbody>        
+            </tbody>
         </table>
         <div class="row">
-        	<div class="col">
-        		<button class="btn btn-primary btn-lg"
+            <div class="col">
+                <button class="btn btn-primary btn-lg"
                         onclick="save_go(this.form)" formmethod="post"
                         type="button">완료
                 </button>
@@ -147,45 +142,27 @@
                         type="reset">취소
                 </button>
                 <button class="btn btn-secondary btn-lg" onclick="list_go(this.form)">목록</button>
-        	</div>
+            </div>
         </div>
-</form>
+    </form>
+</div>
 
-<%-- 
-	<div id="bit">
-	<h2>공지사항 : 수정</h2>
-	<hr>
-	<p><a href="../C_list">[ 목록으로 이동 ]</a></p>
+<footer>
+    <%@ include file="/WEB-INF/views/bit/html/footer.jsp" %>
+</footer>
 
-	<form method="post" action="modify_ok.jsp?b_idx=${BITVO.b_idx }">
-	<table>
-		<tbody>
-			<tr>
-				<th>작성자</th>
-				<td><input type="text" name="writer" value="${BITVO.writer }"></td>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td><input type="text" name="subject" value="${BITVO.subject }"></td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<textarea name="content" rows="5" cols="60">${BITVO.content }</textarea>
-				</td>
-			</tr>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="2">
-					<input type="button" value="수 정" onclick="save_go(this.form)">
-					<input type="reset" value="다시작성">
-					<input type="hidden" name="b_idx" value="${BITVO.b_idx }">
-				</td>
-			</tr>
-		</tfoot>
-	</table>
-	</form>
-	</div> 
---%>
+<script>
+    function save_go(frm) {
+        //DB 수정 작업 요청
+        frm.action = "modify_ok.jsp";
+        frm.submit();
+    }
+
+    function list_go(frm) {
+        frm.action = "../C_list"; //목록 페이지
+        frm.submit();
+    }
+</script>
+
 </body>
 </html>

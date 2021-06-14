@@ -1,4 +1,4 @@
-package com.bc.bit.vo;
+package com.servlet.hansol.bit.vo;
 
 public class CommVO {
 	private String c_idx, writer, content, pwd,

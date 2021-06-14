@@ -1,4 +1,4 @@
-package u.model.command;
+package com.servlet.u.model.command;
 
 import java.io.IOException;
 
@@ -6,13 +6,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import u.model.MemberDAO;
-import u.model.MemberVO;
+import com.servlet.u.model.MemberDAO;
+import com.servlet.u.model.MemberVO;
 
 
 public class signupCommand implements Command {
 
-		
 	@Override
 	public String exec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -28,10 +27,11 @@ public class signupCommand implements Command {
 		MemberDAO memberDAO = new MemberDAO();
 		memberDAO.insert(vo);
 		
+		
 		//vo 값 보내기
 		request.setAttribute("vo", vo);
 		
-		return "signupCheck.jsp";
+		return "login.jsp";
 	}
 
 

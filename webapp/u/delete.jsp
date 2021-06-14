@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         function send_go1(frm) {
@@ -15,7 +18,7 @@
 
         function passwordck() {
             if (document.delete.password.value !=${loginList.password}) {
-                alert("비번 틀림");
+                alert("비밀번호가 일치하지 않습니다.");
             } else {
                 const target = document.getElementById('delete');
                 target.disabled = false;
@@ -64,33 +67,37 @@
 
 <div class="container">
     <div class="py-5 text-center">
-        <h2>마이 페이지</h2>
+        <h2>회원 탈퇴</h2>
     </div>
     <form name="delete" method="post">
-        <table class="table table-hover">
+        <table class="table table-hover" border="1">
             <thead align="center">
-            <h2>${loginList.name}님의 페이지</h2>
+            <h2>${loginList.name}님의 개인 페이지</h2>
             </thead>
             <tbody>
             <tr class="table-active">
                 <th scope="row">비밀번호를 입력하세요</th>
-                <td><input type="password" name="password" id="password" onblur="passwordck()"></td>
-
+                <div class="form-group">
+                    <fieldset>
+                        <td><input class="form-control" type="password" name="password" id="password"
+                                   onblur="passwordck()"></td>
+                    </fieldset>
+                </div>
             </tr>
-            <tr class="table-active">
-                <th scope="row"></th>
-                <input type="hidden" name="id" value="${loginList.id}">
-                <td>
-                    <button type="button" disabled="disabled" id="delete" onclick="send_go1(this.form)">탈퇴하기</button>
-                </td>
-            </tr>
-
             </tbody>
         </table>
+        <div class="col">
+            <input type="hidden" name="id" value="${loginList.id}">
+            <button class="btn btn-danger btn-lg" type="button" disabled="disabled" id="delete"
+                    onclick="send_go1(this.form)">탈퇴하기
+            </button>
+        </div>
     </form>
 </div>
 <%--footer--%>
-<%@ include file="/WEB-INF/views/bit/html/footer.jsp" %>
+<footer>
+    <%@ include file="/WEB-INF/views/bit/html/footer.jsp" %>
+</footer>
 
 </body>
 </html>

@@ -58,7 +58,7 @@
         <h2>개인정보 수정</h2>
     </div>
 
-    <form method="post">
+    <form action="http://localhost:8080/u/controller?type=update" method="post">
         <table class="table table-hover" border="1">
             <thead>
 
@@ -79,7 +79,7 @@
                 <td>
                     <div class="form-group">
                         <fieldset>
-                            <input class="form-control" type="text" name="password" id="password" placeholder="${loginList.password}">
+                            <input class="form-control" type="password" name="password" id="password" placeholder="${loginList.password}">
                         </fieldset>
                     </div>
                 </td>
@@ -118,7 +118,7 @@
         </table>
 
         <div class="col">
-            <button class="btn btn-primary btn-lg" type="button" onclick="location.href='mypage.jsp'">완료</button>
+            <button class="btn btn-primary btn-lg" type="submit" formmethod="post">완료</button>
             <button class="btn btn-danger btn-lg" type="reset" onclick="alert('입력한 내용이 취소됩니다.')">취소</button>
         </div>
     </form>

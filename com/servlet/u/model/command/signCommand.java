@@ -1,4 +1,4 @@
-package u.model.command;
+package com.servlet.u.model.command;
 
 import java.io.IOException;
 

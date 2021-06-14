@@ -9,10 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.servlet.attendance.DAO.DAO;
-import com.servlet.attendance.vo.AttVO;
-
-
 @WebServlet("/controller")
 public class FrontController extends HttpServlet {
 	

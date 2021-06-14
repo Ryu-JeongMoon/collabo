@@ -52,6 +52,7 @@
         frm.submit();
     }
 
+
 </script>
 <body>
 
@@ -61,6 +62,12 @@
 
 <%--navbar--%>
 <%@ include file="/WEB-INF/views/bit/html/navbar.jsp" %>
+
+<c:if test="${!empty request.getParameter('vo')}">
+    <script language="javascript">
+        alert('회원가입이 완료되었습니다.');
+    </script>
+</c:if>
 
 <div class="container">
     <div class="py-5 text-center">

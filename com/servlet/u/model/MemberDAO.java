@@ -1,8 +1,8 @@
-package u.model;
+package com.servlet.u.model;
 
 import org.apache.ibatis.session.SqlSession;
 
-import u.mybatis.DBService;
+import com.servlet.u.mybatis.DBService;
 
 
 public class MemberDAO {
@@ -35,7 +35,13 @@ public class MemberDAO {
 		}else{
 			return 1;
 		}
-		
+	}
+
+	public MemberVO getInfo(String id) {
+		SqlSession ss = DBService.getFactory().openSession();
+		MemberVO list = ss.selectOne("read", id);
+		ss.close();
+		return list;
 	}
 	
 	//로그인 
@@ -45,20 +51,18 @@ public class MemberDAO {
 		ss.close();
 		return member;
 	}
-	
-	//회원 탈퇴
+
+	//탈퇴
 	public void deletemember(String id) {
 		SqlSession ss = DBService.getFactory().openSession(true);
 		ss.delete("bc.deletemember",id);
 		ss.close();
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public void updateMember(MemberVO memberVO) {
+		SqlSession session = DBService.getFactory()
+									  .openSession(true);
+		session.update("bc.update", memberVO);
+		session.close();
+	}
 }

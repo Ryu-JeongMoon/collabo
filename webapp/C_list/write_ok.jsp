@@ -1,5 +1,6 @@
-<%@page import="com.bc.bit.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
+<%@ page import="com.servlet.hansol.bit.mybatis.DBService" %>
+<%@ page import="com.servlet.hansol.bit.vo.BITVO" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html;charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -13,17 +14,21 @@
 
 	//1. 파라미터 값 추출해서 VO에 저장
 %>
-	<jsp:useBean id="BITVO" class="com.bc.bit.vo.BITVO" />
-	<jsp:setProperty property="*" name="BITVO"/>
+<%--	<jsp:useBean id="BITVO" class="com.servlet.hansol.bit.vo.BITVO" />--%>
+<%--	<jsp:setProperty property="*" name="BITVO"/>--%>
 <%
-	System.out.println(">> BITVO : " +BITVO);
+	com.servlet.hansol.bit.vo.BITVO bitvo = new BITVO();
+	bitvo.setWriter((String)session.getAttribute("login"));
+	bitvo.setSubject(request.getParameter("subject"));
+	bitvo.setContent(request.getParameter("content"));
+	bitvo.setWriter(request.getParameter("writer"));
 
 	//2. SqlSession 객체 생성
 	SqlSession ss = DBService.getFactory().openSession(true); //자동커밋상태(실행시 자동으로 커밋)
 	
 	//3. 매퍼의 insert SQL실행
 	try {
-		ss.insert("BIT.insert", BITVO);
+		ss.insert("BIT.insert", bitvo);
 		//4. 페이지 이동 처리(정상처리시)
 %>
 	<script>

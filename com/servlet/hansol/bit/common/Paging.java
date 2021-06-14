@@ -1,4 +1,4 @@
-package com.bc.bit.common;
+package com.servlet.hansol.bit.common;
 
 import java.util.Arrays;
 

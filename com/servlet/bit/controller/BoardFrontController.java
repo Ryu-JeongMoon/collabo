@@ -98,8 +98,8 @@ public class BoardFrontController extends HttpServlet {
 //            paramMap.put("fileName", new String(multi.getFilesystemName("attached_file").getBytes(StandardCharsets.UTF_8), "EUC-KR"));
 //            paramMap.put("originalFileName", new String(multi.getOriginalFileName("attached_file").getBytes(StandardCharsets.UTF_8), "EUC-KR"));
 
-            paramMap.put("fileName", URLDecoder.decode(multi.getFilesystemName("attached_file"), "UTF-8"));
-            paramMap.put("originalFileName", URLDecoder.decode(multi.getOriginalFileName("attached_file"), "UTF-8"));
+            paramMap.put("fileName", multi.getFilesystemName("attached_file"));
+            paramMap.put("originalFileName", multi.getOriginalFileName("attached_file"));
         } catch (IOException e) {
             e.printStackTrace();
         }

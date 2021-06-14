@@ -1,6 +1,6 @@
-<%@page import="com.bc.bit.mybatis.DBService"%>
 <%@page import="org.apache.ibatis.session.SqlSession"%>
-<%@page import="com.bc.bit.vo.BITVO"%>
+<%@ page import="com.servlet.hansol.bit.vo.BITVO" %>
+<%@ page import="com.servlet.hansol.bit.mybatis.DBService" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
