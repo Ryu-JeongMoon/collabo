@@ -149,14 +149,15 @@
 							alert("삭제되었습니다.");
 							monthCalendar.refetchEvents();
 							weekCalendar.refetchEvents();
+							onthCalendar.fullCalendar ('refetchEvents');
+							weekCalendar.fullCalendar ('refetchEvents');
 						},
 						error : function(request,status,error) {
 					        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
 					    }
 					});
 					
-					onthCalendar.fullCalendar ('refetchEvents');
-					weekCalendar.fullCalendar ('refetchEvents');
+					
 				}
 				
 					
@@ -206,11 +207,10 @@
 
 	#footer {
 
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:70px;   
-    background:#ccc;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 70px;   
 
 	}
 </style>

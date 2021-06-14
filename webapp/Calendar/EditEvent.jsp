@@ -36,12 +36,18 @@
 			url: "/Project/updateInsert",
 			type : "post",
 			data : queryString,
-			
+			success : function() {
+				//alert("성공");
+				opener.document.location.reload();
+				window.close();
+			},
+				error : function(request,status,error) {
+			        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+			}
 			
 		});
 		
-		opener.document.location.reload();
-		window.close();
+		
 		
 	}
 	
@@ -92,7 +98,7 @@
 			<div id="ajax">
 			</div>
 			
-			<input type="submit" value="수정" onclick="logic_close(this.form)">
+			<input type="button" value="수정" onclick="logic_close(this.form)">
 			<input type="button" value="취소" onclick="cancle()">
 			
 			<input type="reset" value="초기화">

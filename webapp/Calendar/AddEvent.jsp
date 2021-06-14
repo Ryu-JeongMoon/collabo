@@ -29,14 +29,20 @@
 		var queryString = $("form[name=event]").serialize() ;
 
 		$.ajax({
-					url: "/Project/addEvent",
-					type : "post",
-					data : queryString,
-					//dataType : "json",
-					
-				});
-		opener.document.location.reload();
-		window.close();
+				url: "/Project/addEvent",
+				type : "post",
+				data : queryString,
+				//dataType : "json",
+				success : function() {
+				//alert("성공");
+				opener.document.location.reload();
+				window.close();
+			},
+				error : function(request,status,error) {
+			        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+			}
+		});
+		
     	
 	}
 </script>
@@ -63,7 +69,7 @@
 			<p>제목 색상 : <input type="color" name="text_color" value="#ffffff"></p>
 			<p>설명</P>
 			<p id="center"><textarea name="detail" cols="35" rows="8" ></textarea></p>
-			<input type="submit" value="추가" onclick="logic_close(this.form)">
+			<input type="button" value="추가" onclick="logic_close(this.form)">
 			<input type="button" value="취소" onclick="cancle()">
 			
 			<input type="reset" value="초기화">
