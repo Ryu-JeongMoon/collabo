@@ -6,15 +6,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset='utf-8' />
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"> -->
 
+
+<meta charset='utf-8' />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/fullcalendar@5.7.2/main.js"></script>
 
+
+
+
 <link href='css/main.css' rel='stylesheet' />
 <script src='js/main.js'></script>
+
+<style type="text/css">
+
+	body {
+    	margin: 50px 0 0 60px;
+    	font-size: 14px;
+    	font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+    	
+	}
+
+	#month-calendar,
+	#week-calendar {
+    	float: left;
+    	width: 900px;
+    	margin: 50px 60px 60px 0;
+    	border: 2px solid black;
+	}
+
+	
+	#all {
+		
+	}
+
+	#footer {
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 70px;   
+
+	}
+	
+
+</style>
+
 <script>
 	var width = '600';
 	var height = '500';
@@ -149,20 +197,14 @@
 							alert("삭제되었습니다.");
 							monthCalendar.refetchEvents();
 							weekCalendar.refetchEvents();
-							onthCalendar.fullCalendar ('refetchEvents');
+							monthCalendar.fullCalendar ('refetchEvents');
 							weekCalendar.fullCalendar ('refetchEvents');
 						},
 						error : function(request,status,error) {
 					        alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
 					    }
 					});
-					
-					
 				}
-				
-					
-					
-
 			},
 		});
 	    
@@ -170,10 +212,20 @@
 	    weekCalendar.render();
 	    
 	    
+	    $(".fc-col-header-cell-cushion").css( "color", "black" );
+	    $(".fc-col-header-cell-cushion").css( "text-decoration", "none" );
+	    $(".fc-daygrid-day-number").css( "color", "black" );
+	    $(".fc-daygrid-day-number").css( "text-decoration", "none" );
+	    
+	    $(".fc-list-day-text").css( "color", "black" );
+	    $(".fc-list-day-text").css( "text-decoration", "none" );
+	    $(".fc-list-day-side-text").css( "color", "black" );
+	    $(".fc-list-day-side-text").css( "text-decoration", "none" );
 
 
 	}); //addEventListener end
-  
+  	
+	
 	$(window).on('resize', function(){
 		//clearTimeout(timer);
 		//timer = setTimeout(function(){
@@ -183,37 +235,7 @@
 
 	
 </script>
-<style>
 
-	body {
-    	margin: 50px 0 0 60px;
-    	font-size: 14px;
-    	font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    	
-	}
-
-	#month-calendar,
-	#week-calendar {
-    	float: left;
-    	width: 900px;
-    	margin: 50px 60px 60px 0;
-    	border: 2px solid black;
-	}
-
-	
-	#all {
-		
-	}
-
-	#footer {
-
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 70px;   
-
-	}
-</style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/bit/html/navbar.jsp" %>
