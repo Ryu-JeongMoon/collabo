@@ -20,6 +20,7 @@ import com.zipbop.funding.FundingOpenVO;
 import com.zipbop.funding.FundingPayVO;
 import com.zipbop.funding.FundingRewardVO;
 import com.zipbop.funding.FundingService;
+import com.zipbop.funding.MemberVO;
 
 @Controller
 @SessionAttributes("funding")
@@ -69,7 +70,14 @@ public class FundingController {
 		model.addAttribute("name_price_map", name_price_map);
 		// model.addAttribute("reward", reward);
 		return "fundingDetail.jsp";
-
+	}
+	
+	@RequestMapping("/fundingOpen.do")
+	public String getLicense(MemberVO mvo, Model model) {
+		System.out.println("--사업자 번호 유무 판단해서 펀딩 오픈창 열기");
+		fundingService.getLicense(mvo);
+		System.out.println("mvo: "+mvo);
+		return "fundingOpen.jsp";
 	}
 
 	@RequestMapping("/insertBoard.do")

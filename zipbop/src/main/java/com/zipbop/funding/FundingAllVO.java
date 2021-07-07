@@ -31,6 +31,9 @@ public class FundingAllVO {
 	private String choice_reward;
 	private Date pay_date;
 	
+	//MemberVO
+	private String license;
+	
 	public int getProduct_no() {
 		return product_no;
 	}
@@ -158,6 +161,12 @@ public class FundingAllVO {
 	public void setPay_date(Date pay_date) {
 		this.pay_date = pay_date;
 	}
+	public String getLicense() {
+		return license;
+	}
+	public void setLicense(String license) {
+		this.license = license;
+	}
 	@Override
 	public String toString() {
 		return "FundingAllVO [product_no=" + product_no + ", product_name=" + product_name + ", id=" + id
@@ -165,6 +174,7 @@ public class FundingAllVO {
 				+ region + ", d_day=" + d_day + ", save_money=" + save_money + ", supporter=" + supporter + ", pimg_no="
 				+ pimg_no + ", reward_no=" + reward_no + ", reward_name=" + reward_name + ", reward_price="
 				+ reward_price + ", pay_no=" + pay_no + ", total_sum=" + total_sum + ", name=" + name + ", phone="
-				+ phone + ", address=" + address + ", choice_reward=" + choice_reward + ", pay_date=" + pay_date + "]";
+				+ phone + ", address=" + address + ", choice_reward=" + choice_reward + ", pay_date=" + pay_date
+				+ ", license=" + license + "]";
 	}
 }

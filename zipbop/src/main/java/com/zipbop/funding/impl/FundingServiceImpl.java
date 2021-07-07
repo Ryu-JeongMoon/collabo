@@ -10,6 +10,7 @@ import com.zipbop.funding.FundingOpenVO;
 import com.zipbop.funding.FundingPayVO;
 import com.zipbop.funding.FundingRewardVO;
 import com.zipbop.funding.FundingService;
+import com.zipbop.funding.MemberVO;
 
 @Service("fundingService")
 public class FundingServiceImpl implements FundingService {
@@ -66,6 +67,11 @@ public class FundingServiceImpl implements FundingService {
 	@Override
 	public void insertPay(FundingAllVO allvo) {
 		fundingDAO.insertPay(allvo);
+	}
+
+	@Override
+	public MemberVO getLicense(MemberVO mvo) {
+		return fundingDAO.getLicense(mvo);
 	}
 
 }

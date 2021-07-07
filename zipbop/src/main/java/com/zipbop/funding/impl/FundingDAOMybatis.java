@@ -10,6 +10,7 @@ import com.zipbop.funding.FundingAllVO;
 import com.zipbop.funding.FundingOpenVO;
 import com.zipbop.funding.FundingPayVO;
 import com.zipbop.funding.FundingRewardVO;
+import com.zipbop.funding.MemberVO;
 
 @Repository
 public class FundingDAOMybatis {
@@ -24,6 +25,12 @@ public class FundingDAOMybatis {
 	public String getMember(String id) {
 		System.out.println("-----getMember(id) 실행");
 		return mybatis.selectOne("FundingDAO.getMember", id);
+	}
+	
+	// 사업자 번호
+	public MemberVO getLicense(MemberVO mvo) {
+		System.out.println("---getLicense(mvo) 실행");
+		return mybatis.selectOne("FundingDAO.getLicense", mvo);
 	}
 
 	// 상세조회(selectOne)
