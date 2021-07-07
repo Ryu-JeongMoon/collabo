@@ -28,9 +28,10 @@ public class FundingDAOMybatis {
 	}
 	
 	// 사업자 번호
-	public MemberVO getLicense(MemberVO mvo) {
-		System.out.println("---getLicense(mvo) 실행");
-		return mybatis.selectOne("FundingDAO.getLicense", mvo);
+	public String getLicense(String license) {
+		System.out.println("---getLicense(license) 실행");
+		//System.out.println("DAO : " + mybatis.selectOne("FundingDAO.getLicense", license));
+		return mybatis.selectOne("FundingDAO.getLicense", license);
 	}
 
 	// 상세조회(selectOne)

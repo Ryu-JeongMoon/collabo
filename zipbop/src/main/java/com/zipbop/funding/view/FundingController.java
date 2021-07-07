@@ -37,9 +37,13 @@ public class FundingController {
 	public String login(@RequestParam String id, HttpSession session, Model model) {
 		System.out.println("Controller ID : " + id);
 		String member = fundingService.getMember(id);
+		String license = fundingService.getLicense(id);
 		//System.out.println("Controller Member : " + member);
 		if (member != null) {
 			session.setAttribute("id", id);
+			if(license != null) {
+				session.setAttribute("license", license);				
+			}
 			return "fundingList.jsp";
 		} else {
 			return "login.jsp";
@@ -72,14 +76,6 @@ public class FundingController {
 		return "fundingDetail.jsp";
 	}
 	
-	@RequestMapping("/fundingOpen.do")
-	public String getLicense(MemberVO mvo, Model model) {
-		System.out.println("--사업자 번호 유무 판단해서 펀딩 오픈창 열기");
-		fundingService.getLicense(mvo);
-		System.out.println("mvo: "+mvo);
-		return "fundingOpen.jsp";
-	}
-
 	@RequestMapping("/insertBoard.do")
 	public String insertBoard(FundingAllVO allvo) {
 		System.out.println("--펀딩오픈 신청하기");

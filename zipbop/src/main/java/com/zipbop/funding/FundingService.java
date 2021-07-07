@@ -13,5 +13,5 @@ public interface FundingService {
 	void insertPay(FundingAllVO allvo);
 	String getMember(String id);
 	List<FundingPayVO> getPayList (String id);
-	MemberVO getLicense(MemberVO mvo);
+	String getLicense(String license);
 }

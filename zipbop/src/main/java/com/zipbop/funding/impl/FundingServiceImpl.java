@@ -70,8 +70,8 @@ public class FundingServiceImpl implements FundingService {
 	}
 
 	@Override
-	public MemberVO getLicense(MemberVO mvo) {
-		return fundingDAO.getLicense(mvo);
+	public String getLicense(String license) {
+		return fundingDAO.getLicense(license);
 	}
 
 }
