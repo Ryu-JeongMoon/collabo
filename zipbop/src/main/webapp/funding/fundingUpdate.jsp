@@ -33,7 +33,7 @@
 	}
 	
 	<%--숫자 입력시 자동 콤마 --%>
-    function inputNumberFormat(obj) {
+<%--    function inputNumberFormat(obj) {
         obj.value = comma(uncomma(obj.value));
     }
 
@@ -46,6 +46,14 @@
         str = String(str);
         return str.replace(/[^\d]+/g, '');
     }
+    --%>
+    
+    <%--숫자 최대길이 제한--%>
+function maxLengthCheck(obj) {
+	if(obj.value.length > obj.maxLength) {
+		obj.value = obj.value.slice(0, obj.maxLength);
+	}
+}
 </script>
 </head>
 <body>
@@ -58,46 +66,46 @@
 		<tr>
 			<th>지역</th>
 			<td>
-				<select name="region">
+				<select name="region" required>
 					<option value="">선택</option>
-					<option value="서울">서울</option>
-					<option value="경기">경기</option>
-					<option value="인천">인천</option>
-					<option value="강원">강원</option>
-					<option value="충북">충북</option>
-					<option value="충남">충남</option>
-					<option value="세종">세종</option>
-					<option value="대전">대전</option>
-					<option value="전북">전북</option>
-					<option value="전남">전남</option>
-					<option value="광주">광주</option>
-					<option value="경북">경북</option>
-					<option value="경남">경남</option>
-					<option value="대구">대구</option>
-					<option value="울산">울산</option>
-					<option value="부산">부산</option>
-					<option value="제주">제주</option>
+					<option value="Seoul">서울</option>
+					<option value="Gyeonggi-do">경기</option>
+					<option value="Incheon">인천</option>
+					<option value="Gangwon-do">강원</option>
+					<option value="Chungcheongbuk-do">충북</option>
+					<option value="Chungcheongnam-do">충남</option>
+					<option value="Sejong">세종</option>
+					<option value="Daejeon">대전</option>
+					<option value="Jeollabuk-do">전북</option>
+					<option value="Jeollanam-do">전남</option>
+					<option value="Gwangju">광주</option>
+					<option value="Gyeongsangbuk-do">경북</option>
+					<option value="Gyeongsangnam-do">경남</option>
+					<option value="Daegu">대구</option>
+					<option value="Ulsan">울산</option>
+					<option value="Busan">부산</option>
+					<option value="Jeju-do">제주</option>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<th>상품명</th>
-			<td><input type="text" name="product_name" placeholder="${funding.product_name }"></td>
+			<td><input type="text" name="product_name" maxlength="25" size="30" placeholder="${funding.product_name }" required></td>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
 			<th>사업자명</th>
-			<td><input type="text" value="${funding.id }" readonly></td>
+			<td><input type="text" value="${funding.id }" size="30" readonly></td>
 		</tr>
 		<tr>
 			<th>마감일</th>
-			<td><input type="date" name="deadLine"></td>
+			<td><input type="date" name="deadLine" size="30" required></td>
 		</tr>	
 		<tr>
 			<th>목표금액</th>	
 			<td>
-				<input type="text" value="${funding.goal_money }" readonly>
+				<input type="number" value="${funding.goal_money }" size="30" readonly>
 			</td>		
 		</tr>
 	</tbody>
@@ -109,9 +117,9 @@ field란 id를 가진 div에 생성해주는 소스입니다.-->
 <div id="room_type">
 	<div class="form-group">
 	<label for="image">리워드</label>
-	<input type="text" id="reward_name" name="reward_name" class="form-control" ></input>
+	<input type="text" id="reward_name" name="reward_name" class="form-control" maxlength="25"></input>
 	<label for="image">가격</label>
-	<input type="text" id="reward_price" name="reward_price" class="form-control" ></input>
+	<input type="number" id="reward_price" name="reward_price" class="form-control" maxlength="5" oninput="maxLengthCheck(this)" ></input>
 	<input type="button" value="추가" onclick="add_div()"><br/>
 	</div>
 	<input type="button" value="삭제" onclick="remove_div(this)">
@@ -122,7 +130,7 @@ field란 id를 가진 div에 생성해주는 소스입니다.-->
 <table>
 	<tr>
 		<td colspan="2">
-			<textarea rows="30" cols="100" placeholder="${funding.content }" name="content"></textarea>
+			<textarea rows="30" cols="100" placeholder="${funding.content }" name="content" required></textarea>
 		</td>
 	</tr>
 </table>

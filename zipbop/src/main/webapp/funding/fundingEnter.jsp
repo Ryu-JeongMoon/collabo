@@ -72,18 +72,6 @@ function check(re, what, message) {
 }
 	document.addEventListener('window.onunload', validate);
 	
-<%-- 펀딩 참여 전 확인알림 
-	function alert_go(frm) {
-		var con = 
-			confirm("\n◈ 펀딩 참여 전 확인하세요! ◈\n\n가장 빠른 지정 결제일은 ♤마감 후 일주일 뒤♤ 입니다."
-					+"\n지정 결제일에 결제 수단을 선택할 수 있습니다.\n");
-		if(con == true) {
-			//frm.submit();
-		} else {
-			alert("취소되었습니다. 목록으로 이동합니다.")
-			location.href="fundingList.jsp";
-		}
-	}--%>
 </script>
 </head>
 <body>
@@ -94,6 +82,10 @@ function check(re, what, message) {
 <form action="fundingPayment.do" method="post" onsubmit="alert_go(this.form)">
 	<h3>펀딩 내역</h3>
 <table>
+	<tr>
+		<th>구매 번호</th>
+		<td>${chk.pay_no }</td>
+	</tr>
 	<tr>
 		<th>선택한 리워드</th>
 		<td>
@@ -113,22 +105,26 @@ function check(re, what, message) {
 <hr>
 	<h3>배송지 입력</h3>
 <table>
+	<!--  <tr>
+		<th>주문 번호</th>
+		<td><input type="text" id="pay_no" name="pay_no" value="${pay.pay_no }" readonly></td>
+	</tr>-->
 	<tr><!-- 후결제 -->
 		<th>이름</th>
-		<td><input type="text" id="name" name="name"></td>
+		<td><input type="text" id="name" name="name" required></td>
 		<input type="hidden" value="${sessionScope.id }" id="id" name="id">
 	</tr>
 	<tr>	
 		<th>연락처</th>
-		<td><input type="text" id="phone" name="phone"></td>
+		<td><input type="text" id="phone" name="phone" required></td>
 	</tr>
 	<tr>
 		<th>이메일</th>
-		<td><input type="text" id="email" name="email"></td>
+		<td><input type="text" id="email" name="email" required></td>
 	</tr>
 	<tr>
 		<th>주소</th>
-		<td><input type="text" name="address"></td>
+		<td><input type="text" name="address" required></td>
 	</tr>
 </table>
 <hr>

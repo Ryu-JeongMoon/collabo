@@ -123,6 +123,19 @@ function alert_login(frm) {
 	<c:if test="${funding.d_day < 0}">
 		<h4>&#10060; 이미 <font color="tomato">종료된 펀딩</font>입니다 &#10060;</h4>
 	</c:if>
+	
+	<!-- 진척도 -->
+	<div class="center">
+		<progress style="width:70%;height:30px" value="${funding.percent }" max="100" >${funding.percent }</progress>
+	</div>
+	<div>
+		<small style="text-align: left;">
+			<fmt:formatNumber value="${funding.goal_money}" pattern="#,###,###,###"/>원 목표
+		</small>
+		<small style="text-align: right;">
+			<font style="text-align: right;" color="blue"><fmt:formatNumber value="${funding.save_money }" pattern="#,###,###,###"/>원</font>		
+		</small>
+	</div>
 <form action="fundingEnter.do" method="post">
 <table class="center">
 	<thead>
@@ -130,17 +143,17 @@ function alert_login(frm) {
 			<th>상품번호</th>
 			<th>상품명</th>
 			<th>사업자명</th>
-			<th>목표금액</th>
-			<th>달성금액</th>
+			<%--  <th>목표금액</th>
+			<th>달성금액</th>--%>
 		</tr>	
 	</thead>
 	<tbody>
 		<tr>
 			<td>${funding.product_no }</td>
-			<td>[${funding.region }]&nbsp;&nbsp;${funding.product_name }</td>
+			<td>${funding.product_name }</td>
 			<td>${funding.id }</td>
-			<td>${funding.goal_money}원</td>	
-			<td><fmt:formatNumber value="${funding.save_money }" pattern="#,###,###,###"/>원</td>
+			<%--<td><fmt:formatNumber value="${funding.goal_money}" pattern="#,###,###,###"/>원</td>	
+			<td><fmt:formatNumber value="${funding.save_money }" pattern="#,###,###,###"/>원</td>--%>
 		</tr>
 	</tbody>
 </table>
@@ -170,7 +183,7 @@ function alert_login(frm) {
 	<c:if test="${sessionScope.id == null}">
    		<input type="button" value="펀딩 참여하기" onclick="alert_login(this.form)">
     </c:if>
-	<c:if test="${funding.d_day >= 0}">
+	<c:if test="${sessionScope.id != null && funding.d_day >= 0}">
 		<input type="button" value="펀딩 참여하기" onclick="alert_go(this.form)">
 	</c:if>
 	<c:if test="${funding.d_day < 0}">
