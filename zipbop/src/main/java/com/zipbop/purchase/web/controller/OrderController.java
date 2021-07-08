@@ -96,7 +96,7 @@ public class OrderController {
             orderService.insert(order);
         }
 
-        if(referer.contains("/order/orderDetail")) {
+        if (referer.contains("/order/orderDetail")) {
             model.addAttribute("refund", false);
         }
 
@@ -104,7 +104,7 @@ public class OrderController {
         List<Order> orders = orderService.getListById(id);
         int orderSum = orderService.getSumByOrderId(id);
 
-        Map<Integer, Integer> interval = new ConcurrentHashMap<>();
+        Map<Integer, Integer>  interval = new ConcurrentHashMap<>();
         LocalDateTime now = LocalDateTime.now();
 
         orders.forEach(o -> interval.put(o.getUuid(), now.compareTo(o.getRegdate())));

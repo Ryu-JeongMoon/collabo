@@ -1,8 +1,10 @@
 package com.zipbop.purchase.domain.order.repository;
 
 import com.zipbop.purchase.domain.order.Order;
-import org.apache.ibatis.annotations.*;
-import org.aspectj.weaver.ast.Or;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -37,7 +39,4 @@ public interface OrderMapper {
     @Select("select sum(product_count * product_price) from orders where member_id = #{member_id} and state = 'ORDER' group by member_id")
     int getTotalSum(String member_id);
 
-//    보류
-//    @Select("select * from cart_check_view where member_id = #{member_id}")
-//    List<OrderCheck> getList(String member_id);
 }
