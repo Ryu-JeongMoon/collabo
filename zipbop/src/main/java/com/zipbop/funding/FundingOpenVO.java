@@ -8,12 +8,13 @@ public class FundingOpenVO {
 	private String product_name;
 	private String id;
 	private Date deadLine;
-	private String goal_money;
+	private int goal_money;
 	private String content;
 	private String region;
-	private String save_money;
+	private int save_money;
 	private int supporter;
-	private String pimg_no;
+	private String fileName;
+	private int percent;
 	
 	public int getProduct_no() {
 		return product_no;
@@ -39,10 +40,10 @@ public class FundingOpenVO {
 	public void setDeadLine(Date deadLine) {
 		this.deadLine = deadLine;
 	}
-	public String getGoal_money() {
+	public int getGoal_money() {
 		return goal_money;
 	}
-	public void setGoal_money(String goal_money) {
+	public void setGoal_money(int goal_money) {
 		this.goal_money = goal_money;
 	}
 	public String getContent() {
@@ -57,10 +58,10 @@ public class FundingOpenVO {
 	public void setRegion(String region) {
 		this.region = region;
 	}
-	public String getSave_money() {
+	public int getSave_money() {
 		return save_money;
 	}
-	public void setSave_money(String save_money) {
+	public void setSave_money(int save_money) {
 		this.save_money = save_money;
 	}
 	public int getSupporter() {
@@ -69,16 +70,24 @@ public class FundingOpenVO {
 	public void setSupporter(int supporter) {
 		this.supporter = supporter;
 	}
-	public String getPimg_no() {
-		return pimg_no;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setPimg_no(String pimg_no) {
-		this.pimg_no = pimg_no;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public int getPercent() {
+		return percent;
+	}
+	public void setPercent(int percent) {
+		this.percent = percent;
 	}
 	@Override
 	public String toString() {
 		return "FundingOpenVO [product_no=" + product_no + ", product_name=" + product_name + ", id=" + id
 				+ ", deadLine=" + deadLine + ", goal_money=" + goal_money + ", content=" + content + ", region="
-				+ region + ", save_money=" + save_money + ", supporter=" + supporter + ", pimg_no=" + pimg_no + "]";
+				+ region + ", save_money=" + save_money + ", supporter=" + supporter + ", fileName=" + fileName
+				+ ", percent=" + percent + "]";
 	}
+	
 }

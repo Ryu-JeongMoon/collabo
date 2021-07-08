@@ -1,6 +1,7 @@
 package com.zipbop.funding;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class FundingPayVO {
 
@@ -12,7 +13,7 @@ public class FundingPayVO {
 	private String address;
 	private String id;
 	private String choice_reward;
-	private Date pay_date;
+	private LocalDateTime pay_date;
 	
 	public int getPay_no() {
 		return pay_no;
@@ -62,10 +63,10 @@ public class FundingPayVO {
 	public void setChoice_reward(String choice_reward) {
 		this.choice_reward = choice_reward;
 	}
-	public Date getPay_date() {
+	public LocalDateTime getPay_date() {
 		return pay_date;
 	}
-	public void setPay_date(Date pay_date) {
+	public void setPay_date(LocalDateTime pay_date) {
 		this.pay_date = pay_date;
 	}
 	@Override

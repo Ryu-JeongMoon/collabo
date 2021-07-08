@@ -1,6 +1,7 @@
 package com.zipbop.funding;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 public class FundingAllVO {
 	
@@ -9,13 +10,14 @@ public class FundingAllVO {
 	private String product_name;
 	private String id;
 	private Date deadLine;
-	private String goal_money;
+	private int goal_money;
 	private String content;
 	private String region;
 	private String d_day;  //db 칼럼 x
-	private String save_money;
+	private int save_money;
 	private int supporter;
-	private String pimg_no;
+	private String fileName;
+	private int percent;
 	
 	//FundingRewardVO
 	private int reward_no;
@@ -29,11 +31,14 @@ public class FundingAllVO {
 	private String phone;
 	private String address;
 	private String choice_reward;
-	private Date pay_date;
+	private LocalDateTime pay_date;
 	
 	//MemberVO
 	private String license;
 	
+	public FundingAllVO() {
+		
+	}
 	public int getProduct_no() {
 		return product_no;
 	}
@@ -46,10 +51,10 @@ public class FundingAllVO {
 	public void setD_day(String d_day) {
 		this.d_day = d_day;
 	}
-	public String getSave_money() {
+	public int getSave_money() {
 		return save_money;
 	}
-	public void setSave_money(String save_money) {
+	public void setSave_money(int save_money) {
 		this.save_money = save_money;
 	}
 	public int getSupporter() {
@@ -58,11 +63,11 @@ public class FundingAllVO {
 	public void setSupporter(int supporter) {
 		this.supporter = supporter;
 	}
-	public String getPimg_no() {
-		return pimg_no;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setPimg_no(String pimg_no) {
-		this.pimg_no = pimg_no;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public String getProduct_name() {
 		return product_name;
@@ -82,10 +87,10 @@ public class FundingAllVO {
 	public void setDeadLine(Date deadLine) {
 		this.deadLine = deadLine;
 	}
-	public String getGoal_money() {
+	public int getGoal_money() {
 		return goal_money;
 	}
-	public void setGoal_money(String goal_money) {
+	public void setGoal_money(int goal_money) {
 		this.goal_money = goal_money;
 	}
 	public String getContent() {
@@ -155,10 +160,10 @@ public class FundingAllVO {
 	public void setChoice_reward(String choice_reward) {
 		this.choice_reward = choice_reward;
 	}
-	public Date getPay_date() {
+	public LocalDateTime getPay_date() {
 		return pay_date;
 	}
-	public void setPay_date(Date pay_date) {
+	public void setPay_date(LocalDateTime pay_date) {
 		this.pay_date = pay_date;
 	}
 	public String getLicense() {
@@ -167,14 +172,24 @@ public class FundingAllVO {
 	public void setLicense(String license) {
 		this.license = license;
 	}
+	public int getPercent() {
+		return percent;
+	}
+	public void setPercent(int percent) {
+		this.percent = percent;
+	}
 	@Override
 	public String toString() {
 		return "FundingAllVO [product_no=" + product_no + ", product_name=" + product_name + ", id=" + id
 				+ ", deadLine=" + deadLine + ", goal_money=" + goal_money + ", content=" + content + ", region="
-				+ region + ", d_day=" + d_day + ", save_money=" + save_money + ", supporter=" + supporter + ", pimg_no="
-				+ pimg_no + ", reward_no=" + reward_no + ", reward_name=" + reward_name + ", reward_price="
-				+ reward_price + ", pay_no=" + pay_no + ", total_sum=" + total_sum + ", name=" + name + ", phone="
-				+ phone + ", address=" + address + ", choice_reward=" + choice_reward + ", pay_date=" + pay_date
-				+ ", license=" + license + "]";
+				+ region + ", d_day=" + d_day + ", save_money=" + save_money + ", supporter=" + supporter
+				+ ", fileName=" + fileName + ", percent=" + percent + ", reward_no=" + reward_no + ", reward_name="
+				+ reward_name + ", reward_price=" + reward_price + ", pay_no=" + pay_no + ", total_sum=" + total_sum
+				+ ", name=" + name + ", phone=" + phone + ", address=" + address + ", choice_reward=" + choice_reward
+				+ ", pay_date=" + pay_date + ", license=" + license + "]";
+	}
+	
+	public void Data() {
+		percent = (int)(Math.ceil((double)save_money) / (double)goal_money * 100);
 	}
 }

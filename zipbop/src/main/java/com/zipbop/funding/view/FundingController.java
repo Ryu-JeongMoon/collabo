@@ -1,5 +1,7 @@
 package com.zipbop.funding.view;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,13 +16,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.zipbop.funding.FundingAllVO;
 import com.zipbop.funding.FundingOpenVO;
 import com.zipbop.funding.FundingPayVO;
 import com.zipbop.funding.FundingRewardVO;
 import com.zipbop.funding.FundingService;
-import com.zipbop.funding.MemberVO;
 
 @Controller
 @SessionAttributes("funding")
@@ -38,7 +41,6 @@ public class FundingController {
 		System.out.println("Controller ID : " + id);
 		String member = fundingService.getMember(id);
 		String license = fundingService.getLicense(id);
-		//System.out.println("Controller Member : " + member);
 		if (member != null) {
 			session.setAttribute("id", id);
 			if(license != null) {
@@ -53,8 +55,13 @@ public class FundingController {
 	@RequestMapping("/getBoard.do")
 	public String getBoard(FundingAllVO allvo, Model model) {
 		// System.out.println("---펀딩게시글 상세보기");
+		
 		FundingAllVO funding = fundingService.getBoard(allvo);
-		//System.out.println("getBoard DB funding: " + funding);
+		
+		//진척도 계산
+		funding.Data();
+		
+		System.out.println("getBoard DB funding: " + funding);
 		model.addAttribute("funding", funding); // fundingDetail.jsp에서 funding.~ 이렇게 사용
 
 		// rname=reward name
@@ -68,8 +75,6 @@ public class FundingController {
 		HashMap<String, String> name_price_map = new HashMap<>();
 		for (int i = 0; i < rname_list.length; i++) {
 			name_price_map.put(rname_list[i], rprice_list[i]);
-			// System.out.println("i : " + i);
-			// System.out.println(rname_list[i] +", " + rprice_list[i]);
 		}
 		model.addAttribute("name_price_map", name_price_map);
 		// model.addAttribute("reward", reward);
@@ -77,9 +82,19 @@ public class FundingController {
 	}
 	
 	@RequestMapping("/insertBoard.do")
-	public String insertBoard(FundingAllVO allvo) {
+	public String insertBoard(FundingAllVO allvo, MultipartHttpServletRequest mpRequest) throws Exception, IOException {
 		System.out.println("--펀딩오픈 신청하기");
 		//System.out.println("allvo: " + allvo);
+		
+		//파일업로드->디비에 저장
+		MultipartFile file = mpRequest.getFile("pimg_no");
+		
+		if(file.getOriginalFilename() != "" ) {
+			System.out.println("file not null");
+			String fileName = file.getOriginalFilename();
+			file.transferTo(new File("C:\\MyStudy\\temp\\"+fileName));
+			allvo.setFileName(fileName);
+		}
 		fundingService.insertBoard(allvo);
 		return "fundingList.jsp";
 	}
@@ -94,8 +109,6 @@ public class FundingController {
 	@RequestMapping("/updateBoard.do")
 	public String updateBoard(FundingOpenVO ovo, FundingRewardVO rvo) {
 		System.out.println("--게시글 수정");
-		//System.out.println("update ovo: " + ovo);
-		//System.out.println("update rvo: " + rvo);
 		fundingService.updateBoard(ovo, rvo);
 		return "fundingList.jsp";
 	}
@@ -104,7 +117,6 @@ public class FundingController {
 	public String totalSum(HttpServletRequest request, ModelMap model) {
 		String totalSum = request.getParameter("totalSum");
 		model.addAttribute("totalSum", totalSum);
-		//System.out.println("totalSum: " + totalSum);
 		
 		List<String> list = new ArrayList<>();
 		
@@ -123,10 +135,21 @@ public class FundingController {
 		System.out.println("---회원)펀딩 참여");
 		//System.out.println("allvo: " + allvo);
 		fundingService.insertPay(allvo);
+		//System.out.println("Con-pay_no:"+pay_no);
 		
+		String chk = fundingService.getPayChk(allvo.getPay_no());
+		System.out.println("allvo.getPay_no(): "+allvo.getPay_no());
+		model.addAttribute("chk", chk);
+		System.out.println("chk: "+chk);
+		return "payChk.jsp";
+	}
+	
+	@RequestMapping("/allPayList.do")
+	public String getPayList(FundingAllVO allvo, Model model) {
+		//펀딩참여 전체리스트
 		List<FundingPayVO> pays = fundingService.getPayList(allvo.getId());
 		model.addAttribute("pays", pays);
-		//System.out.println("pays: " + pays);
+		System.out.println("pays: " + pays);
 		return "allPayList.jsp";
 	}
 }

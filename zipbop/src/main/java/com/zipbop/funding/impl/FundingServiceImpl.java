@@ -74,4 +74,10 @@ public class FundingServiceImpl implements FundingService {
 		return fundingDAO.getLicense(license);
 	}
 
+	@Override
+	public String getPayChk(int pay_no) {
+		System.out.println("Service-pay_no: "+pay_no);
+		return fundingDAO.getPayChk(pay_no);
+	}
+
 }

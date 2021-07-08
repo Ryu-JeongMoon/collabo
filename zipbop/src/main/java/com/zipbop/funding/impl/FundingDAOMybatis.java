@@ -57,8 +57,14 @@ public class FundingDAOMybatis {
 
 	// 결제 리스트(selectList)	
 	public List<FundingPayVO> getPayList(String id) {
-	System.out.println("-------getPayList(String id) 실행"); 
-	return mybatis.selectList("FundingDAO.getPayList",id); 
+		System.out.println("-------getPayList(String id) 실행"); 
+		return mybatis.selectList("FundingDAO.getPayList",id); 
+	}
+	
+	// 결제 완료창(selectOne)
+	public String getPayChk(int pay_no) {
+		System.out.println("-------getPayChk(int pay_no) 실행"); 
+		return mybatis.selectOne("FundingDAO.getPayChk", pay_no);
 	}
 	
 	// 리워드 이름 가져오기
