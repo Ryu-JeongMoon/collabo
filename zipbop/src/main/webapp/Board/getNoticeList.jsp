@@ -9,20 +9,6 @@
 <meta charset="UTF-8">
 <title>Board</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-	function getBoard(board_no) {
-		$.ajax({  
-			url : 'updateHit.do?no='+board_no,
-			type : 'GET',
-			success : function(){
-				location.href="getBoard.do?no="+board_no;
-			}, 
-			error : function (e){
-				alert("실패");
-			}
-		}); 
-	}
-</script>
 <style>
 	#container { width:700px; margin: 0 auto; }
 	h1, h3, p { text-align: center; }
@@ -58,8 +44,6 @@
 
 	
 	<h3>테스트님 환영합니다...<a href="logout.do">Log-out</a></h3>
-		
-	<!-- 데이터 표시영역 -->
 	<table>
 		<tr>
 			<th width="100">번호</th>
@@ -74,7 +58,7 @@
 				<tr>
 					<td class="center">${board.no }</td>
 					<td>
-						<a href="#" onclick="getBoard(${board.no})">${board.title }</a>
+						<a href="getBoard.do?no=${board.no}&cnt=1">${board.title }</a>
 					</td>
 					<td>${board.writer }</td>
 					<td>${board.regdate }</td>
@@ -95,13 +79,6 @@
 					<option value="TITLE">제목
 					<option value="CONTENT">내용
 				</select>
-			 <!--
-			 <select name="searchCondition">
-			 <c:forEach var="option" items="${conditionMap }">
-			 	<option value="${option.value }">${option.key }</option>
-			 </c:forEach>
-			 </select>
-			 -->
 				<input type="text" name="searchKeyword">
 				<input type="submit" value="검색">
 				<input type="hidden" value="N" name="flag_nq">
@@ -109,7 +86,6 @@
 		</tr>
 	</table>
 </form>
-	<!-- id가 admin 일 경우만 뜨게??? -->
 	<p><a href="insertBoard.do?flag_nq=Q">글등록</a></p>
   <ul>
 	<c:if test="${pageMaker.prev}">

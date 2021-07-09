@@ -9,20 +9,6 @@
 <meta charset="UTF-8">
 <title>Board</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-	function getBoard(board_no) {
-		$.ajax({  
-			url : 'updateHit.do?no='+board_no,
-			type : 'GET',
-			success : function(){
-				location.href="getBoard.do?no="+board_no;
-			}, 
-			error : function (e){
-				alert("실패");
-			}
-		}); 
-	}
-</script>
 <style>
 	#container { width:700px; margin: 0 auto; }
 	h1, h3, p { text-align: center; }
@@ -74,7 +60,7 @@
 				<tr>
 					<td class="center">${board.no }</td>
 					<td>
-						<a href="#" onclick="getBoard(${board.no})">${board.title }</a>
+						<a href="getBoard.do?no=${board.no}&cnt=1">${board.title }</a>
 						<c:forEach var="answer" items="${answerList}">
 							<c:if test="${board.no eq answer.board_no}">
 								답변완료
