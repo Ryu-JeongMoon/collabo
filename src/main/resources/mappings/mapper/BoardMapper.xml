@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Board">
+
+    <select id="getMember" parameterType="string" resultType="string">
+        SELECT *
+        FROM MEMBER
+        WHERE id = #{id}
+    </select>
+
+    <select id="getBoard" parameterType="com.zipbop.board.domain.entity.BoardVO" resultType="com.zipbop.board.domain.entity.BoardVO">
+        SELECT *
+        FROM BOARD_NORMAL
+        WHERE NO = #{no}
+    </select>
+
+    <select id="getBoardList" parameterType="com.zipbop.board.domain.paging.Criteria" resultType="com.zipbop.board.domain.entity.BoardVO">
+
+        SELECT * FROM
+        (SELECT WRITER, NO, title, content, REGDATE, FLAG_NQ, HIT,
+        ROW_NUMBER() OVER (ORDER BY NO DESC) AS RNUM
+        FROM board_normal
+        WHERE FLAG_NQ = #{flag_nq}
+        <if test="searchCondition == 'TITLE' ">
+            AND TITLE LIKE '%'|| #{searchKeyword} ||'%' ORDER BY NO DESC
+        </if>
+        <if test="searchCondition == 'CONTENT' ">
+            AND CONTENT LIKE '%'|| #{searchKeyword} ||'%' ORDER BY NO DESC
+        </if>
+        )
+        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+    </select>
+
+    <insert id="insertBoard" parameterType="com.zipbop.board.domain.entity.BoardVO">
+        INSERT INTO BOARD_NORMAL(NO, WRITER, TITLE, CONTENT, FLAG_NQ)
+        VALUES (#{no}, #{writer}, #{title}, #{content}, #{flag_nq})
+    </insert>
+
+    <update id="updateBoard" parameterType="com.zipbop.board.domain.entity.BoardVO">
+        UPDATE BOARD_NORMAL
+        SET TITLE   = #{title},
+            CONTENT = #{content},
+            REGDATE = SYSDATE
+        WHERE NO = #{no}
+    </update>
+
+    <delete id="deleteBoard" parameterType="com.zipbop.board.domain.entity.BoardVO">
+        DELETE
+        FROM BOARD_NORMAL
+        WHERE NO = #{no}
+    </delete>
+
+    <select id="selectFile" parameterType="com.zipbop.board.domain.entity.BoardVO" resultType="com.zipbop.board.domain.entity.FileVO">
+        SELECT FILE_NO, ORG_FILE_NAME, ROUND(FILE_SIZE / 1024, 1) AS FILE_SIZE, DEL_YN
+        FROM FILE_TABLE
+        WHERE BOARD_NO = #{no}
+          AND DEL_YN = 'N'
+    </select>
+
+    <select id="downloadFile" parameterType="com.zipbop.board.domain.entity.FileVO" resultType="com.zipbop.board.domain.entity.FileVO">
+        SELECT *
+        FROM FILE_TABLE
+        WHERE FILE_NO = #{file_no}
+          AND DEL_YN = 'N'
+    </select>
+
+    <insert id="insertFile" parameterType="hashMap">
+        INSERT INTO FILE_TABLE(FILE_NO, BOARD_NO, ORG_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, DEL_YN)
+        VALUES (SEQ_FILE_TABLE_NO.NEXTVAL, #{BOARD_NO}, #{ORG_FILE_NAME}, #{STORED_FILE_NAME}, #{FILE_SIZE}, 'N')
+    </insert>
+
+    <select id="getNo" resultType="string">
+        SELECT NVL(MAX(NO), 0) + 1
+        FROM BOARD_NORMAL
+    </select>
+
+    <select id="listCount" parameterType="com.zipbop.board.domain.entity.BoardVO" resultType="int">
+        SELECT COUNT(NO)
+        FROM board_normal
+        WHERE FLAG_NQ = #{flag_nq}
+        <if test="searchCondition == 'TITLE' ">
+            AND TITLE LIKE '%'|| #{searchKeyword} ||'%' ORDER BY NO DESC
+        </if>
+        <if test="searchCondition == 'CONTENT' ">
+            AND CONTENT LIKE '%'|| #{searchKeyword} ||'%' ORDER BY NO DESC
+        </if>
+
+    </select>
+
+    <update id="updateHit" parameterType="com.zipbop.board.domain.entity.BoardVO">
+        UPDATE BOARD_NORMAL
+        SET HIT = HIT + 1
+        WHERE NO = #{no}
+    </update>
+
+    <update id="deleteFile" parameterType="string">
+        UPDATE FILE_TABLE
+        SET DEL_YN = 'Y'
+        WHERE FILE_NO = #{no}
+    </update>
+
+    <update id="deleteFileAll" parameterType="com.zipbop.board.domain.entity.BoardVO">
+        UPDATE FILE_TABLE
+        SET DEL_YN = 'Y'
+        WHERE BOARD_NO = #{no}
+    </update>
+
+    <insert id="insertAnswer" parameterType="hashMap">
+        INSERT INTO ANSWER_TABLE(ANSWER_NO, TEXT, BOARD_NO)
+        VALUES (SEQ_ANSWER_TABLE_NO.NEXTVAL, #{text}, #{no})
+    </insert>
+
+    <select id="selectAnswer" parameterType="string" resultType="com.zipbop.board.domain.entity.AnswerVO">
+        SELECT *
+        FROM ANSWER_TABLE
+        WHERE BOARD_NO = #{no}
+    </select>
+
+    <select id="selectAnswerAll" resultType="com.zipbop.board.domain.entity.AnswerVO">
+        SELECT *
+        FROM ANSWER_TABLE
+    </select>
+
+    <update id="updateAnswer" parameterType="hashMap">
+        UPDATE ANSWER_TABLE
+        SET TEXT=#{text},
+            REGDATE=SYSDATE
+        WHERE BOARD_NO = #{no}
+    </update>
+
+    <delete id="deleteAnswer" parameterType="string">
+        DELETE
+        FROM ANSWER_TABLE
+        WHERE BOARD_NO = #{no}
+    </delete>
+
+    <!-- 펀딩 게시판  리스트-->
+    <select id="getFundingBoardList" parameterType="com.zipbop.board.domain.paging.Criteria"
+            resultType="com.zipbop.board.domain.entity.FundingVO">
+        SELECT * FROM
+        (SELECT PRODUCT_NO,PRODUCT_NAME,ID,DEADLINE,GOAL_MONEY,CONTENT,REGION,SAVE_MONEY,SUPPORTER,PIMG_NO ,
+        ROW_NUMBER() OVER (ORDER BY PRODUCT_NO DESC) AS RNUM
+        FROM FUNDING_OPEN
+        WHERE 1=1
+        <if test="searchCondition == 'REGION' ">
+            AND REGION LIKE '%'|| #{searchKeyword} ||'%' ORDER BY PRODUCT_NO DESC
+        </if>
+        <if test="searchCondition == 'PRODUCT_NAME' ">
+            AND PRODUCT_NAME LIKE '%'|| #{searchKeyword} ||'%' ORDER BY PRODUCT_NO DESC
+        </if>
+        )
+        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+    </select>
+
+    <!-- 펀딩게시판 페이징 리스트 카운트 -->
+    <select id="fundingListCount" parameterType="com.zipbop.board.domain.entity.FundingVO" resultType="int">
+        SELECT COUNT(PRODUCT_NO)
+        FROM FUNDING_OPEN
+        WHERE 1=1
+        <if test="searchCondition == 'REGION' ">
+            AND REGION LIKE '%'|| #{searchKeyword} ||'%' ORDER BY PRODUCT_NO DESC
+        </if>
+        <if test="searchCondition == 'PRODUCT_NAME' ">
+            AND PRODUCT_NAME LIKE '%'|| #{searchKeyword} ||'%' ORDER BY PRODUCT_NO DESC
+        </if>
+
+    </select>
+
+    <!-- 구매 게시판  리스트-->
+    <select id="getPurchaseBoardList" parameterType="com.zipbop.board.domain.paging.Criteria" resultType="com.zipbop.board.domain.entity.PurchaseVO">
+
+        SELECT * FROM
+        (SELECT ID, NAME, PRICE, DESCRIPTION, URL, REGDATE ,
+        ROW_NUMBER() OVER (ORDER BY ID DESC) AS RNUM
+        FROM PRODUCT
+        WHERE 1=1
+        <if test="searchCondition == 'NAME' ">
+            AND NAME LIKE '%'|| #{searchKeyword} ||'%' ORDER BY ID DESC
+        </if>
+        <if test="searchCondition == 'DESCRIPTION' ">
+            AND DESCRIPTION LIKE '%'|| #{searchKeyword} ||'%' ORDER BY ID DESC
+        </if>
+        )
+        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+    </select>
+
+    <!-- 구매게시판 페이징 리스트 카운트 -->
+    <select id="purchaseListCount" parameterType="com.zipbop.board.domain.entity.PurchaseVO" resultType="int">
+        SELECT COUNT(ID)
+        FROM PRODUCT
+        WHERE 1=1
+        <if test="searchCondition == 'NAME' ">
+            AND NAME LIKE '%'|| #{searchKeyword} ||'%' ORDER BY ID DESC
+        </if>
+        <if test="searchCondition == 'DESCRIPTION' ">
+            AND DESCRIPTION LIKE '%'|| #{searchKeyword} ||'%' ORDER BY ID DESC
+        </if>
+
+    </select>
+</mapper>

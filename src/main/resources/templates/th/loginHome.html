@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{/css/member.css}" rel="stylesheet"/>
+    <link th:href="@{/css/wrapper.css}" rel="stylesheet"/>
+    <th:block th:include="fragments/navbar :: html-head"></th:block>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/korea.css"/>
+    <title th:text="#{label.woomool}"></title>
+</head>
+
+<script type="text/javascript" src="js/d3.js"></script>
+<script type="text/javascript" src="js/korea.js"></script>
+
+<body>
+
+<!-- header -->
+<th:block th:include="fragments/navbar :: header"></th:block>
+
+<!-- container -->
+<div class="container" id="woomoolWrap">
+    <div class="py-5 text-center">
+        <h2 th:text="#{label.home}">홈 화면</h2></div>
+    <h4 class="mb-3 text-center" th:text="|#{label.welcome} [${member.id}]|">로그인 사용자 이름</h4>
+
+    <div class="wrapper">
+        <div id="container"></div>
+    </div>
+</div>
+
+<!-- footer -->
+<footer th:replace="fragments/footer :: footer"></footer>
+<script type="text/javascript" th:src="@{/js/duplication_validity.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/navbar :: html-head"></th:block>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/korea.css"/>
+    <link th:href="@{/css/wrapper.css}" rel="stylesheet"/>
+    <title th:text="#{label.woomool}"></title>
+</head>
+
+<script type="text/javascript" src="js/d3.js"></script>
+<script type="text/javascript" src="js/korea.js"></script>
+
+<body>
+
+<!-- header -->
+<th:block th:include="fragments/navbar :: header"></th:block>
+
+<!-- container -->
+<div class="container">
+    <div class="wrapper">
+        <div id="container"></div>
+    </div>
+</div>
+
+<!-- footer -->
+<footer th:replace="fragments/footer :: footer"></footer>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/member.css}" rel="stylesheet" />
+    <title th:text="#{label.woomool}">회원 탈퇴</title>
+    <th:block th:include="fragments/navbar :: html-head"></th:block>
+</head>
+<body>
+
+<!-- header -->
+<th:block th:include="fragments/navbar :: header"></th:block>
+
+<!-- container -->
+<div class="container" id="woomoolWrap">
+    <div class="py-5 text-center">
+        <h2 th:text="#{label.signOut}">로그인</h2>
+    </div>
+
+    <form action="item.html" onsubmit="return validate();" th:action th:object="${loginForm}" method="post">
+        <div th:if="${#fields.hasGlobalErrors()}">
+            <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+               th:text="${err}">전체 오류 메시지</p>
+        </div>
+
+        <div class="text-center">
+            <h4 th:text="#{label.signoutHelp}">회원 탈퇴 시 복구할 수 없으며, 개인 정보는 6개월 후에 삭제됩니다.</h4>
+        </div>
+
+        <hr class="my-4">
+
+        <div>
+            <label for="id" th:text="#{label.member.id}">아이디</label>
+            <input type="text" id="id" th:value="*{id}" class="form-control" disabled>
+            <input type="text" th:field="*{id}" class="form-control" hidden>
+        </div>
+        <div>
+            <label for="password" th:text="#{label.member.passwordCheck}">비밀번호 확인</label>
+            <input type="password" id="password" minlength="4" maxlength="20" required th:field="*{password}"
+                   class="form-control"
+                   th:errorclass="field-error">
+            <div class="field-error" th:errors="*{password}"/>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="col">
+                <button class="w-100 btn btn-danger btn-lg"
+                        th:text="#{button.signout}"
+                        type="button" onclick="button_event(this.form);">
+                    탈퇴
+                </button>
+            </div>
+            <div class="col">
+                <button class="w-100 btn btn-primary btn-lg"
+                        onclick="location.href='items.html'"
+                        th:text="#{button.cancel}"
+                        th:onclick="|location.href='@{/}'|" type="button">취소
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<!-- footer -->
+<footer th:replace="fragments/footer :: footer"></footer>
+<script type="text/javascript" th:src="@{/js/common_validity.js}"></script>
+
+</body>
+</html>
