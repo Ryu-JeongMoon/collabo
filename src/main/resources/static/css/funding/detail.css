@@ -1,0 +1,27 @@
+#container {
+    width: 700px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#img {
+    text-align: center;
+}
+
+h1, h4, .center {
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.reward td {
+    text-align: left;
+}

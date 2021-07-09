@@ -1,0 +1,37 @@
+/*.container {*/
+/*    max-width: 720px;*/
+/*}*/
+
+#woomoolWrap {
+    max-width:700px;
+    min-height:100%;
+    margin:0 auto;
+    background:#fff;
+}
+
+.field-error {
+    border-color: #dc3545;
+    color: #dc3545;
+}
+
+.id_input_re_1 {
+    color: green;
+    display: none;
+}
+
+.id_input_re_2 {
+    color: red;
+    display: none;
+}
+
+.id_input_re_3 {
+    color: red;
+    display: none;
+}
+
+.wrapper {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    justify-content: center;
+}
