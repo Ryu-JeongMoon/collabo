@@ -152,10 +152,11 @@ function check(re, what, message) {
 <form action="fundingPayment.do" method="post" onsubmit="alert_go(this.form)">
 	<h3>펀딩 내역</h3>
 <table>
-	<tr>
-		<th>구매 번호</th>
+<%-- 	<tr>
+		<th>주문 번호</th>
 		<td>${chk.pay_no }</td>
-	</tr>
+	</tr> --%>
+	
 	<tr>
 		<th>선택한 리워드</th>
 		<td>
@@ -175,10 +176,6 @@ function check(re, what, message) {
 <hr>
 	<h3>배송지 입력</h3>
 <table>
-	<!--  <tr>
-		<th>주문 번호</th>
-		<td><input type="text" id="pay_no" name="pay_no" value="${pay.pay_no }" readonly></td>
-	</tr>-->
 	<tr><!-- 후결제 -->
 		<th>이름</th>
 		<td><input type="text" id="name" name="name" required></td>

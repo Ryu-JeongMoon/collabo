@@ -96,6 +96,7 @@
 </h1>
 <input class="center" type="button" value="목록으로 돌아가기" onclick="location.href='fundingList.jsp'">
 <hr>
+<p>방금 참여하신 펀딩</p>
 <c:forEach var="pay" items="${pays }">
 <table class="center">
 	<tr>
@@ -115,6 +116,7 @@
 		<td>${pay.pay_date }</td>
 	</tr>
 </table>
+	<hr>
 </c:forEach>
 </div>
    <!-- ======= Footer ======= -->

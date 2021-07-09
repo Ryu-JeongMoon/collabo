@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -87,14 +89,20 @@
 	<tr>
 		<th>주문 번호</th>
 		<td>${chk.pay_no }</td>
+		<input type="hidden" name="pay_no" id="pay_no" value="${chk.pay_no }">
 	</tr>
 	<tr>
 		<th>선택한 리워드</th>
-		<td>${chk.choice_reward }<br></td>
+		<td>
+			<c:forEach var="element" items="${list }">
+				${element }<br>
+				<input type="text" name="choice_reward" value="${element }" hidden="hidden" />
+			</c:forEach>
+		</td>
 	</tr>
 	<tr>
 		<th>총 금액</th>
-		<td>${chk.total_sum }원</td>
+		<td><fmt:formatNumber value="${totalSum }" pattern="#,###,###,###"/>원</td>
 	</tr>
 	<tr>
 		<th>참여 일시</th>
