@@ -62,7 +62,7 @@ public class FundingDAOMybatis {
 	}
 	
 	// 결제 완료창(selectOne)
-	public String getPayChk(int pay_no) {
+	public FundingPayVO getPayChk(int pay_no) {
 		System.out.println("-------getPayChk(int pay_no) 실행"); 
 		return mybatis.selectOne("FundingDAO.getPayChk", pay_no);
 	}

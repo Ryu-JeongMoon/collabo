@@ -135,21 +135,29 @@ public class FundingController {
 		System.out.println("---회원)펀딩 참여");
 		//System.out.println("allvo: " + allvo);
 		fundingService.insertPay(allvo);
-		//System.out.println("Con-pay_no:"+pay_no);
 		
-		String chk = fundingService.getPayChk(allvo.getPay_no());
-		System.out.println("allvo.getPay_no(): "+allvo.getPay_no());
-		model.addAttribute("chk", chk);
-		System.out.println("chk: "+chk);
-		return "payChk.jsp";
+		List<FundingPayVO> pays = fundingService.getPayList(allvo.getId());
+		model.addAttribute("pays", pays); //System.out.println("pays: " + pays);
+		return "allPayList.jsp";
+		
+		 /*
+		 FundingPayVO chk = fundingService.getPayChk(allvo.getPay_no());
+		 System.out.println("chk: "+chk); 
+		 model.addAttribute("chk", chk); 
+		 return "payChk.jsp";
+		 */
 	}
 	
-	@RequestMapping("/allPayList.do")
-	public String getPayList(FundingAllVO allvo, Model model) {
-		//펀딩참여 전체리스트
-		List<FundingPayVO> pays = fundingService.getPayList(allvo.getId());
+	@RequestMapping("/allPayList.do") 
+	public String getPayList(FundingPayVO pvo, HttpSession session, Model model) { 
+		System.out.println("---펀딩 참여 전체 리스트");
+		String id = (String)session.getAttribute("id");
+		System.out.println("id: "+id);
+		
+		List<FundingPayVO> pays = fundingService.getPayList(id);
 		model.addAttribute("pays", pays);
-		System.out.println("pays: " + pays);
-		return "allPayList.jsp";
+		//System.out.println("pays: " + pays); 
+		return "allPayList.jsp"; 
 	}
+	 
 }

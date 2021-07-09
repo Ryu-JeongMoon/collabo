@@ -1,6 +1,5 @@
 package com.zipbop.funding;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 public class FundingPayVO {
