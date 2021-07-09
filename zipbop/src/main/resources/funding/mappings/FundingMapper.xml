@@ -21,7 +21,7 @@
    </select>
    
    <!-- 사업자 번호 유무 -->
-   <select id="getLicense" parameterType="com.zipbop.funding.MemberVO" resultType="com.zipbop.funding.MemberVO">
+   <select id="getLicense" parameterType="string" resultType="string">
    		SELECT LICENSE FROM MEMBER
 		WHERE ID = #{id}
    </select>
@@ -44,9 +44,9 @@
 	
 	<!-- 펀딩 오픈신청 -->
 	<insert id="insertBoard" parameterType="com.zipbop.funding.FundingAllVO">
-		INSERT INTO FUNDING_OPEN (PRODUCT_NO, PRODUCT_NAME, ID, DEADLINE, GOAL_MONEY, CONTENT, REGION)
+		INSERT INTO FUNDING_OPEN (PRODUCT_NO, PRODUCT_NAME, ID, DEADLINE, GOAL_MONEY, CONTENT, REGION, PIMG_NO)
 		VALUES((SELECT NVL(MAX(PRODUCT_NO),0)+1 FROM FUNDING_OPEN),
-		 		#{product_name}, #{id}, #{deadLine}, #{goal_money}, #{content}, #{region})
+		 		#{product_name}, #{id}, #{deadLine}, #{goal_money}, #{content}, #{region}, #{fileName})
 	</insert> 
 
 	<!-- 리워드 입력(오픈신청 할 때 같이 넘어감) -->
@@ -96,5 +96,12 @@
 		FROM FUNDING_PAY 
 		WHERE ID = #{id}
 		ORDER BY PAY_DATE DESC
+	</select>
+	
+	<!-- 방금 결제한 펀딩 -->
+	<select id="getPayChk" parameterType="int" resultType="com.zipbop.funding.FundingPayVO">
+		SELECT PAY_NO, CHOICE_REWARD, TOTAL_SUM, PAY_DATE
+		FROM FUNDING_PAY 
+		WHERE PAY_NO = #{pay_no}
 	</select>
 </mapper>
