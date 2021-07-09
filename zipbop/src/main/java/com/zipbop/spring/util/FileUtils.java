@@ -15,12 +15,10 @@ public class FileUtils {
 	public static Map<String, Object> parseInsertFileInfo(BoardVO boardVO, 
 		MultipartFile multipartFile) throws Exception{
 		
-		//MultipartFile multipartFile = null;
 		String originalFileName = null;
 		String originalFileExtension = null;
 		String storedFileName = null;
 		
-		//List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
 		Map<String, Object> listMap = null;
 		
 		int board_no = Integer.parseInt(boardVO.getNo());
@@ -30,7 +28,6 @@ public class FileUtils {
 			file.mkdirs();
 		}
 		
-		System.out.println("UTIL iterator has next");
 		originalFileName = multipartFile.getOriginalFilename();
 		originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 		storedFileName = getRandomString() + originalFileExtension;

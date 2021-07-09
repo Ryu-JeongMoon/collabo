@@ -18,7 +18,6 @@ public class BoardVO {
 	private String searchKeyword="";	
 	
 	public BoardVO() {
-		System.out.println("VO 생성");
 	}
 
 	public String getWriter() {

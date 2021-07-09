@@ -1,6 +1,5 @@
 package com.spring.board.biz;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +13,6 @@ public class BoardDAOMybatis {
 	private SqlSessionTemplate mybatis;
 	
 	public BoardDAOMybatis() {
-		System.out.println(">> BoardDAOMybatis() 객체생성");
 	}
 			
 	//로그인
@@ -35,7 +33,6 @@ public class BoardDAOMybatis {
 	}
 	
 	public void deleteAnswer(String no) {
-		System.out.println("no : " + no);
 		mybatis.delete("Board.deleteAnswer", no);
 	}
 
@@ -45,34 +42,26 @@ public class BoardDAOMybatis {
 	
 	//글입력
 	public void insertFile(Map<String, Object> map) throws Exception {
-		System.out.println("===> mybatis로 insertBoard() 실행");
-		
-		
 		mybatis.insert("Board.insertFile", map);
 	}
 	
 	public void insertBoard(BoardVO vo) {
-		System.out.println("===> mybatis로 insertBoard() 실행");
 		mybatis.insert("Board.insertBoard", vo);
 	}
 	
 	//글수정
 	public void updateBoard(BoardVO vo) {
-		System.out.println("===> mybatis로 updateBoard() 실행");
 		mybatis.update("Board.updateBoard", vo);
 	}
 			
 	//글삭제
 	public void deleteBoard(BoardVO vo) {
-		System.out.println("===> mybatis로 deleteBoard() 실행");
 		mybatis.delete("Board.deleteBoard", vo);
 		mybatis.update("Board.deleteFileAll", vo);
 	}
 			
 	//글상세조회(데이터 하나 조회)
 	public BoardVO getBoard(BoardVO vo) {
-		System.out.println("===> mybatis로 getBoard() 실행");
-		System.out.println("DAO vo : " + vo);
 		return mybatis.selectOne("Board.getBoard", vo);
 
 	}
@@ -82,12 +71,10 @@ public class BoardDAOMybatis {
 	}
 	
 	public List<FileVO> selectFile(BoardVO vo) {
-		//System.out.println("dao : " + mybatis.selectList("Board.selectFile", vo));
 		return mybatis.selectList("Board.selectFile", vo);
 	}
 	
 	public FileVO downloadFile(FileVO vo) {
-		//System.out.println("dao : " + mybatis.selectList("Board.selectFile", vo));
 		return mybatis.selectOne("Board.downloadFile", vo);
 	}
 	
@@ -101,7 +88,6 @@ public class BoardDAOMybatis {
 	}
 	
 	public String getNo() {
-		System.out.println("DAO getNO : " + mybatis.selectOne("Board.getNo"));
 		return mybatis.selectOne("Board.getNo");
 	}
 	
@@ -114,7 +100,6 @@ public class BoardDAOMybatis {
 	}
 	
 	public void updateHit(BoardVO vo) {
-		System.out.println("HIT 계산");
 		mybatis.update("Board.updateHit", vo);
 	}
 	

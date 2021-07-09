@@ -83,7 +83,6 @@ public class Criteria {
 	public void setSearchKeyword(String searchKeyword) {
 		this.searchKeyword = searchKeyword;
 	}
-
 	@Override
 	public String toString() {
 		return "Criteria [page=" + page + ", perPageNum=" + perPageNum + ", rowStart=" + rowStart + ", rowEnd=" + rowEnd

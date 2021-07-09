@@ -1,14 +1,10 @@
 package com.spring.board.view;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.board.biz.FileVO;
@@ -50,18 +45,15 @@ public class BoardController {
 	         fundingVO.Data();
 	         
 	      }
-	      System.out.println("Controller boardList : " + boardList);
 	      
 	      model.addAttribute("boardList", boardList);
 	      
 	      PageMarker pageMaker = new PageMarker();
 	      pageMaker.setCri(cri);
-	      System.out.println("Controller cri : " + cri);
 	      pageMaker.setTotalCount(boardService.FundinglistCount(cri));
 	      
 	      
 	      model.addAttribute("pageMaker",pageMaker);
-	      System.out.println("겟 펀딩 리스트에pagemaker" + pageMaker);
 	      return "getFundingList.jsp";
 	      
 	   }
@@ -70,19 +62,15 @@ public class BoardController {
 	   @RequestMapping("/getPerchaseList.do")
 	   public String getPerchaseList(Criteria cri, Model model ) {
 	      List<PerchaseVO> boardList = boardService.getPerchaseBoardList(cri);
-	   
-	      System.out.println("Controller boardList : " + boardList);
 	      
 	      model.addAttribute("boardList", boardList);
 	      
 	      PageMarker pageMaker = new PageMarker();
 	      pageMaker.setCri(cri);
-	      System.out.println("Controller cri : " + cri);
 	      pageMaker.setTotalCount(boardService.PerchaseListCount(cri));
 	      
 	      
 	      model.addAttribute("pageMaker",pageMaker);
-	      System.out.println("겟 펀딩 리스트에pagemaker" + pageMaker);
 	      return "getPerchaseList.jsp";
 	      
 	   }
@@ -90,42 +78,27 @@ public class BoardController {
 	   @GetMapping("getImg.do")
 	    public void setImageFileById(HttpServletResponse response,HttpServletRequest request)
 	            throws IOException {
-	      
-	        //FileInfo fileInfo = fileService.getFileInfo(id);
-	        // 파일 정보를 찾고
 	        StringBuilder sb = new StringBuilder("file:///C:\\MyStudy\\temp\\");
-	        // 파일이 실제로 저장되어 있는 경로에
 	        String no = request.getParameter("no");
 	        sb.append(no);
-	        // 파일 이름을 더해
 	        
 	        URL fileUrl = new URL(sb.toString());
-	        // file URL을 생성하고 
 	        
 	        IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
-	        // IOUtils.copy는 input에서 output으로 encoding 맞춰서 복사하는 메소드다
-	        // openStream으로 fileUrl의 통로( 입력 스트림 )를 열고 respons의 outputStream에 복사하면 끝
 	 
 	    }
+	   
 	   @GetMapping("getpImg.do")
 	   public void setImageFileByUrl(HttpServletResponse response,HttpServletRequest request)
 	         throws IOException {
-	      
-	      //FileInfo fileInfo = fileService.getFileInfo(id);
-	      // 파일 정보를 찾고
 	      StringBuilder sb = new StringBuilder("file:///C:\\MyStudy\\temp\\");
-	      // 파일이 실제로 저장되어 있는 경로에
 	      String url = request.getParameter("url");
 	      sb.append(url);
-	      // 파일 이름을 더해
-	      
+
 	      URL fileUrl = new URL(sb.toString());
-	      // file URL을 생성하고 
-	      
+
 	      IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
-	      // IOUtils.copy는 input에서 output으로 encoding 맞춰서 복사하는 메소드다
-	      // openStream으로 fileUrl의 통로( 입력 스트림 )를 열고 respons의 outputStream에 복사하면 끝
-	      
+
 	   }
 	
 	
@@ -136,9 +109,7 @@ public class BoardController {
 	
 	@PostMapping("login.do")
 	public String login(String id) {
-		System.out.println("Controller ID : " + id);
 		String member = boardService.getMember(id);
-		System.out.println("Controller Member : " + member);
 		if(member != null) {
 			return "index.jsp";			
 		} else {
@@ -178,19 +149,15 @@ public class BoardController {
 	public String getBoardListView(BoardVO vo, Criteria cri, Model model ) {
 		
 		List<BoardVO> boardList = boardService.getBoardList(cri);
-		System.out.println("Controller CRI : " + cri);
-		System.out.println("Controller vo : " + vo);
 		
 		model.addAttribute("boardList", boardList);
 		
 		PageMarker pageMaker = new PageMarker();
 		pageMaker.setCri(cri);
-		System.out.println("Controller cri : " + cri);
 		pageMaker.setTotalCount(boardService.listCount(cri));
 		
 		
 		model.addAttribute("pageMaker",pageMaker);
-		System.out.println("겟 리스트에pagemaker" + pageMaker);
 		
 		List<AnswerVO> answer = boardService.selectAnswerAll();
 		model.addAttribute("answerList", answer);
@@ -203,12 +170,13 @@ public class BoardController {
 		}
 	}
 	
-	@GetMapping("/getBoard.do")
-	public String getBoardView(BoardVO vo, Model model) {
+	@RequestMapping("/getBoard.do")
+	public String getBoardView(BoardVO vo, String cnt, Model model) {
+		if(cnt != null) {
+			updateHit(vo);
+		}
 		
 		BoardVO board = boardService.getBoard(vo);
-		
-		System.out.println("Controller VO : " + board);
 		model.addAttribute("board", board);
 		
 		List<FileVO> file = boardService.selectFile(vo);
@@ -216,23 +184,6 @@ public class BoardController {
 		
 		AnswerVO answer = boardService.selectAnswer(vo);
 		model.addAttribute("answer", answer);
-		
-		return "getBoard.jsp";
-
-	}
-	
-	@PostMapping("/getBoard.do")
-	public String getBoardView1(BoardVO vo, Model model) {
-		
-		BoardVO board = boardService.getBoard(vo);
-		model.addAttribute("board", board);
-
-		List<FileVO> file = boardService.selectFile(vo);
-		model.addAttribute("file", file);
-		
-		AnswerVO answer = boardService.selectAnswer(vo);
-		model.addAttribute("answer", answer);
-		
 		
 		return "getBoard.jsp";
 
@@ -241,7 +192,6 @@ public class BoardController {
 	@GetMapping("/fileDownload.do")
 	public void fileDownload(FileVO file, HttpServletResponse response) throws Exception{
 		file = boardService.downloadFile(file);
-		System.out.println("Down file : " + file);
 		String storedFileName = file.getStored_file_name();
 		String originalFileName = file.getOrg_file_name();
 
@@ -256,17 +206,9 @@ public class BoardController {
 		
 	}
 	
-//	@ResponseBody
-//	@GetMapping("/deleteFile.do")
-	public void deleteFile (String no) {
-		System.out.println("delete Fiel do");
-		boardService.deleteFile(no);
-	}
-	
 	@PostMapping("/insertBoard.do")
 	public String insertBoard (BoardVO vo, MultipartHttpServletRequest mpRequest) throws Exception {
 		vo.setNo(boardService.getNo());
-		System.out.println("Controller VO : " + vo);
 
 		boardService.insertFile(vo, mpRequest);	
 		boardService.insertBoard(vo);
@@ -293,10 +235,9 @@ public class BoardController {
 	
 	@PostMapping("/updateBoard.do")
 	public String updateQna(@ModelAttribute("board") BoardVO vo,MultipartHttpServletRequest mpRequest, @RequestParam(value="del_file_no") String[] files) throws Exception {
-		System.out.println(">>> 게시글 수정 POST");
 		
 		for(String no : files) {
-			deleteFile(no);
+			boardService.deleteFile(no);
 		}
 		
 		if(mpRequest != null) {
@@ -312,8 +253,6 @@ public class BoardController {
 	
 	@GetMapping("/deleteBoard.do")
 	public String deleteQna(BoardVO vo, Model model) {
-		System.out.println(">>> 게시글 삭제");
-		System.out.println("Controller VO : " + vo);
 		boardService.deleteBoard(vo);
 
 		return "getBoardList.do";

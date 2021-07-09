@@ -9,7 +9,6 @@ public class PerchaseVO {
 	private String regdate;
 	
 	public PerchaseVO() {
-		System.out.println("perchase vo 생성");
 	}
 	public String getId() {
 		return id;

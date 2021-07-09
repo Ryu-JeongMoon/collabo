@@ -30,7 +30,6 @@ public class PageMarker {
    
    public void setTotalCount(int totalCount) {
       this.totalCount = totalCount;
-      System.out.println("totalCount : " + totalCount);
       calcData();
    }
    
@@ -103,7 +102,6 @@ public class PageMarker {
                .queryParam("flag_nq", cri.getFlag_nq())
                .build();
       }
-      System.out.println("uriComponents : " + uriComponents);
       return uriComponents.toUriString();
    }
    

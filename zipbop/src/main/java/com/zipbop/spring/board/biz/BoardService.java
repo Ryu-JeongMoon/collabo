@@ -1,6 +1,5 @@
 package com.spring.board.biz;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,12 +64,10 @@ public class BoardService {
 	}
 	
 	public void insertBoard(BoardVO vo) {
-		System.out.println("DAO insert");
 		boardDAO.insertBoard(vo);
 	}
 	
 	public void insertFile(BoardVO vo, MultipartHttpServletRequest mpRequest) throws Exception {
-		System.out.println("DAO insert");
 		
 		List<MultipartFile> mpList = mpRequest.getFiles("file");
 			
@@ -78,7 +75,6 @@ public class BoardService {
 				
 		for(MultipartFile file : mpList) {
 			if(file.getOriginalFilename() != "") {
-				System.out.println("SERVICE : " + file.getOriginalFilename());
 				Map<String,Object> list = FileUtils.parseInsertFileInfo(vo, file);
 				boardDAO.insertFile(list); 	
 			}		
@@ -124,7 +120,6 @@ public class BoardService {
 	}
 	
 	public String getNo() {
-		System.out.println("Service getNO() : " + boardDAO.getNo());
 		return boardDAO.getNo();
 	}
 	
