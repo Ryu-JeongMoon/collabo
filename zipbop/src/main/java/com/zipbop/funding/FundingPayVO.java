@@ -12,7 +12,7 @@ public class FundingPayVO {
 	private String address;
 	private String id;
 	private String choice_reward;
-	private LocalDateTime pay_date;
+	private String pay_date;
 	
 	public int getPay_no() {
 		return pay_no;
@@ -62,10 +62,10 @@ public class FundingPayVO {
 	public void setChoice_reward(String choice_reward) {
 		this.choice_reward = choice_reward;
 	}
-	public LocalDateTime getPay_date() {
+	public String getPay_date() {
 		return pay_date;
 	}
-	public void setPay_date(LocalDateTime pay_date) {
+	public void setPay_date(String pay_date) {
 		this.pay_date = pay_date;
 	}
 	@Override

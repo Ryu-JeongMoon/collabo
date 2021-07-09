@@ -61,7 +61,7 @@ public class FundingController {
 		//진척도 계산
 		funding.Data();
 		
-		System.out.println("getBoard DB funding: " + funding);
+		//System.out.println("getBoard DB funding: " + funding);
 		model.addAttribute("funding", funding); // fundingDetail.jsp에서 funding.~ 이렇게 사용
 
 		// rname=reward name
@@ -136,16 +136,11 @@ public class FundingController {
 		//System.out.println("allvo: " + allvo);
 		fundingService.insertPay(allvo);
 		
+		//결제 내역 리스트
 		List<FundingPayVO> pays = fundingService.getPayList(allvo.getId());
 		model.addAttribute("pays", pays); //System.out.println("pays: " + pays);
 		return "allPayList.jsp";
-		
-		 /*
-		 FundingPayVO chk = fundingService.getPayChk(allvo.getPay_no());
-		 System.out.println("chk: "+chk); 
-		 model.addAttribute("chk", chk); 
-		 return "payChk.jsp";
-		 */
+
 	}
 	
 	@RequestMapping("/allPayList.do") 
