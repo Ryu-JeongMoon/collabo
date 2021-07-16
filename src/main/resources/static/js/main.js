@@ -12,7 +12,7 @@ var stompClient = null;
 var username = null;
 
 var colors = [
-    '#2196F3', '#32c787', '#00BCD4', '#ff5652',
+    '#2196F3', '#2a52be', '#00BCD4', '#ff5652',
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 

@@ -9,6 +9,12 @@ function remove_div(obj) {
     document.getElementById('field').removeChild(obj.parentNode);
 }
 
+function maxLengthCheck(obj) {
+    if(obj.value.length > obj.maxLength) {
+        obj.value = obj.value.slice(0, obj.maxLength);
+    }
+}
+/*
 function inputNumberFormat(obj) {
     obj.value = comma(uncomma(obj.value));
 }
@@ -21,4 +27,4 @@ function comma(str) {
 function uncomma(str) {
     str = String(str);
     return str.replace(/[^\d]+/g, '');
-}
+}*/

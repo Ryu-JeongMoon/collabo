@@ -19,23 +19,23 @@ function sum(opt) {
     totalTag.value = totalValue;
 }
 
-function update_go() {
-    var con = confirm("\n수정하시겠습니까?\n◈ 악용 방지를 위해 목표 금액은 수정이 불가합니다. ◈");
-    if (con == true) {
-        location.href = "fundingUpdate";
-    } else {
-        alert("취소되었습니다.");
-    }
-}
-
-function delete_go() {
-    var con = confirm("삭제하시겠습니까?");
-    if (con == true) {
-        location.href = "deleteBoard?product_no=${funding.product_no}";
-    } else {
-        alert("취소되었습니다.");
-    }
-}
+// function update_go() {
+//     var con = confirm("\n수정하시겠습니까?\n◈ 악용 방지를 위해 목표 금액은 수정이 불가합니다. ◈");
+//     if (con == true) {
+//         location.href = "/funding/fundingUpdate";
+//     } else {
+//         alert("취소되었습니다.");
+//     }
+// }
+//
+// function delete_go() {
+//     var con = confirm("삭제하시겠습니까?");
+//     if (con == true) {
+//         location.href = "/funding/deleteBoard?product_no=${funding.product_no}";
+//     } else {
+//         alert("취소되었습니다.");
+//     }
+// }
 
 function alert_go(frm) {
     var check = $('.check:checked');
@@ -56,5 +56,5 @@ function alert_go(frm) {
 
 function alert_login(frm) {
     alert("로그인이 필요한 서비스입니다.");
-    location.href = "/";
+    location.href = "/login";
 }

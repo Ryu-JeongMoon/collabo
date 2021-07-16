@@ -33,7 +33,7 @@ function setDisplay() {
 }
 
 function initialShow() {
-    if(document.getElementById('forSales').is('checked'))
+    if(document.getElementById('forSales').is(':checked'))
         $('#license').show();
 }
 

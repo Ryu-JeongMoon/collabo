@@ -5,7 +5,7 @@ function validate() {
     let ageRe = /^[0-9]{1,3}$/;
     let phoneRe = /^010\d{8}$/;
     let emailRe = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    let addressRe = /^[가-힣a-zA-Z ]{10,50}$/;
+    let addressRe = /^[가-힣a-zA-Z ]{10,200}$/;
 
     //-----------------------------------------
 
@@ -38,7 +38,7 @@ function validate() {
         return false;
     }
 
-    if (!check(addressRe, address, "주소는 10자 이상 50자 이하로 입력 가능합니다.")) {
+    if (!check(addressRe, address, "주소는 최소 10자 이상 입력해야 합니다.")) {
         return false;
     }
 

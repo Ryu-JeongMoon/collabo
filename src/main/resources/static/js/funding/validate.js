@@ -34,7 +34,7 @@ function validate() {
         alert("참여가 완료되었습니다.")
     } else {
         alert("취소되었습니다. 목록으로 이동합니다.")
-        location.href = "fundingList.jsp";
+        location.href = "board/getFundingList";
     }
 }
 
