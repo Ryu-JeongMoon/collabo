@@ -38,6 +38,23 @@
     * Author: BootstrapMade.com
     * License: https://bootstrapmade.com/license/
     ======================================================== -->
+
+    <!--login-->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <!--===============================================================================================-->
+
 </head>
 
 <body>
@@ -45,42 +62,27 @@
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top" th:fragment="header">
     <div class="container d-flex align-items-center">
-
-        <h1 class="logo me-auto"><a href="/">WooMooL</a></h1>
-
+        <h1 class="logo me-auto" style="color: #2a52be; " onclick="location.href='/'">WooMooL</h1>
         <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
                 <li><a class="active" href="/" th:text="#{label.home}">HOME</a></li>
                 <li><a href="/board/getFundingList" th:text="#{label.funding}">펀딩</a></li>
                 <li><a href="/board/getPurchaseList" th:text="#{label.purchase}">구매</a></li>
-                <li class="dropdown"><a href="/board/index"><span th:text="#{label.community}">커뮤니티</span> <i
+                <li class="dropdown"><a href="#"><span th:text="#{label.community}">커뮤니티</span> <i
                         class="bi bi-chevron-down"></i></a>
                     <ul>
                         <li><a href="/board/getBoardList?flag_nq=N" th:text="#{label.notice}">공지사항</a></li>
                         <li><a href="/board/getBoardList?flag_nq=Q">Q&A</a></li>
-                        <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                            <ul>
-                                <li><a href="#">Deep Drop Down 1</a></li>
-                                <li><a href="#">Deep Drop Down 2</a></li>
-                            </ul>
-                        </li>
                     </ul>
                 </li>
                 <!-- <li><a href="contact.html">마이페이지</a></li> -->
             </ul>
-            <!-- 검색 -->
             <div class="navbar-toolbar d-flex align-items-center order-lg-3">
-                <a href="search.html" class="navbar-tool d-none d-lg-flex">
-                    <div class="navbar-tool-icon-box">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                        <!-- ::before -->
-                    </div>
-                </a>
                 <!-- chat -->
                 <a href="/chat" class="navbar-tool d-none d-lg-flex">
                     <!-- <span class="navbar-tool-label yith_wcwl_count">0</span> -->
                     <div class="navbar-tool-icon-box">
-                        <i class="fa fa-bell" aria-hidden="true"></i>
+                        <i class="fa fa-comments" aria-hidden="true"></i>
                         <!-- ::before -->
                     </div>
                 </a>
