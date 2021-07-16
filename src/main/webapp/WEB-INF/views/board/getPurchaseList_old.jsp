@@ -41,79 +41,9 @@
     <div class="breadcrumbs">
         <div class="container">
             <h2>구매 페이지</h2>
-            <p> </p>
+            <p>펀딩에 성공한 제품 판매 페이지 </p>
         </div>
     </div><!-- End Breadcrumbs -->
-
-        <%----%>
-    <div style="width: 100%; position:absolute; left: 45%; ">
-        <br>
-        <br>
-        <%-- 페이징 --%>
-
-    </div>
-
-    <div class="container">
-        <div class="row mt-5">
-            <div class="col-4">
-                <ul>
-                    <c:if test="${pageMaker.prev}">
-                        <li class="page"><a href="/board/getPurchaseList?page=1">처음</a></li>
-                        <li class="page"><a href="/board/getPurchaseList${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
-                    </c:if>
-
-                    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-                        <li class="page"><a href="/board/getPurchaseList${pageMaker.makeQuery(idx)}">${idx}</a></li>
-                    </c:forEach>
-
-                    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                        <li class="page"><a href="/board/getPurchaseList${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
-                        <li class="page"><a href="/board/getPurchaseList?page=${pageMaker.tempEndPage }">맨끝</a></li>
-                    </c:if>
-                </ul>
-            </div>
-            <div class="col-4"></div>
-            <div class="col-4">
-                <!--검색-->
-                <form action="/board/getPurchaseList">
-                    <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
-                        <div class="input-group">
-                            <select name="searchCondition" hidden>
-                                <option value="NAME" hidden>상품이름</option>
-                            </select>
-                            <input type="text" placeholder="상품 이름을 입력해주세요" aria-describedby="button-addon1" class="form-control border-0 bg-light"
-                                   name="searchKeyword">
-                            <div class="input-group-append">
-                                <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- 검색을 위한 폼
-    <div class="mt-4"></div>
-    <div style="width:100%; position:absolute; left:40%; ">-->
-        <!-- 검색을 위한 폼  -->
-        <!-- 검색-->
-        <!-- Custom rounded search bars with input group -->
-    <!--
-        <form action="/board/getPurchaseList">
-            <table class="border-none">
-                <tr>
-                    <td>
-                        <select name="searchCondition">
-                            <option value="NAME">상품이름
-                            <option value="DESCRIPTION">상품설명
-                        </select>
-                        <input type="text" name="searchKeyword">
-                        <input type="submit" value="검색">
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>-->
 
     <div class="container">
         <!-- Course 이용한 데이터 표시 영역-->
@@ -132,7 +62,7 @@
                                          style="width: 415px; height: 350px">
                                     <div class="course-content">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-<%--                                            <h4>${board.id}</h4>--%>
+                                            <h4>제주도</h4>
                                             <p class="price"><fmt:formatNumber value="${board.price }"
                                                                                pattern="#,###,###"/>원</p>
                                         </div>
@@ -147,6 +77,41 @@
                 </div>
             </div>
         </section><!-- End Courses Section -->
+
+        <div>
+            <!-- 검색을 위한 폼  -->
+            <form action="/board/getPurchaseList">
+                <table class="border-none">
+                    <tr>
+                        <td>
+                            <select name="searchCondition">
+                                <option value="NAME">상품이름
+                                <option value="DESCRIPTION">상품설명
+                            </select>
+                            <input type="text" name="searchKeyword">
+                            <input type="submit" value="검색">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div>
+            <ul>
+                <c:if test="${pageMaker.prev}">
+                    <li class="page"><a href="/board/getPurchaseList?page=1">처음</a></li>
+                    <li class="page"><a href="/board/${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
+                </c:if>
+
+                <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+                    <li class="page"><a href="/board/${pageMaker.makeQuery(idx)}">${idx}</a></li>
+                </c:forEach>
+
+                <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                    <li class="page"><a href="/board/${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
+                    <li class="page"><a href="/board/getPurchaseList?page=${pageMaker.tempEndPage }">맨끝</a></li>
+                </c:if>
+            </ul>
+        </div>
     </div>
 </main>
 <%-- footer --%>
@@ -169,3 +134,4 @@
 
 </body>
 </html>
+.

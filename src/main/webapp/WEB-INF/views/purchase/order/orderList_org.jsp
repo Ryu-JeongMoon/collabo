@@ -62,7 +62,7 @@
                                     </td>
                                     <td>
                                         <small><fmt:parseDate value="${order.regdate}" var="parsedDateTime" type="both"
-                                                              pattern="yyyy-MM-dd'T'HH:mm"/>
+                                                              pattern="yyyy-MM-dd'T'HH:mm:ss"/>
                                             <fmt:formatDate value="${parsedDateTime}" type="both" dateStyle="long"
                                                             timeStyle="long"
                                                             pattern="yyyy.MM.dd E HH:mm"/></small>
@@ -151,7 +151,8 @@
                 </div>
             </div>
         </c:if>
-        <br><br><br><br><br><br>
+        <br>
+        <br>
     </section>
 </main><!--end main-->
 

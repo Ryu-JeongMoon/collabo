@@ -7,16 +7,11 @@
     <%@ include file="../../fragments/head.html" %>
     <meta charset="UTF-8">
     <title>상품 상세정보</title>
-    <link type="text/css" rel="stylesheet" href="<c:url value='/css/purchase/purchase.css'/>">
-
 </head>
-
 <body>
 
 <%-- navbar --%>
 <jsp:include page="../../fragments/navbar.jsp" flush="false"/>
-
-<th:block th:replace="/templates/fragments/navbar :: header"></th:block>
 
 <main id="main">
 
@@ -27,19 +22,18 @@
         </div>
     </div><!-- End Breadcrumbs -->
 
+    <div class="mt-4"></div>
+
     <!-- ======= Cource Details Section ======= -->
     <section id="course-details" class="course-details">
         <div class="container" data-aos="fade-up">
+            <hr>
             <div class="row">
-                <div class="col-lg-6">
-                    <img src="/images/apple.png" class="img-fluid" alt="" width="80%">
+                <div class="col-lg-6 mt-3" style="padding: 0 0 0 50px">
+                    <img src="/board/getpImg?url=${product.url }" class="img-fluid" alt="" width="90%">
                 </div>
 
                 <div class="col-lg-6">
-                    <br>
-                    <br>
-                    <br>
-                    <br>
                     <div class="mt-5 course-info d-flex justify-content-between align-items-center">
                         <h5>상품명</h5>
                         <p>${product.name }</p>
@@ -70,18 +64,32 @@
                             </select>
                         </div>
                         <br>
+                        <%--                            <div class="col-1"></div>--%>
                         <div class="row">
-                            <%--                            <div class="col-1"></div>--%>
-                            <div class="col-1">
-                                <input type="submit" class="get-started-btn" value="장바구니 담기" onclick="cartCheck()">
+                            <div class="col-3"></div>
+                            <div class="col-4">
+                                <c:if test="${sessionScope.loginMember != null}">
+                                    <input type="submit" onclick="alert('장바구니에 담겼습니다');" class="btn btn-primary"
+                                           value="장바구니 담기">
+                                </c:if>
+                                <c:if test="${sessionScope.loginMember == null}">
+                                    <input type="button" class="btn btn-primary" value="장바구니 담기"
+                                           onclick="location.href='/login'">
+                                </c:if>
                             </div>
-                            <div class="col-5"></div>
-                            <div class="col-1">
-                                <input type="button" class="get-started-btn" onclick="location.href='/product/productList'" value="상품목록"></input>
+                            <div class="col-4">
+                                <%--                            <div class="col-1">--%>
+                                <input type="button" class="btn btn-secondary"
+                                       onclick="location.href='/board/getPurchaseList'" value="상품목록">
                             </div>
+
+                            <%-------------------------------------------------------------------------------------------------------------------%>
+                            <%--                            <div class="col-2">--%>
+                            <%--                                <input type="button" class="get-started-btn" value="주문내역" onclick="'/order/orderList'">--%>
+                            <%--                            </div>--%>
                         </div>
-                        <br>
-                        <br>
+                        <br><br><br><br>
+
                     </form>
                 </div>
                 <hr>
@@ -93,25 +101,27 @@
                 <%--                    </div>--%>
                 <%--                </div>--%>
             </div>
+            <br><br><br><br>
         </div>
     </section>
-
-    <script>
-        function cartCheck() {
-            alert('장바구니에 담겼습니다.');
-        }
-    </script>
-
-
 </main><!-- End #main -->
+
+<%-- footer --%>
+<jsp:include page="../../fragments/footer.jsp" flush="false"/>
 
 <div id="preloader"></div>
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
         class="bi bi-arrow-up-short"></i></a>
 
+<!-- Vendor JS Files -->
+<script src="/assets/vendor/aos/aos.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/php-email-form/validate.js"></script>
+<script src="/assets/vendor/purecounter/purecounter.js"></script>
+<script src="/assets/vendor/swiper/js/swiper-bundle.min.js"></script>
 
-<%-- footer --%>
-<jsp:include page="../../fragments/footer.jsp" flush="false"/>
+<!-- Template Main JS File -->
+<script src="/assets/js/main.js"></script>
 
 </body>
 </html>

@@ -5,63 +5,15 @@
 <head>
     <%@ include file="../fragments/head.html" %>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script>
-        $(function () {
-            $("#PRODUCT_NAMEKeyword").hide();
-            $("#REGIONKeyword").hide();
-            $("#searchCondition").change(function () {
-                if ($("#searchCondition").val() == "PRODUCT_NAME") {
-                    $("#PRODUCT_NAMEKeyword").show();
-                    $("#PRODUCT_NAMEKeyword").attr("disabled", false);
-                } else {
-                    $("#PRODUCT_NAMEKeyword").hide();
-                    $("#PRODUCT_NAMEKeyword").attr("disabled", true);
-                }
-            })
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-            $("#searchCondition").change(function () {
-                //직접입력을 누를 때 나타남
-                if ($("#searchCondition").val() == "REGION") {
-                    $("#REGIONKeyword").show();
-                    $("#REGIONKeyword").attr("disabled", false);
-                } else {
-                    $("#REGIONKeyword").hide();
-                    $("#REGIONKeyword").attr("disabled", true);
-                }
-            })
-        });
-    </script>
-    <meta charset="UTF-8">
     <style>
-        #container {
-            width: 50%;
-            margin: 0 auto;
-        }
-
-        h1, h3, p {
-            text-align: center;
-        }
-
-        table {
-            border-collapse: collapse;
-        }
-
-        table, th, td {
-            border: 1px solid black;
-            margin: 0 auto;
-            text-align: center !important;
-        }
-
-        th {
-            background-color: silver;
-            text-align: center;
-        }
-
         .page {
             display: block;
             margin: 0 3px;
             float: left;
-            border: 1px solid #e6e6e6;
+            border: 1px solid #e1e4eb;
             width: 28px;
             height: 28px;
             line-height: 28px;
@@ -71,24 +23,9 @@
             color: #999999;
             text-decoration: none;
         }
-
-        .center {
-            text-align: center;
+        li {
+            list-style: none;
         }
-
-        .border-none, .border-none td {
-            border: none;
-        }
-
-        div > img {
-            width: 100%;
-            height: 35%;
-        }
-
-        .list {
-            display: block;
-        }
-
     </style>
     <title>펀딩리스트</title>
 </head>
@@ -97,95 +34,273 @@
 <%-- navbar --%>
 <jsp:include page="../fragments/navbar.jsp" flush="false"/>
 
-<div class="container" id="container">
-    <h1>펀딩리스트</h1>
-    <c:if test="${not empty boardList}">
-        <c:forEach var="board" items="${boardList}">
-            <div style="float: left; padding:3%; width:33%;">
-                <div>
-                    <img class="image" onclick="location.href='/funding/getBoard?product_no=${board.product_no}'"
-                         src="/board/getImg?url=${board.pimg_no }">
+<main id="main">
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs" data-aos="fade-in">
+        <div class="container">
+            <h2>${searchKeyword} 지역 펀딩</h2>
+            <p></p>
+        </div>
+    </div><!-- End Breadcrumbs -->
+
+    <!-- 지역 -->
+    <!-- ======= Features Section ======= -->
+    <section id="features" class="features">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row" data-aos="zoom-in" data-aos-delay="100">
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2" onclick="location.href='/board/getFundingList'">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3>전체</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Seoul'">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3>서울</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Gyeonggi-do'">
+                        <i class="ri-bar-chart-box-line" style="color: #5578ff;"></i>
+                        <h3>경기도</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Incheon'">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3>인천</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Gangwon-do'">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3>강원도</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Chungcheongbuk-do'">
+                        <i class="ri-gradienter-line" style="color: #ffa76e;"></i>
+                        <h3>충청북도</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Chungcheongbuk-do'">
+                        <i class="ri-gradienter-line" style="color: #ffa76e;"></i>
+                        <h3>충청남도</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Sejong'">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3>세종</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Daejeon'">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3>대전</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Jeollabuk-do'">
+                        <i class="ri-paint-brush-line" style="color: #e361ff;"></i>
+                        <h3>전라북도</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Jeollanam-do'">
+                        <i class="ri-paint-brush-line" style="color: #e361ff;"></i>
+                        <h3>전라남도</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Gwangju'">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3>광주</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Gyeongsangbuk-do'">
+                        <i class="ri-calendar-todo-line" style="color: #e80368;"></i>
+                        <h3>경상북도</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Gyeongsangnam-do'">
+                        <i class="ri-calendar-todo-line" style="color: #e80368;"></i>
+                        <h3>경상남도</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Daegu'">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3>대구</h3>
+                    </div>
                 </div>
 
-                <br>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Ulsan'">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3>울산</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Busan'">
+                        <i class="ri-store-line" style="color: #ffbb2c;"></i>
+                        <h3>부산</h3>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mt-4 mt-md-0 ">
+                    <div class="icon-box mt-2"
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Jeju-do'">
+                        <i class="ri-fingerprint-line active" style="color: #29cc61;"></i>
+                        <h3>제주도</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Features Section -->
 
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: ${board. percent }%"
-                         aria-valuenow="${board.percent }"
-                         aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div>
-                        ${board.percent }%
-                </div>
+    <div class="container text-center">
+        <div class="row mt-3">
+            <div class="col-4 center-block mt-2 ml-5" data-aos="fade-up">
+                <!--페이징-->
                 <ul>
-                    <li class="list">${board.product_name }</li>
-                    <li class="list">${board.region }</li>
-                    <li class="list">${board.percent }%</li>
+                    <c:if test="${pageMaker.prev}">
+                        <li class="page"><a href="/board/getFundingList?page=1">처음</a></li>
+                        <li class="page"><a href="${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
+                    </c:if>
+
+                    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+                        <li class="page"><a href="${pageMaker.makeQuery(idx)}">${idx}</a></li>
+                    </c:forEach>
+
+                    <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+                        <li class="page"><a href="${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
+                        <li class="page"><a href="/board/getFundingList?page=${pageMaker.tempEndPage }">맨끝</a></li>
+                    </c:if>
                 </ul>
             </div>
-        </c:forEach>
-    </c:if>
+            <div class="col-4" data-aos="fade-up">
+                <form action="/funding/fundingOpen">
+                    <c:if test="${sessionScope.loginMember.license ne null}">
+                        <input type="submit" value="펀딩오픈 신청하기" class="get-started-btn">
+                    </c:if>
+                    <c:if test="${sessionScope.loginMember eq null}">
+                        <input type="submit" value="펀딩오픈 신청하기" class="get-started-btn"
+                               onclick="alert('로그인이 필요한 서비스입니다.');">
+                    </c:if>
+                    <c:if test="${sessionScope.loginMember ne null && empty sessionScope.loginMember.license}">
+                        <input type="button" value="펀딩오픈 신청하기" class="get-started-btn"
+                               onclick="alert('사업자 등록이 필요한 서비스입니다.');">
+                    </c:if>
+                </form>
+            </div>
+            <div class="col-4" data-aos="fade-up">
+                <!-- 검색-->
+                <!-- Custom rounded search bars with input group -->
+                <form action="/board/getFundingList">
+                    <div class="p-1 bg-light rounded rounded-pill shadow-sm mb-4">
+                        <div class="input-group">
+                            <input type="search" placeholder="펀딩 이름" aria-describedby="button-addon1" class="form-control border-0 bg-light"
+                                   id="PRODUCT_NAMEKeyword" name="searchKeyword" value="${param.searchKeyword}">
+                            <input type="text" hidden name="searchCondition" id="searchCondition" value="PRODUCT_NAME">
+                            <div class="input-group-append">
+                                <button id="button-addon1" type="submit" class="btn btn-link text-primary"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- End -->
+            </div>
+        </div>
 
-    <div>
-        <form action="/board/getFundingList">
-            <table class="border-none">
-                <tr>
-                    <td>
-                        <select name="searchCondition" id="searchCondition">
-                            <option>검색어 선택</option>
-                            <option value="REGION">지역</option>
-                            <option value="PRODUCT_NAME">제목</option>
-                        </select>
-                        <!--상단의 select box에서 '제목'을 선택하면 나타날 인풋박스  -->
-
-                        <select id="REGIONKeyword" name="searchKeyword" disabled>
-                            <option value="Seoul">서울</option>
-                            <option value="Gyeonggi-do">경기</option>
-                            <option value="Incheon">인천</option>
-                            <option value="Gangwon-do">강원</option>
-                            <option value="Chungcheongbuk-do">충북</option>
-                            <option value="Chungcheongnam-do">충남</option>
-                            <option value="Sejong">세종</option>
-                            <option value="Daejeon">대전</option>
-                            <option value="Jeollabuk-do">전북</option>
-                            <option value="Jeollanam-do">전남</option>
-                            <option value="Gwangju">광주</option>
-                            <option value="Chungcheongbuk-do">경북</option>
-                            <option value="Gyeongsangnam-do">경남</option>
-                            <option value="Daegu">대구</option>
-                            <option value="Ulsan">울산</option>
-                            <option value="Busan">부산</option>
-                            <option value="Jeju-do">제주</option>
-                        </select>
-                        <input type="text" id="PRODUCT_NAMEKeyword" name="searchKeyword" disabled/>
-                        <input type="submit" value="검색">
-                    </td>
-                </tr>
-            </table>
-        </form>
-
-        <p><a href="">글등록</a></p>
-
-        <ul>
-            <c:if test="${pageMaker.prev}">
-                <li class="page"><a href="/board/getFundingList?page=1">처음</a></li>
-                <li class="page"><a href="${pageMaker.makeQuery(pageMaker.startPage - 1)}">이전</a></li>
-            </c:if>
-
-            <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-                <li class="page"><a href="${pageMaker.makeQuery(idx)}">${idx}</a></li>
-            </c:forEach>
-
-            <c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-                <li class="page"><a href="${pageMaker.makeQuery(pageMaker.endPage + 1)}">다음</a></li>
-                <li class="page"><a href="/board/getFundingList?page=${pageMaker.tempEndPage }">맨끝</a></li>
-            </c:if>
-        </ul>
     </div>
-</div>
 
-<%-- footer --%>
+    <!-- ======= Courses Section ======= -->
+    <section id="courses" class="courses">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row" data-aos="zoom-in" data-aos-delay="100">
+                <!-- each -->
+                <c:if test="${not empty boardList}">
+                    <c:forEach var="board" items="${boardList}">
+                        <div class="col-lg-4 col-md-6 d-flex mt-3 align-items-stretch">
+                            <div class="course-item">
+                                <a href="/funding/getBoard?product_no=${board.product_no}">
+                                    <img src="/board/getImg?no=${board.pimg_no }" class="img-fluid course-img ">
+                                </a>
+                                    <%--                                    alt="/board/getImg.do?no=${board.pimg_no }"--%>
+                                <div class="course-content">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h4>${board.region }</h4>
+                                        <c:if test="${board.d_day > 0}">
+                                            <li class="price">D-${board.d_day }</li>
+                                        </c:if>
+
+                                        <c:if test ="${board.d_day <= 0}">
+                                            <p class="price">[종료]</p>
+                                        </c:if>
+                                    </div>
+
+                                    <h3><a href="/funding/getBoard?product_no=${board.product_no}">${board.product_name }</a></h3>
+                                        <%--                                        <p>${board.product_content}</p>--%>
+                                    <!--progress bar-->
+                                    <div class="progress ">
+                                        <div class="progress-bar progress-bar-striped active " role="progressbar"
+                                             style="width: ${board. percent }%"
+                                             aria-valuenow="${board.percent }"
+                                             aria-valuemin="0" aria-valuemax="100">
+                                            <span class="sr-only">${board.percent }%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Course Item-->
+                    </c:forEach>
+                </c:if>
+            </div>
+        </div>
+    </section><!-- End Courses Section -->
+
+</main>
+<!-- End #main -->
+
+<!-- footer -->
 <jsp:include page="../fragments/footer.jsp" flush="false"/>
+
+<div id="preloader"></div>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="/assets/vendor/aos/aos.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/php-email-form/validate.js"></script>
+<script src="/assets/vendor/purecounter/purecounter.js"></script>
+<script src="/assets/vendor/swiper/js/swiper-bundle.min.js"></script>
+
+<!-- Template Main JS File -->
+<script src="/assets/js/main.js"></script>
 
 </body>
 </html>
