@@ -16,6 +16,6 @@ public class FundingOpenVO {
 	private String content;
 	private String region;
 	private int save_money;
-	private String fileName;
+	private String pimg_no;
 	private int percent;
 }

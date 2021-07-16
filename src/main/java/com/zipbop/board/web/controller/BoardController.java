@@ -4,6 +4,7 @@ import com.zipbop.board.domain.entity.*;
 import com.zipbop.board.domain.paging.Criteria;
 import com.zipbop.board.domain.paging.PageMarker;
 import com.zipbop.board.domain.service.BoardService;
+import com.zipbop.funding.repository.FundingDAOMybatis;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -20,6 +21,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.util.List;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024,
@@ -38,13 +41,48 @@ public class BoardController {
         return "board/index";
     }
 
-    @RequestMapping("/getFundingList")
-    public String getFundingList(Criteria cri, Model model) {
+    @GetMapping("/getFundingList")
+    public String getFundingList(Criteria cri, Model model) throws ParseException {
 
         List<FundingVO> boardList = boardService.getFundingBoardList(cri);
 
-        for (FundingVO fundingVO : boardList)
+        for (FundingVO fundingVO : boardList) {
             fundingVO.data();
+            if (fundingVO.getRegion().equals("Chungcheongbuk-do"))
+                fundingVO.setRegion("충청북도");
+            else if (fundingVO.getRegion().equals("Chungcheongnam-do"))
+                fundingVO.setRegion("충청남도");
+            else if (fundingVO.getRegion().equals("Incheon"))
+                fundingVO.setRegion("인천");
+            else if (fundingVO.getRegion().equals("Gangwon-do"))
+                fundingVO.setRegion("강원도");
+            else if (fundingVO.getRegion().equals("Gyeongsangnam-do"))
+                fundingVO.setRegion("경상남도");
+            else if (fundingVO.getRegion().equals("Gyeongsangbuk-do"))
+                fundingVO.setRegion("경상북도");
+            else if (fundingVO.getRegion().equals("Jeollabuk-do"))
+                fundingVO.setRegion("전라북도");
+            else if (fundingVO.getRegion().equals("Jeollanam-do"))
+                fundingVO.setRegion("전라남도");
+            else if (fundingVO.getRegion().equals("Daegu"))
+                fundingVO.setRegion("대구");
+            else if (fundingVO.getRegion().equals("Ulsan"))
+                fundingVO.setRegion("울산");
+            else if (fundingVO.getRegion().equals("Daejeon"))
+                fundingVO.setRegion("대전");
+            else if (fundingVO.getRegion().equals("Busan"))
+                fundingVO.setRegion("부산");
+            else if (fundingVO.getRegion().equals("Jeju-do"))
+                fundingVO.setRegion("제주도");
+            else if (fundingVO.getRegion().equals("Sejong"))
+                fundingVO.setRegion("세종");
+            else if (fundingVO.getRegion().equals("Seoul"))
+                fundingVO.setRegion("서울");
+            else if (fundingVO.getRegion().equals("Gyeonggi-do"))
+                fundingVO.setRegion("경기도");
+            else if (fundingVO.getRegion().equals("Gwangju"))
+                fundingVO.setRegion("광주");
+        }
 
         PageMarker pageMaker = new PageMarker();
         pageMaker.setCri(cri);
@@ -71,10 +109,9 @@ public class BoardController {
     }
 
     @GetMapping("/getImg")
-    public void setImageFileById(HttpServletResponse response, HttpServletRequest request) throws IOException {
-
+    public void setImageFileById(@RequestParam("no") String no, HttpServletResponse response) throws IOException {
         StringBuilder sb = new StringBuilder("file:/Users/ryujeongmoon/Downloads/upload/");
-        String no = request.getParameter("no");
+//        StringBuilder sb = new StringBuilder("file:C:\\MyStudy\\Downloads\\upload\\");
         sb.append(no);
         URL fileUrl = new URL(sb.toString());
         IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
@@ -82,10 +119,11 @@ public class BoardController {
 
     @GetMapping("/getpImg")
     public void setImageFileByUrl(HttpServletResponse response, HttpServletRequest request) throws IOException {
-
         StringBuilder sb = new StringBuilder("file:/Users/ryujeongmoon/Downloads/upload/");
+//        StringBuilder sb = new StringBuilder("file:C:\\MyStudy\\Downloads\\upload\\");
         String url = request.getParameter("url");
         sb.append(url);
+
         URL fileUrl = new URL(sb.toString());
         IOUtils.copy(fileUrl.openStream(), response.getOutputStream());
     }
@@ -115,12 +153,10 @@ public class BoardController {
         boardService.deleteAnswer(vo.getNo());
     }
 
-    @RequestMapping("/getBoardList")
+    @GetMapping("/getBoardList")
     public String getBoardListView(BoardVO vo, Criteria cri, Model model) {
 
         List<BoardVO> boardList = boardService.getBoardList(cri);
-        log.info("vo = {}", vo);
-
         model.addAttribute("boardList", boardList);
 
         PageMarker pageMaker = new PageMarker();
@@ -162,11 +198,12 @@ public class BoardController {
 
         String storedFileName = file.getStored_file_name();
         String originalFileName = file.getOrg_file_name();
-        byte fileByte[] = FileUtils.readFileToByteArray(new File("/Users/ryujeongmoon/Downloads/upload/" + storedFileName));
+//        byte[] fileByte = FileUtils.readFileToByteArray(new File("C:\\MyStudy\\Downloads\\upload\\" + storedFileName));
+        byte[] fileByte = FileUtils.readFileToByteArray(new File("/Users/ryujeongmoon/Downloads/upload/" + storedFileName));
 
         response.setContentType("application/octet-stream");
         response.setContentLength(fileByte.length);
-        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(originalFileName, "UTF-8") + "\";");
+        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(originalFileName, StandardCharsets.UTF_8) + "\";");
         response.getOutputStream().write(fileByte);
         response.getOutputStream().flush();
         response.getOutputStream().close();
@@ -191,18 +228,19 @@ public class BoardController {
     }
 
     @GetMapping("/updateBoard")
-    public String updateQnaView(BoardVO vo, Model model) {
+    public String updateQnaView(@RequestParam("flag_nq") char flag_nq, BoardVO vo, Model model) {
         BoardVO board = boardService.getBoard(vo);
-        model.addAttribute("board", board);
-
         List<FileVO> fileList = boardService.selectFile(vo);
+
+        model.addAttribute("flag_nq", flag_nq);
+        model.addAttribute("board", board);
         model.addAttribute("file", fileList);
         return "board/updateBoard";
     }
 
     @PostMapping("/updateBoard")
     public String updateQna(
-//            @RequestParam("flag_nq") char flag_nq,
+            @RequestParam("flag_nq") char flag_nq,
             @ModelAttribute("board") BoardVO vo, MultipartHttpServletRequest mpRequest,
             @RequestParam(value = "del_file_no") String[] files) throws Exception {
 
@@ -214,13 +252,13 @@ public class BoardController {
 
         boardService.updateBoard(vo);
 
-        return "redirect:/board/getBoard?no=" + vo.getNo();
+        return "redirect:/board/getBoard?no=" + vo.getNo() + "&flag_nq=" + flag_nq;
     }
 
     @GetMapping("/deleteBoard")
-    public String deleteQna(BoardVO vo) {
+    public String deleteQna(@RequestParam("flag_nq") char flag_nq, BoardVO vo) {
 
         boardService.deleteBoard(vo);
-        return "redirect:/board/getBoardList";
+        return "redirect:/board/getBoardList?flag_nq=" + flag_nq;
     }
 }

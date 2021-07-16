@@ -35,8 +35,9 @@ public class JpaMemberRepository implements MemberRepository {
     @Transactional(readOnly = true)
     public Optional<Member> findById(String id) {
         return findAll().stream()
-                .filter(member -> member.getId().equals(id))
-                .findAny();
+                        .filter(member -> member.getId()
+                                                .equals(id))
+                        .findAny();
     }
 
     @Transactional(readOnly = true)
@@ -68,7 +69,6 @@ public class JpaMemberRepository implements MemberRepository {
 
     public void delete() {
         List result = em.createQuery("select m from Member m where months_between(current_date, m.signoutDate) >= 6").getResultList();
-
         result.stream()
               .forEach(toBeDeleteMember -> em.remove(toBeDeleteMember));
     }

@@ -4,6 +4,7 @@ import com.zipbop.funding.domain.*;
 import com.zipbop.funding.service.FundingService;
 import com.zipbop.member.domain.member.Member;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 @Controller
 @SessionAttributes
 @RequiredArgsConstructor
@@ -34,7 +35,7 @@ public class FundingController {
             String license = loginMember.getLicense();
             model.addAttribute("license", license);
         }
-        return "funding/fundingList";
+        return "board/getFundingList";
     }
 
     @RequestMapping("/getBoard")
@@ -53,47 +54,58 @@ public class FundingController {
             name_price_map.put(rewardNameList[i], rewardPriceList[i]);
         }
 
+        log.info("D-DAY = {}" , funding.getD_day());
         model.addAttribute("funding", funding);
         model.addAttribute("name_price_map", name_price_map);
         return "funding/fundingDetail";
     }
 
     @GetMapping("/fundingOpen")
-    public String getLicense(@ModelAttribute MemberVO memberVO) {
-
+    public String getFundingForm() {
         return "funding/fundingOpen";
     }
 
-    @RequestMapping("/insertBoard")
-    public String insertBoard(@ModelAttribute FundingAllVO fundingAllVO, MultipartHttpServletRequest mpRequest) throws Exception, IOException {
+    @PostMapping("/insertBoard")
+    public String insertBoard(@ModelAttribute FundingAllVO fundingAllVO, MultipartHttpServletRequest mpRequest) throws Exception {
 
-        MultipartFile file = mpRequest.getFile("pimg_no");
+        MultipartFile file = mpRequest.getFile("file");
 
-        if(file.getOriginalFilename() != "" ) {
+        if(!file.getOriginalFilename().isEmpty()) {
             String fileName = file.getOriginalFilename();
+//            file.transferTo(new File("C:\\MyStudy\\Downloads\\upload\\" + fileName));
             file.transferTo(new File("/Users/ryujeongmoon/Downloads/upload/" + fileName));
-            fundingAllVO.setFileName(fileName);
+            fundingAllVO.setPimg_no(fileName);
+        } else {
+            fundingAllVO.setPimg_no("");
         }
 
         fundingService.insertBoard(fundingAllVO);
-        return "funding/fundingList";
+        return "redirect:/board/getFundingList";
     }
 
-    @RequestMapping("/deleteBoard")
-    public String deleteBoard(FundingOpenVO fundingOpenVO) {
-        fundingService.deleteBoard(fundingOpenVO);
-        return "funding/fundingList";
+    @GetMapping("/deleteBoard/{product_no}")
+    public String deleteBoard(@PathVariable int product_no, HttpSession session) {
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        FundingAllVO board = fundingService.getBoard(product_no);
+
+        if(!(loginMember.getId().equals(board.getId())))
+            return "redirect:/";
+
+        fundingService.deleteBoard(product_no);
+        return "redirect:/board/getFundingList";
     }
 
     @GetMapping("/fundingUpdate")
-    public String updateForm() {
+    public String updateForm(@RequestParam("product_no") int product_no, Model model) {
+        FundingAllVO funding = fundingService.getBoard(product_no);
+        model.addAttribute("funding", funding);
         return "funding/fundingUpdate";
     }
 
-    @GetMapping("/updateBoard")
+    @PostMapping("/updateBoard")
     public String update(FundingOpenVO fundingOpenVO, FundingRewardVO fundingRewardVO) {
         fundingService.updateBoard(fundingOpenVO, fundingRewardVO);
-        return "funding/fundingList";
+        return "redirect:/board/getFundingList";
     }
 
     @RequestMapping("/fundingEnter")
@@ -114,17 +126,16 @@ public class FundingController {
 
     @PostMapping("/fundingPayment")
     public String insertPay(@ModelAttribute FundingAllVO fundingAllVO, Model model) {
-
         fundingService.insertPay(fundingAllVO);
-        String chk = fundingService.getPayChk(fundingAllVO.getPay_no());
-        model.addAttribute("chk", chk);
-        return "funding/payChk";
+        List<FundingPayVO> pays = fundingService.getPayList(fundingAllVO.getId());
+        model.addAttribute("pays", pays);
+        return "redirect:/funding/allPayList";
     }
 
     @RequestMapping("/allPayList")
-    public String getPayList(FundingAllVO fundingAllVO, Model model) {
-
-        List<FundingPayVO> pays = fundingService.getPayList(fundingAllVO.getId());
+    public String getPayList(HttpSession session, Model model) {
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        List<FundingPayVO> pays = fundingService.getPayList(loginMember.getId());
         model.addAttribute("pays", pays);
         return "funding/allPayList";
     }

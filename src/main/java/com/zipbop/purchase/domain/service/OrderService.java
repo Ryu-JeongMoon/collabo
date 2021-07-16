@@ -29,15 +29,15 @@ public class OrderService {
         return mybatisOrderRepository.getListByMemberId(member_id);
     }
 
-    public List<Order> getSpecificListByMemberId(String member_id, int id) {
-        return mybatisOrderRepository.getSpecificListByMemberId(member_id, id);
+    public List<Order> getSpecificListByMemberId(int id) {
+        return mybatisOrderRepository.getSpecificListByMemberId(id);
     }
 
-    public int changeState(String state, int uuid) {
-        return mybatisOrderRepository.changeState(state, uuid);
+    public int changeState(int uuid) {
+        return mybatisOrderRepository.changeState(uuid);
     }
 
-    public int getTotalSum(String member_id) {
+    public Integer getTotalSum(String member_id) {
         return mybatisOrderRepository.getTotalSum(member_id);
     }
 

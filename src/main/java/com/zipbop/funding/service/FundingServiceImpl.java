@@ -24,19 +24,19 @@ public class FundingServiceImpl implements FundingService {
 	}
 
 	@Override
-	public void deleteBoard(FundingOpenVO ovo) {
-		fundingDAO.deleteBoard(ovo);
+	public void deleteBoard(int product_no) {
+		fundingDAO.deleteBoard(product_no);
 	}
 
-//	@Override
+	@Override
 	public List<FundingPayVO> getPayList(String id) {
 		return fundingDAO.getPayList(id);
 	}
 
-/*	@Override
-	public String getPayChk(int pay_no) {
-		return fundingDAO.getPayChk(pay_no);
-	}*/
+//	@Override
+//	public String getPayChk(int pay_no) {
+//		return fundingDAO.getPayChk(pay_no);
+//	}
 
 	@Override
 	public void updateBoard(FundingOpenVO ovo, FundingRewardVO rvo) {

@@ -2,7 +2,6 @@ package com.zipbop.board.domain.repository;
 
 import com.zipbop.board.domain.entity.*;
 import com.zipbop.board.domain.paging.Criteria;
-import com.zipbop.board.domain.paging.PageMarker;
 import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;

@@ -37,19 +37,14 @@ public class FundingDAOMybatis {
     }
 
     // 펀딩글 삭제(delete)
-    public void deleteBoard(FundingOpenVO ovo) {
-        mybatis.delete("FundingDAO.deleteBoard", ovo);
+    public void deleteBoard(int product_no) {
+        mybatis.delete("FundingDAO.deleteBoard", product_no);
     }
 
     // 결제 리스트(selectList)
     public List<FundingPayVO> getPayList(String id) {
         return mybatis.selectList("FundingDAO.getPayList", id);
     }
-
-    //결제 완료창
-//    public String getPayChk(int pay_no) {
-//        return mybatis.selectOne("FundingDAO.getPayChk", pay_no);
-//    }
 
     // 리워드 이름 가져오기
     public String getRewardName(int product_no) {
@@ -71,5 +66,22 @@ public class FundingDAOMybatis {
     public void insertPay(FundingAllVO allvo) {
         mybatis.insert("FundingDAO.insertPay", allvo); // 펀딩 참여
         mybatis.update("FundingDAO.updateSS", allvo); // 참여 시 후원자 수, 모금액 변화
+    }
+
+    // 전체 펀딩 수
+    public int getTotalFundingCount() {
+        return mybatis.selectOne("FundingDAO.getTotalFundingCount");
+    }
+
+    public int getOngoingFundingCount() {
+        return mybatis.selectOne("FundingDAO.getOngoingFundingCount");
+    }
+
+    public int getSuccessfulFundingCount() {
+        return mybatis.selectOne("FundingDAO.getSuccessfulFundingCount");
+    }
+
+    public int getFailureFundingCount() {
+        return mybatis.selectOne("FundingDAO.getFailureFundingCount");
     }
 }

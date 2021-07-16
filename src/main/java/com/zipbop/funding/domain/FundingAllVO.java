@@ -3,9 +3,9 @@ package com.zipbop.funding.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -23,7 +23,9 @@ public class FundingAllVO {
     private String d_day;
     private int save_money; //int
     private int supporter;
-    private String fileName;
+
+    private MultipartFile file;
+    private String pimg_no;
     private int percent;
 
     //FundingRewardVO
@@ -44,6 +46,6 @@ public class FundingAllVO {
     private String license;
 
     public void Data() {
-        percent = (int) (Math.ceil((double) save_money) / (double) goal_money * 100);
+        percent = (int) (Math.ceil(save_money) / (double) goal_money * 100);
     }
 }

@@ -29,19 +29,26 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/add")
-    public String addForm(@ModelAttribute("form") MemberSaveForm form) {
-        return "th/members/addMemberForm";
+    public String addForm(@ModelAttribute("form") MemberSaveForm form, Model model) {
+        model.addAttribute("isCertified", "false");
+        return "th/members/addMemberForm_org";
     }
 
     @PostMapping("/add")
-    public String add(@Validated @ModelAttribute("form") MemberSaveForm form, BindingResult bindingResult) {
+    public String add(@Validated @ModelAttribute("form") MemberSaveForm form, BindingResult bindingResult, @RequestParam("isCertified") String isCertified, Model model) {
 
         if(loginService.hasLoginId(form.getId())) {
             bindingResult.reject("duplicateId");
         }
 
+        if(isCertified.equals("false")) {
+            bindingResult.reject("isCertified");
+            return "th/members/addMemberForm_org";
+        }
+
         if (bindingResult.hasErrors()) {
-            return "th/members/addMemberForm";
+            log.info("bindingResult = {}", bindingResult);
+            return "th/members/addMemberForm_org";
         }
 
         Member member = new Member();
@@ -54,7 +61,8 @@ public class MemberController {
         member.setEmail(form.getEmail());
         member.setLicense(form.getLicense());
 
-        Long uuid = memberService.join(member);
+        memberService.join(member);
+        log.info("member = {}", member);
 
         return "redirect:/";
     }
@@ -75,6 +83,18 @@ public class MemberController {
 
     @GetMapping("/myPage")
     public String myPage(HttpSession session, Model model) {
+        Member loginMember = (Member) session.getAttribute("loginMember");
+        Member member = memberRepository.findByUuid(loginMember.getUuid());
+
+        if(loginMember == null)
+            return "redirect:/login";
+
+        model.addAttribute("member", member);
+        return "th/members/myPage";
+    }
+
+    @GetMapping("/myPageForm")
+    public String myPageForm(HttpSession session, Model model) {
         Member loginMember = (Member) session.getAttribute("loginMember");
         Member member = memberRepository.findByUuid(loginMember.getUuid());
 
@@ -103,6 +123,7 @@ public class MemberController {
     public String edit(HttpSession session, @Validated @ModelAttribute("form") MemberUpdateForm form, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
+            log.info("bindingResult = {}", bindingResult);
             return "th/members/updateMemberForm";
         }
 
@@ -117,7 +138,8 @@ public class MemberController {
         member.setEmail(form.getEmail());
         member.setLicense(form.getLicense());
 
-        memberService.update(loginMember.getUuid(), member);
+        Member updatedMember = memberService.update(loginMember.getUuid(), member);
+        session.setAttribute("loginMember", updatedMember);
         model.addAttribute("uuid", loginMember.getUuid());
 
         return "redirect:/members/myPage";

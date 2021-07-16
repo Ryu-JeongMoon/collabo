@@ -3,6 +3,7 @@ package com.zipbop.purchase.domain.repository;
 import com.zipbop.purchase.domain.entity.Order;
 import com.zipbop.purchase.domain.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,16 +30,19 @@ public class MybatisOrderRepository {
         return mapper.getListByMemberId(member_id);
     }
 
-    public List<Order> getSpecificListByMemberId(String member_id, int id) {
-        return mapper.getSpecificListByMemberId(member_id, id);
+    public List<Order> getSpecificListByMemberId(int id) {
+        return mapper.getSpecificListByMemberId(id);
     }
 
-    public int changeState(String state, int uuid) {
-        return mapper.changeState(state, uuid);
+    public int changeState(int uuid) {
+        return mapper.changeState(uuid);
     }
 
-    public int getTotalSum(String member_id) {
-        return mapper.getTotalSum(member_id);
+    public Integer getTotalSum(String member_id) {
+        if(mapper.getTotalSum(member_id) != null)
+            return mapper.getTotalSum(member_id);
+
+        return 0;
     }
 
     public int getSumByOrderId(int id) {

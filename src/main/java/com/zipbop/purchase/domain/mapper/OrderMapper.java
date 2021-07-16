@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -27,16 +28,16 @@ public interface OrderMapper {
     @Select("select * from orders where member_id = #{member_id} and state = 'ORDER' order by id desc")
     List<Order> getListByMemberId(String member_id);
 
-    @Select("select * from orders where member_id = #{member_id} and state = 'ORDER' and id = #{id}")
-    List<Order> getSpecificListByMemberId(String member_id, int id);
+    @Select("select * from orders where state = 'ORDER' and id = #{id}")
+    List<Order> getSpecificListByMemberId(int id);
 
     @Select("select sum(product_count * product_price) from orders where id = #{id} and state = 'ORDER' group by member_id")
     int getSumByOrderId(int id);
 
-    @Update("update orders set state = #{state} where uuid = #{uuid}")
-    int changeState(String state, int uuid);
+    @Update("update orders set state = 'CANCEL' where uuid = #{uuid}")
+    int changeState(int uuid);
 
     @Select("select sum(product_count * product_price) from orders where member_id = #{member_id} and state = 'ORDER' group by member_id")
-    int getTotalSum(String member_id);
+    Integer getTotalSum(String member_id);
 
 }

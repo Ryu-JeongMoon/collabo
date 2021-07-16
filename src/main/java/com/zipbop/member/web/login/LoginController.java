@@ -1,5 +1,6 @@
 package com.zipbop.member.web.login;
 
+import com.zipbop.funding.repository.FundingDAOMybatis;
 import com.zipbop.member.domain.login.LoginService;
 import com.zipbop.member.domain.member.Member;
 import com.zipbop.member.web.SessionConst;
@@ -61,11 +62,5 @@ public class LoginController {
             session.invalidate();
 
         return "redirect:/";
-    }
-
-    private void expireCookie(HttpServletResponse response, String cookieName) {
-        Cookie cookie = new Cookie(cookieName, null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
     }
 }

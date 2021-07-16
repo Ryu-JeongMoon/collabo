@@ -7,6 +7,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 @MapperScan(basePackageClasses = { CartMapper.class, ProductMapper.class, OrderMapper.class })
 @SpringBootApplication
 public class ZipbopApplication {

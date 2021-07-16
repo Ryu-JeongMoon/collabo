@@ -63,7 +63,6 @@ public class OrderController {
 
         String referer = request.getHeader("Referer");
 
-        // TODO 통합 후 로그인 페이지로 보내기
         if (!member_id.equals(loginMember.getId())) {
             return "redirect:/";
         }
@@ -97,7 +96,7 @@ public class OrderController {
         }
 
         if(referer.contains("/order/orderDetail")) {
-            model.addAttribute("refund", false);
+            model.addAttribute("isOrdered", true);
         }
 
         cartService.deleteAll(member_id);
@@ -119,7 +118,8 @@ public class OrderController {
     @GetMapping("/list/{member_id}")
     public String orderList(@PathVariable String member_id, Model model) {
         List<Order> orders = orderService.getListByMemberId(member_id);
-        int sum = orderService.getTotalSum(member_id);
+        int sum = 0;
+        sum = orderService.getTotalSum(member_id);
 
         Map<Integer, Integer> interval = new ConcurrentHashMap<>();
         LocalDateTime now = LocalDateTime.now();
@@ -141,14 +141,14 @@ public class OrderController {
         List<Order> orders = new ArrayList<>();
         int sum = 0;
 
-        orderService.changeState("CANCEL", uuid);
         Order order = orderService.findOneByUuid(uuid);
-
-        if(!loginMember.getId().equals(order.getMember_id()))
+        if(!(loginMember.getId().equals(order.getMember_id())))
             return "redirect:/";
 
+        orderService.changeState(uuid);
+
         if (referer.contains("/order/add/")) {
-            orders = orderService.getSpecificListByMemberId(order.getMember_id(), order.getId());
+            orders = orderService.getSpecificListByMemberId(order.getId());
             sum = orderService.getSumByOrderId(order.getId());
         } else {
             orders = orderService.getListByMemberId(order.getMember_id());
