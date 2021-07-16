@@ -15,9 +15,10 @@
                GOAL_MONEY,
                CONTENT,
                REGION,
+               PIMG_NO,
                (SELECT TRUNC(DEADLINE) - TRUNC(SYSDATE)
                 FROM FUNDING_OPEN
-                WHERE PRODUCT_NO = 1) AS D_DAY
+                WHERE PRODUCT_NO = #{product_no}) AS D_DAY
         FROM FUNDING_OPEN
         WHERE PRODUCT_NO = #{product_no}
     </select>
@@ -44,9 +45,9 @@
 
     <!-- 펀딩 오픈신청 -->
     <insert id="insertBoard" parameterType="com.zipbop.funding.domain.FundingAllVO">
-        INSERT INTO FUNDING_OPEN (PRODUCT_NO, PRODUCT_NAME, ID, DEADLINE, GOAL_MONEY, CONTENT, REGION)
+        INSERT INTO FUNDING_OPEN (PRODUCT_NO, PRODUCT_NAME, ID, DEADLINE, GOAL_MONEY, CONTENT, REGION, PIMG_NO)
         VALUES ((SELECT NVL(MAX(PRODUCT_NO), 0) + 1 FROM FUNDING_OPEN),
-                #{product_name}, #{id}, #{deadLine}, #{goal_money}, #{content}, #{region})
+                #{product_name}, #{id}, #{deadLine}, #{goal_money}, #{content}, #{region}, #{pimg_no})
     </insert>
 
     <!-- 리워드 입력(오픈신청 할 때 같이 넘어감) -->
@@ -57,7 +58,7 @@
     </insert>
 
     <!-- 펀딩 게시글 삭제 -->
-    <delete id="deleteBoard" parameterType="com.zipbop.funding.domain.FundingOpenVO">
+    <delete id="deleteBoard" parameterType="int">
         DELETE
         FROM FUNDING_OPEN
         WHERE PRODUCT_NO = #{product_no}
@@ -103,4 +104,32 @@
         WHERE ID = #{id}
         ORDER BY PAY_DATE DESC
     </select>
+
+    <select id="getTotalFundingCount" resultType="int">
+        SELECT COUNT(PRODUCT_NO)
+        FROM FUNDING_OPEN
+    </select>
+
+    <select id="getOngoingFundingCount" resultType="int">
+        SELECT COUNT(PRODUCT_NO)
+        FROM FUNDING_OPEN
+        WHERE DEADLINE > SYSDATE
+    </select>
+
+    <select id="getSuccessfulFundingCount" resultType="int">
+        <![CDATA[
+        SELECT COUNT(PRODUCT_NO)
+        FROM FUNDING_OPEN
+        WHERE SAVE_MONEY >= GOAL_MONEY
+        ]]>
+    </select>
+
+    <select id="getFailureFundingCount" resultType="int">
+        <![CDATA[
+        SELECT COUNT(PRODUCT_NO)
+        FROM FUNDING_OPEN
+        WHERE SAVE_MONEY < GOAL_MONEY
+        ]]>
+    </select>
+
 </mapper>

@@ -24,10 +24,10 @@
         FROM board_normal
         WHERE FLAG_NQ = #{flag_nq}
         <if test="searchCondition == 'TITLE' ">
-            AND TITLE LIKE '%'|| #{searchKeyword} ||'%' ORDER BY NO DESC
+            AND UPPER(TITLE) LIKE '%'|| UPPER(#{searchKeyword}) ||'%' ORDER BY NO DESC
         </if>
         <if test="searchCondition == 'CONTENT' ">
-            AND CONTENT LIKE '%'|| #{searchKeyword} ||'%' ORDER BY NO DESC
+            AND UPPER(CONTENT) LIKE '%'|| UPPER(#{searchKeyword}) ||'%' ORDER BY NO DESC
         </if>
         )
         WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
@@ -41,8 +41,7 @@
     <update id="updateBoard" parameterType="com.zipbop.board.domain.entity.BoardVO">
         UPDATE BOARD_NORMAL
         SET TITLE   = #{title},
-            CONTENT = #{content},
-            REGDATE = SYSDATE
+            CONTENT = #{content}
         WHERE NO = #{no}
     </update>
 
@@ -81,10 +80,10 @@
         FROM board_normal
         WHERE FLAG_NQ = #{flag_nq}
         <if test="searchCondition == 'TITLE' ">
-            AND TITLE LIKE '%'|| #{searchKeyword} ||'%' ORDER BY NO DESC
+            AND UPPER(TITLE) LIKE '%'|| UPPER(#{searchKeyword}) ||'%' ORDER BY NO DESC
         </if>
         <if test="searchCondition == 'CONTENT' ">
-            AND CONTENT LIKE '%'|| #{searchKeyword} ||'%' ORDER BY NO DESC
+            AND UPPER(CONTENT) LIKE '%'|| UPPER(#{searchKeyword}) ||'%' ORDER BY NO DESC
         </if>
 
     </select>
@@ -137,8 +136,8 @@
     </delete>
 
     <!-- 펀딩 게시판  리스트-->
-    <select id="getFundingBoardList" parameterType="com.zipbop.board.domain.paging.Criteria"
-            resultType="com.zipbop.board.domain.entity.FundingVO">
+    <select id="getFundingBoardList" parameterType="com.zipbop.board.domain.paging.Criteria" resultType="com.zipbop.board.domain.entity.FundingVO">
+
         SELECT * FROM
         (SELECT PRODUCT_NO,PRODUCT_NAME,ID,DEADLINE,GOAL_MONEY,CONTENT,REGION,SAVE_MONEY,SUPPORTER,PIMG_NO ,
         ROW_NUMBER() OVER (ORDER BY PRODUCT_NO DESC) AS RNUM
@@ -154,9 +153,14 @@
         WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
     </select>
 
-    <!-- 펀딩게시판 페이징 리스트 카운트 -->
-    <select id="fundingListCount" parameterType="com.zipbop.board.domain.entity.FundingVO" resultType="int">
-        SELECT COUNT(PRODUCT_NO)
+    <!-- 펀딩 게시판  리스트
+    <select id="getFundingBoardList" parameterType="com.zipbop.board.domain.paging.Criteria" resultType="com.zipbop.board.domain.entity.FundingVO">
+
+        SELECT * FROM
+        (SELECT PRODUCT_NO,PRODUCT_NAME,ID,DEADLINE,GOAL_MONEY,CONTENT,REGION,SAVE_MONEY,SUPPORTER,PIMG_NO ,
+        ROW_NUMBER() OVER (ORDER BY PRODUCT_NO DESC) AS RNUM ,
+        (SELECT TRUNC(DEADLINE) - TRUNC(SYSDATE)
+        FROM FUNDING_OPEN WHERE PRODUCT_NO = 1) AS D_DAY
         FROM FUNDING_OPEN
         WHERE 1=1
         <if test="searchCondition == 'REGION' ">
@@ -164,6 +168,22 @@
         </if>
         <if test="searchCondition == 'PRODUCT_NAME' ">
             AND PRODUCT_NAME LIKE '%'|| #{searchKeyword} ||'%' ORDER BY PRODUCT_NO DESC
+        </if>
+        )
+        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+    </select>
+-->
+
+    <!-- 펀딩게시판 페이징 리스트 카운트 -->
+    <select id="fundingListCount" parameterType="com.zipbop.board.domain.entity.FundingVO" resultType="int">
+        SELECT COUNT(PRODUCT_NO)
+        FROM FUNDING_OPEN
+        WHERE 1=1
+        <if test="searchCondition == 'REGION' ">
+            AND UPPER(REGION) LIKE '%'|| UPPER(#{searchKeyword}) ||'%' ORDER BY PRODUCT_NO DESC
+        </if>
+        <if test="searchCondition == 'PRODUCT_NAME' ">
+            AND UPPER(PRODUCT_NAME) LIKE '%'|| UPPER(#{searchKeyword}) ||'%' ORDER BY PRODUCT_NO DESC
         </if>
 
     </select>
@@ -177,10 +197,7 @@
         FROM PRODUCT
         WHERE 1=1
         <if test="searchCondition == 'NAME' ">
-            AND NAME LIKE '%'|| #{searchKeyword} ||'%' ORDER BY ID DESC
-        </if>
-        <if test="searchCondition == 'DESCRIPTION' ">
-            AND DESCRIPTION LIKE '%'|| #{searchKeyword} ||'%' ORDER BY ID DESC
+            AND UPPER(NAME) LIKE '%'|| UPPER(#{searchKeyword}) ||'%' ORDER BY ID DESC
         </if>
         )
         WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
@@ -192,11 +209,7 @@
         FROM PRODUCT
         WHERE 1=1
         <if test="searchCondition == 'NAME' ">
-            AND NAME LIKE '%'|| #{searchKeyword} ||'%' ORDER BY ID DESC
+            AND UPPER(NAME) LIKE '%'|| UPPER(#{searchKeyword}) ||'%' ORDER BY ID DESC
         </if>
-        <if test="searchCondition == 'DESCRIPTION' ">
-            AND DESCRIPTION LIKE '%'|| #{searchKeyword} ||'%' ORDER BY ID DESC
-        </if>
-
     </select>
 </mapper>
