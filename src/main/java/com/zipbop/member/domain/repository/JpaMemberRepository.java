@@ -19,7 +19,6 @@ import java.util.Optional;
 @Repository
 public class JpaMemberRepository implements MemberRepository {
 
-    @PersistenceContext
     private final EntityManager em;
 
     public Long save(Member member) {
