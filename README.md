@@ -1,6 +1,5 @@
 # WooMooL Market V1.0
 ### 스프링 프로젝트 협업을 위한 Github Repository 입니다
 
-#### ddl 사용법
-Total.sql을 다운 받고, "BITCAMP".TABLE_NAME 에서 "BITCAMP"를 자신의 oracle sql developer username을 적어줍니다.
-
+### Link
+[WooMool-Market](ec2-15-165-101-123.ap-northeast-2.compute.amazonaws.com:8080)
