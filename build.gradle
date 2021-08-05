@@ -30,6 +30,7 @@ dependencies {
 
     implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.5.1'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 
     implementation 'org.junit.jupiter:junit-jupiter:5.7.0'
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
@@ -46,8 +47,6 @@ dependencies {
     implementation group: 'org.imgscalr', name: 'imgscalr-lib', version: '4.2'
 
 
-
-    compileOnly 'org.apache.tomcat.embed:tomcat-embed-jasper'
     compileOnly 'javax.servlet:jstl:1.2'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

@@ -92,7 +92,7 @@
                 </div>
                 <div class="col-lg-2 col-md-4 mt-4 mt-md-0">
                     <div class="icon-box mt-2"
-                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Chungcheongbuk-do'">
+                         onclick="location.href='/board/getFundingList?searchCondition=REGION&searchKeyword=Chungcheongnam-do'">
                         <i class="ri-gradienter-line" style="color: #ffa76e;"></i>
                         <h3>충청남도</h3>
                     </div>
